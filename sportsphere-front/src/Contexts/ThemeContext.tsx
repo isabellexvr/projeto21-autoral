@@ -28,7 +28,7 @@ export default function ThemeProvider({ children }: UserProviderProps) {
     )
 }
 
-export function useToken() {
+export function useTheme() {
     const context = useContext(ThemeContext);
     const { theme, setTheme } = context;
     return ({ theme, setTheme });
