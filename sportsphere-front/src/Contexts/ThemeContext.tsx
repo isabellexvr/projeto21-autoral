@@ -1,6 +1,17 @@
 import { createContext, useState, useContext, Dispatch, SetStateAction, ReactNode } from "react";
 import { colors } from "../assets/colors";
 
+export const themes = {
+    darkTheme: {
+        backgroundColor: colors.black,
+        fontColor: colors.white
+    },
+    lightTheme: {
+        backgroundColor: colors.white,
+        fontColor: colors.black
+    },
+}
+
 type ThemeDetails = {
     backgroundColor: string,
     fontColor: string
@@ -11,7 +22,12 @@ interface ThemeContextInterface {
     setTheme: Dispatch<SetStateAction<ThemeDetails>>
 } 
 
-const ThemeContext = createContext<Partial<ThemeContextInterface>>({});
+const defaultState = {
+    theme: themes.lightTheme,
+    setTheme: (theme: ThemeDetails) => {}
+} as ThemeContextInterface
+
+const ThemeContext = createContext(defaultState);
 
 type UserProviderProps = {
     children: ReactNode
