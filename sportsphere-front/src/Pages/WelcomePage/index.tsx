@@ -1,19 +1,14 @@
-import { useTheme, themes } from "../Contexts/ThemeContext"
+import { useTheme, themes } from "../../Contexts/ThemeContext"
 import styled from "styled-components";
 import { Switch } from "@mui/material";
-
-type ThemeProps = {
-    backgroundColor: string,
-    fontColor: string
-}
+import { UserExamples } from "./Components";
+import { ThemeProps } from "../../Types";
 
 export default function WelcomePage() {
-
     const { theme, setTheme } = useTheme();
-    console.log(theme)
 
     return (<Background backgroundColor={theme.backgroundColor} fontColor={theme.fontColor}>
-        weifwlekfmweve
+        <UserExamples/>
         <Switch onClick={() => { setTheme(theme === themes.darkTheme ? themes.lightTheme : themes.darkTheme) }} />
     </Background>)
 }
