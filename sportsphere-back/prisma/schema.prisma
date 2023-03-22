@@ -1,0 +1,87 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model categories {
+  id          Int           @id(map: "categories_pk") @default(autoincrement())
+  name        String
+  description String
+  icon        String
+  communities communities[]
+  posts       posts[]
+}
+
+model comments {
+  id      Int    @id(map: "comments_pk") @default(autoincrement())
+  postId  Int
+  ownerId Int
+  comment String
+  posts   posts  @relation(fields: [postId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "comments_fk0")
+  users   users  @relation(fields: [ownerId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "comments_fk1")
+}
+
+model communities {
+  id               Int                @id(map: "communities_pk") @default(autoincrement())
+  name             String
+  description      String?
+  icon             String?
+  categoryId       Int
+  categories       categories         @relation(fields: [categoryId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "communities_fk0")
+  posts            posts[]
+  usersCommunities usersCommunities[]
+}
+
+model likes {
+  id      Int   @id(map: "likes_pk") @default(autoincrement())
+  postId  Int
+  ownerId Int
+  posts   posts @relation(fields: [postId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "likes_fk0")
+  users   users @relation(fields: [ownerId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "likes_fk1")
+}
+
+model posts {
+  id                Int               @id(map: "posts_pk") @default(autoincrement())
+  ownerId           Int
+  categoryId        Int
+  communityId       Int
+  description       String
+  contentTypeId     Int
+  comments          comments[]
+  likes             likes[]
+  users             users             @relation(fields: [ownerId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "posts_fk0")
+  categories        categories        @relation(fields: [categoryId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "posts_fk1")
+  communities       communities       @relation(fields: [communityId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "posts_fk2")
+  postsContentTypes postsContentTypes @relation(fields: [contentTypeId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "posts_fk3")
+}
+
+model postsContentTypes {
+  id    Int     @id(map: "postsContentTypes_pk") @default(autoincrement())
+  name  String  @unique
+  posts posts[]
+}
+
+model users {
+  id               Int                @id(map: "users_pk") @default(autoincrement())
+  fullName         String             @default(cuid()) @db.VarChar(25)
+  userName         String             @unique @default(cuid()) @db.VarChar(25)
+  picture          String
+  email            String             @unique
+  password         String
+  comments         comments[]
+  likes            likes[]
+  posts            posts[]
+  usersCommunities usersCommunities[]
+}
+
+model usersCommunities {
+  id          Int         @id(map: "usersCommunities_pk") @default(autoincrement())
+  communityId Int
+  userId      Int
+  communities communities @relation(fields: [communityId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "usersCommunities_fk0")
+  users       users       @relation(fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "usersCommunities_fk1")
+}
