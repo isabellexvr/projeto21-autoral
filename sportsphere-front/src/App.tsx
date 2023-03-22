@@ -1,17 +1,15 @@
-import { useState } from 'react'
 import Button from '@mui/material/Button';
 import { Switch } from '@mui/material';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import WelcomePage from './Pages/WelcomePage';
 
 function App() {
   return (
-    <div className="App">
-      <Button variant="contained">Hello World</Button>
-      <Switch sx={{
-        '& .Mui-checked': {
-          color: 'black'
-        }
-      }}/>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path='/' element={<WelcomePage/>}/>
+      </Routes>
+    </BrowserRouter>
   )
 }
 
