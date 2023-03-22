@@ -3,6 +3,7 @@ import { Switch } from '@mui/material';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import WelcomePage from './Pages/WelcomePage';
 import ThemeProvider from './Contexts/ThemeContext';
+import "./assets/reset.css"
 
 function App() {
   return (
