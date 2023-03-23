@@ -1,6 +1,7 @@
 import styled from "styled-components"
 import { useTheme } from "../../../Contexts/ThemeContext"
 import { ThemeProps } from "../../../Types";
+import { colors } from "../../../assets/colors";
 
 const mockedData = [
     {
@@ -52,11 +53,25 @@ const mockedData = [
 
 export function UserExamples() {
     const { theme, setTheme } = useTheme();
-    return <UsersContainer backgroundColor={theme.backgroundColor} fontColor={theme.fontColor}></UsersContainer>
+    return <UsersContainer backgroundColor={theme.backgroundColor} fontColor={theme.fontColor}>
+        {mockedData.map( u => <User></User>)}
+    </UsersContainer>
 }
 
 const UsersContainer = styled.div<ThemeProps>`
-    
     height: 60%;
     background-color: ${p => p.backgroundColor};
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+`
+const User = styled.div`
+    
+    width: 70px;
+    height: 90px;
+    background-color: yellow;
+    border-radius: 10px;
+    margin-right: 34px;
+    
 `
