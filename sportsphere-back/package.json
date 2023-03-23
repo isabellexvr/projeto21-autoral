@@ -10,7 +10,7 @@
     "test:migration:generate": "dotenv -e .env.test prisma migrate dev"
   },
   "keywords": [],
-  "author": "",
+  "author": "Isabelle Xavier",
   "license": "ISC",
   "devDependencies": {
     "@types/cors": "^2.8.13",
