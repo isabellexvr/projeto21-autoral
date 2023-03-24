@@ -1,4 +1,5 @@
 import { db } from "@/config/db";
+import { users } from "@prisma/client";
 
 function findUserByUsername(username: string) {
     return (db.prisma.users.findFirst({
@@ -6,6 +7,18 @@ function findUserByUsername(username: string) {
     }))
 };
 
+function findUserByEmail(email: string) {
+    return db.prisma.users.findFirst({
+        where: {email}
+    })
+}
+
+function createNewUser(data: users) {
+    return db.prisma.users.create({data});
+}
+
 export const usersRepository = {
-    findUserByUsername
+    findUserByUsername,
+    findUserByEmail,
+    createNewUser
 };
