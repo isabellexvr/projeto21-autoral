@@ -9,12 +9,12 @@ function findUserByUsername(username: string) {
 
 function findUserByEmail(email: string) {
     return db.prisma.users.findFirst({
-        where: {email}
+        where: { email }
     })
 }
 
 function createNewUser(data: users) {
-    return db.prisma.users.create({data});
+    return db.prisma.users.create({ data });
 }
 
 export const usersRepository = {
