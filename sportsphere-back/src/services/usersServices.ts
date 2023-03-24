@@ -4,26 +4,29 @@ import { usernameConflictError, emailConflictError } from "../errors";
 import bcrypt from "bcrypt";
 
 async function createUser(userInfo: users) {
+
     await checkUsername(userInfo.userName);
+
     await checkEmail(userInfo.email);
-    const hashedPassword = encrypt(userInfo.password);
+
+    const hashedPassword = bcrypt.hashSync(userInfo.password, 10);
+
     delete userInfo.password;
-    await createUser({ ...userInfo, password: hashedPassword });
+
+    await usersRepository.createNewUser({ ...userInfo, password: hashedPassword });
 };
 
-const checkUsername = async (username: string) => {
+async function checkUsername(username: string) {
     const userExists = await usersRepository.findUserByUsername(username);
+
     if (userExists) throw usernameConflictError();
 };
 
-const checkEmail = async (email: string) => {
+async function checkEmail(email: string) {
     const userExists = await usersRepository.findUserByEmail(email);
+
     if (userExists) throw emailConflictError();
 };
-
-const encrypt = (password: string) => {
-    return bcrypt.hashSync(password, 10);
-}
 
 export const usersServices = {
     createUser

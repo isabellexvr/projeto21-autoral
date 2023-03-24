@@ -3,9 +3,9 @@ import joi from "joi";
 //TO DO: Arrumar o profilePic pra upload de imagem
 
 export const signupSchema = joi.object({
-    name: joi.string().max(30).required(),
-    username: joi.string().max(15).required(),
-    profilePic: joi.string(),
+    fullName: joi.string().max(30).required(),
+    userName: joi.string().max(15).required(),
+    picture: joi.string().required(),
     email: joi.string().email().required(),
     password: joi.string().required(),
 });
