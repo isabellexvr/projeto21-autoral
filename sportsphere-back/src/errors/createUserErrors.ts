@@ -16,3 +16,19 @@ export function emailConflictError(): AppError {
         message: "This e-mail is already registered."
     }
 }
+
+type Target = "e-mail" | "username"
+
+export function userNotFoundError(target: Target): AppError {
+    return {
+        name: "UserNotFound",
+        message: `This ${target} is not registered yet.`
+    }
+}
+
+export function invalidPasswordError(): AppError {
+    return {
+        name: "InvalidPasswordError",
+        message: "Invalid password."
+    }
+}
