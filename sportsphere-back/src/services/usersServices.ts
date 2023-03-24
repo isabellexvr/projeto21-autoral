@@ -1,6 +1,6 @@
 import { users } from "@prisma/client";
-import { usersRepository } from "@/repositories";
-import { usernameConflictError, emailConflictError } from "@/errors";
+import { usersRepository } from "../repositories";
+import { usernameConflictError, emailConflictError } from "../errors";
 import bcrypt from "bcrypt";
 
 async function createUser(userInfo: users) {

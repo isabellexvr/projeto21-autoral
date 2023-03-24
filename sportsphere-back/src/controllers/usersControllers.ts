@@ -1,6 +1,6 @@
 import { Response, Request } from "express";
 import { users } from "@prisma/client";
-import { usersServices } from "@/services";
+import { usersServices } from "../services";
 
 export async function createUser(req: Request, res: Response) {
     const userInfo: users = req.body;

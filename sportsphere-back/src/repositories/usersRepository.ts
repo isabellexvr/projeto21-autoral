@@ -1,4 +1,4 @@
-import { db } from "@/config/db";
+import { db } from "../config/db";
 import { users } from "@prisma/client";
 
 function findUserByUsername(username: string) {
