@@ -41,7 +41,7 @@ async function login(userInfo: signIn) {
 
     validatePasswordOrFail(userInfo.password, user.password);
 
-    const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET);
+    const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET, { expiresIn: 10800 });
 
     delete user.password;
     delete userInfo.password;
