@@ -9,4 +9,6 @@ usersRouter.post("/signup", bodyValidation(signupSchema), createUser);
 
 usersRouter.post("/signin", bodyValidation(signInSchema), login);
 
+//logout => retirar token do localstorage => expira em 3 horas
+
 export { usersRouter };

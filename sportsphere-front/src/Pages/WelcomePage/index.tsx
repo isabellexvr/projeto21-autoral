@@ -1,26 +1,44 @@
 import { useTheme, themes } from "../../Contexts/ThemeContext"
-import styled from "styled-components";
-import { Switch } from "@mui/material";
-import { UserExamples } from "./Components";
-import { ThemeProps } from "../../Types";
-import { useRef } from "react";
+import { Fade, Tooltip, Button } from "@mui/material";
+import Switch from '@mui/material/Switch';
+import WbSunnyIcon from '@mui/icons-material/WbSunny';
+import ModeNightIcon from '@mui/icons-material/ModeNight';
+import logo from "./Assets/logo.png";
+import { colors } from "../../assets/colors";
+import { TopContainer, Background, SwitchThemes, Logo, WelcomeMessage, BottomContainer, StartButton } from "./Assets/styles";
 
 export default function WelcomePage() {
-    const { theme, setTheme } = useTheme();
-    const something = useRef(null);
-    
-    function handleInput(e:React.ChangeEvent<HTMLInputElement>){
-      console.log(e)
-    }
+  const { theme, setTheme } = useTheme();
 
-    return (<Background backgroundColor={theme.backgroundColor} fontColor={theme.fontColor}>
-      <input onChange={(e) => handleInput(e)} ref={something} type="file"></input>
-        <Switch onClick={() => { setTheme(theme === themes.darkTheme ? themes.lightTheme : themes.darkTheme) }} />
-    </Background>)
+  return (<Background backgroundColor={theme.backgroundColor} fontColor={theme.fontColor}>
+    {/* <input onChange={(e) => handleInput(e)} ref={something} type="file"></input> */}
+
+
+
+    <TopContainer>
+      <Tooltip title="Switch Theme" TransitionComponent={Fade} enterDelay={300} leaveDelay={300} arrow>
+        <SwitchThemes>
+          <WbSunnyIcon />
+          <Switch color="warning" onClick={() => { setTheme(theme === themes.darkTheme ? themes.lightTheme : themes.darkTheme) }} />
+          <ModeNightIcon />
+        </SwitchThemes>
+      </Tooltip>
+      <Logo src={logo}/>
+      <WelcomeMessage mainName={colors.pink} theme={theme.fontColor}>
+        <h1>Find Your Group
+          <br />
+          With <strong>SportSphere</strong>
+        </h1>
+        <h3>
+        Connect with fellow sports enthusiasts and fuel your passion with our vibrant community of like-minded individuals.
+        </h3>
+      </WelcomeMessage>
+    </TopContainer>
+    <BottomContainer>
+      <StartButton backgroundColor={colors.orange} to="/sign-up">
+        <button>Get Started</button>
+      </StartButton>
+    </BottomContainer>
+
+  </Background>)
 }
-
-const Background = styled.div<ThemeProps>`
-  background-color: ${p => p.backgroundColor};
-  height: 100%;
-  color: ${p => p.fontColor};
-`;
