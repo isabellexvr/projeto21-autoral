@@ -33,7 +33,7 @@ export default function WelcomePage() {
     </TopContainer>
     <BottomContainer>
       <StartButton backgroundColor={colors.orange} to="/sign-up">
-        <button>Get Started</button>
+        <button><h1>Get Started</h1></button>
       </StartButton>
     </BottomContainer>
 

@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { ThemeProps, WelcomeMessageProps, ButtonProps } from "./propsTypes";
 import { Link } from "react-router-dom";
+import { colors } from "../../../assets/colors";
 
 
 
@@ -12,10 +13,16 @@ export const Background = styled.div<ThemeProps>`
 
 export const Logo = styled.img`
 z-index: 0;
-opacity: 0.2;
+opacity: 0.25;
 position: absolute;
 top: 20vh;
 width: 92%;
+
+filter: drop-shadow(0px 0px 10px ${colors.orange});
+@media only screen and (min-width: 600px) {
+  width: 430px;
+  top: 10vh;
+}
 `
 
 export const SwitchThemes = styled.div`
@@ -34,14 +41,15 @@ export const TopContainer = styled.div`
   display: flex;
   flex-direction:column;
   justify-content: center;
-  align-items: center
+  align-items: center;
+
 `
 
 export const WelcomeMessage = styled.div<WelcomeMessageProps>`
 width: 280px;
 text-align: center;
 font-family: Roboto;
-
+cursor: default;
   >h1{
     font-weight: 500;
     font-size: 35px;
@@ -67,6 +75,7 @@ export const BottomContainer = styled.div`
 export const StartButton = styled(Link) <ButtonProps>`
   all: unset;
   margin: 0 auto;
+  cursor: pointer;
   >button{
     all: unset;
     background-color: ${props => props.backgroundColor};
@@ -80,6 +89,13 @@ export const StartButton = styled(Link) <ButtonProps>`
     align-items: center;
     justify-content: center;
     filter: drop-shadow(1px 1px 12px ${props => props.backgroundColor});
+    >h1{
+      filter: drop-shadow(1px 0px 2.5px white)
+    }
+    :hover{
+      background-color: ${colors.pink};
+      transition: all 1s ease-out;
+    }
   }
 
 `
