@@ -3,6 +3,7 @@ import { Switch } from '@mui/material';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import WelcomePage from './Pages/WelcomePage';
 import ThemeProvider from './Contexts/ThemeContext';
+import LoginPage from './Pages/LoginPage';
 import "./assets/reset.css"
 
 function App() {
@@ -11,6 +12,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path='/' element={<WelcomePage />} />
+          <Route path="/sign-up" element={<LoginPage/>}/>
         </Routes>
       </BrowserRouter>
     </ThemeProvider>

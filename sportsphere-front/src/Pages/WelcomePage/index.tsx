@@ -11,9 +11,6 @@ export default function WelcomePage() {
   const { theme, setTheme } = useTheme();
 
   return (<Background backgroundColor={theme.backgroundColor} fontColor={theme.fontColor}>
-    {/* <input onChange={(e) => handleInput(e)} ref={something} type="file"></input> */}
-
-
 
     <TopContainer>
       <Tooltip title="Switch Theme" TransitionComponent={Fade} enterDelay={300} leaveDelay={300} arrow>
