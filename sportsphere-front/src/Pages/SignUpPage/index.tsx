@@ -12,12 +12,10 @@ import Form from "./Components/Form";
 //TODO: colocar loader spinner pra enquanto a imagem estiver carregando
 
 export default function LoginPage() {
-    const [url, setUrl] = useState("");
+    const [url, setUrl] = useState(null);
     const [loading, setLoading] = useState(false);
 
     const { theme, setTheme } = useTheme();
-
-
 
     const convertBase64 = (file: any) => {
         return new Promise((resolve, reject) => {
@@ -36,15 +34,22 @@ export default function LoginPage() {
 
     const uploadImage = async (event: any) => {
         event.preventDefault();
+        
         const file = event.target.files[0];
         const hashed = await convertBase64(file);
+        setLoading(true);
         axios
             .post("http://localhost:3000/upload-images", { image: hashed })
             .then(res => {
                 setUrl(res.data);
-                alert("deu bom")
+                console.log(res.data)
+                console.log(loading)
+                setLoading(false)
             })
-            .catch(err => console.log(err))
+            .catch(err => {
+                alert("Algo deu errado ao importar a foto.")
+                setLoading(false);
+            })
     };
     return (
         <>
@@ -58,7 +63,7 @@ export default function LoginPage() {
                 </TopContainer>
 
                 <BottomContainer>
-                    <Form uploadImage={uploadImage} color={theme} />
+                    <Form uploadImage={uploadImage} color={theme} loading={loading} url={url} />
                 </BottomContainer>
             </Background>
 

@@ -1,4 +1,5 @@
 import { TextField } from "@mui/material";
+import { colors } from "../../../assets/colors";
 
 type InputProps = {
     color: string,
@@ -19,8 +20,10 @@ export default function Input({ color, name, label }: InputProps) {
                     m: 1, width: '30ch', '& .MuiOutlinedInput-root': {
                         '& fieldset': {
                             borderColor: 'white',
-                        }
+                        }, '&:hover fieldset': {
+                        borderColor: '#9c27b0',
                     },
+                    }
                 }} name={name} label={label} variant="outlined" />
             )}
             {
@@ -33,8 +36,10 @@ export default function Input({ color, name, label }: InputProps) {
                         m: 1, width: '30ch', '& .MuiOutlinedInput-root': {
                             '& fieldset': {
                                 borderColor: 'black',
-                            }
+                            }, '&:hover fieldset': {
+                            borderColor: '#9c27b0',
                         },
+                        }
                     }} name={name} label={label} variant="outlined" />
                 )
             }
