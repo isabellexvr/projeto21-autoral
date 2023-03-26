@@ -80,3 +80,18 @@ export const UploadImageContainer = styled.div`
     }
 position: relative;
 `;
+
+export const PreviewPic = styled.img`
+    width: 45px;
+    border-radius: 10px;
+    margin-right: 7px;
+    object-fit: cover;
+`
+
+export const UploadPicContainer = styled.div`
+display: flex;
+justify-content: space-evenly;
+align-items: center;
+width: 269.53px;
+
+`

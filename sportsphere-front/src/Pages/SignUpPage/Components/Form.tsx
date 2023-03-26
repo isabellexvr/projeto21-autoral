@@ -1,4 +1,4 @@
-import { RegistrationForm, SubmitButton, Header } from "../Assets/styles";
+import { RegistrationForm, SubmitButton, Header, PreviewPic, UploadPicContainer } from "../Assets/styles";
 import OutlinedInput from '@mui/material/OutlinedInput';
 import IconButton from '@mui/material/IconButton';
 import InputAdornment from '@mui/material/InputAdornment';
@@ -60,12 +60,12 @@ export default function Form({ uploadImage, color, loading, url }: FormProps) {
     function sendForm(e: any) {
         e.preventDefault();
         e.target.reset()
-        if(form.password !== form.confirmPassword){
+        if (form.password !== form.confirmPassword) {
             alert("As senhas não correspondem.")
             return;
         }
         delete form.confirmPassword
-        const send = {...form, picture: url}
+        const send = { ...form, picture: url }
         console.log(send)
         setForm({})
     }
@@ -85,15 +85,24 @@ export default function Form({ uploadImage, color, loading, url }: FormProps) {
                         Upload a Profile Picture
                         <input onChange={uploadImage} hidden accept="image/*" multiple type="file" />
                     </LoadingButton>
-                ) : (<>Você já importou a sua foto!</>)}
+                ) : (
+                    <UploadPicContainer>
+                        <LoadingButton loading={loading} loadingPosition="start" color="secondary" startIcon={<PhotoCamera />} sx={{ m: 1, width: '25ch', height: "56px" }} variant="outlined" component="label">
+                            Change Picture
+                            <input onChange={uploadImage} hidden accept="image/*" multiple type="file" />
+                        </LoadingButton>
+                        <PreviewPic src={url} />
+                    </UploadPicContainer>
+
+                )}
 
 
 
                 <FormControl color="secondary" sx={{ m: 1, width: '30ch' }} variant="outlined">
                     <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
                     <OutlinedInput
-                    onChange={handleForm}
-                    name="password"
+                        onChange={handleForm}
+                        name="password"
                         color="secondary"
                         id="password"
                         type={showPassword ? 'text' : 'password'}
@@ -115,8 +124,8 @@ export default function Form({ uploadImage, color, loading, url }: FormProps) {
                 <FormControl color="secondary" sx={{ m: 1, width: '30ch' }} variant="outlined">
                     <InputLabel htmlFor="confirm-password">Confirm Password</InputLabel>
                     <OutlinedInput
-                    onChange={handleForm}
-                    name="confirmPassword"
+                        onChange={handleForm}
+                        name="confirmPassword"
                         color="secondary"
                         id="outlined-adornment-password"
                         type={showPassword ? 'text' : 'password'}
@@ -144,3 +153,4 @@ export default function Form({ uploadImage, color, loading, url }: FormProps) {
 
     )
 }
+
