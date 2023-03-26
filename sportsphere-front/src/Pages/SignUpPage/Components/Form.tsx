@@ -11,9 +11,13 @@ import { PhotoCamera } from "@mui/icons-material";
 import { TextField } from "@mui/material";
 import { colors } from "../../../assets/colors";
 import { useState } from "react";
+import { Link } from "react-router-dom";
+import Input from "./Input";
+import { ThemeDetails } from "../../../Contexts/ThemeContext";
 
+type FormProps = {uploadImage: (event: any) => Promise<void>, color: ThemeDetails}
 
-export default function Form({ uploadImage }) {
+export default function Form({ uploadImage, color }: FormProps) {
 
     const [showPassword, setShowPassword] = useState(false);
 
@@ -28,9 +32,9 @@ export default function Form({ uploadImage }) {
                 <h1>Get Into The Sphere!</h1>
             </Header>
             <RegistrationForm>
-                <TextField color="secondary" sx={{ m: 1, width: '30ch' }} name="name" label="Name" variant="outlined" />
-                <TextField color="secondary" sx={{ m: 1, width: '30ch' }} name="username" label="Username" variant="outlined" />
-                <TextField color="secondary" sx={{ m: 1, width: '30ch' }} name="e-mail" label="E-mail" variant="outlined" type="email" />
+                <Input color={color.fontColor} name="name" label="Name"/>
+                <Input color={color.fontColor} name="username" label="Username"/>
+                <Input color={color.fontColor} name="email" label="E-mail"/>
 
                 <Button color="secondary" startIcon={<PhotoCamera />} sx={{ m: 1, width: '33.875ch', height: "56px" }} variant="outlined" component="label">
                     Upload a Profile Picture
@@ -65,7 +69,8 @@ export default function Form({ uploadImage }) {
                 </FormControl>
                 <br />
 
-                <Button color="secondary" variant="contained" sx={{backgroundColor: colors.orange, m: 1, width: '269.53px', height: "56px"}}>Sign Up!</Button>
+                <Button color="secondary" variant="contained" sx={{ backgroundColor: colors.orange, m: 1, width: '269.53px', height: "56px" }}>Sign Up!</Button>
+                <Link to="/sign-in">Do you already have an account? Sign In Instead!</Link>
             </RegistrationForm>
         </>
 

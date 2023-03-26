@@ -13,6 +13,7 @@ import Form from "./Components/Form";
 
 export default function LoginPage() {
     const [url, setUrl] = useState("");
+    const [loading, setLoading] = useState(false);
 
     const { theme, setTheme } = useTheme();
 
@@ -57,7 +58,7 @@ export default function LoginPage() {
                 </TopContainer>
 
                 <BottomContainer>
-                    <Form uploadImage={uploadImage} />
+                    <Form uploadImage={uploadImage} color={theme} />
                 </BottomContainer>
             </Background>
 

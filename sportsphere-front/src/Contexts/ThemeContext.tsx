@@ -12,7 +12,7 @@ export const themes = {
     },
 }
 
-type ThemeDetails = {
+export type ThemeDetails = {
     backgroundColor: string,
     fontColor: string
 }

@@ -11,7 +11,7 @@ export const Header = styled.div`
         display: flex;
         justify-content: center;
         margin-bottom: 30px;
-        margin-top: 70px;
+        margin-top: 85px;
         filter: drop-shadow(1px 1px 12px ${colors.orange})
 `
 
