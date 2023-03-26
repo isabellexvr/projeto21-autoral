@@ -4,15 +4,15 @@ import { colors } from "../../../assets/colors";
 type InputProps = {
     color: string,
     name: string,
-    label: string
+    label: string,
+    handleForm: ({ target: { value, name } }: { target: { value: any; name: any; }; }) => void
 }
 
-export default function Input({ color, name, label }: InputProps) {
-    console.log(color)
+export default function Input({ color, name, label, handleForm }: InputProps) {
     return (
         <>
             {color === "#FFFFFF" && (
-                <TextField InputLabelProps={{
+                <TextField onChange={handleForm} InputLabelProps={{
                     style: {
                         color: 'white'
                     }
@@ -21,14 +21,14 @@ export default function Input({ color, name, label }: InputProps) {
                         '& fieldset': {
                             borderColor: 'white',
                         }, '&:hover fieldset': {
-                        borderColor: '#9c27b0',
-                    },
+                            borderColor: '#9c27b0',
+                        },
                     }
                 }} name={name} label={label} variant="outlined" />
             )}
             {
                 color === '#272727' && (
-                    <TextField InputLabelProps={{
+                    <TextField onChange={handleForm} InputLabelProps={{
                         style: {
                             color: 'black'
                         }
@@ -37,8 +37,8 @@ export default function Input({ color, name, label }: InputProps) {
                             '& fieldset': {
                                 borderColor: 'black',
                             }, '&:hover fieldset': {
-                            borderColor: '#9c27b0',
-                        },
+                                borderColor: '#9c27b0',
+                            },
                         }
                     }} name={name} label={label} variant="outlined" />
                 )

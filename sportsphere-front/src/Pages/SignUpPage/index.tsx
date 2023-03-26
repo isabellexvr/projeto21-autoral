@@ -9,7 +9,6 @@ import { themes } from "../../Contexts/ThemeContext";
 import { BottomContainer } from "./Assets/styles";
 import Form from "./Components/Form";
 
-//TODO: colocar loader spinner pra enquanto a imagem estiver carregando
 
 export default function LoginPage() {
     const [url, setUrl] = useState(null);
@@ -42,8 +41,6 @@ export default function LoginPage() {
             .post("http://localhost:3000/upload-images", { image: hashed })
             .then(res => {
                 setUrl(res.data);
-                console.log(res.data)
-                console.log(loading)
                 setLoading(false)
             })
             .catch(err => {
