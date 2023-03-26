@@ -91,7 +91,7 @@ export default function Form({ uploadImage, color, loading, url }: FormProps) {
                             Change Picture
                             <input onChange={uploadImage} hidden accept="image/*" multiple type="file" />
                         </LoadingButton>
-                        <PreviewPic src={url} />
+                        <PreviewPic theme={color.fontColor} src={url} />
                     </UploadPicContainer>
 
                 )}

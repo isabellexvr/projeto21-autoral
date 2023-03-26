@@ -4,10 +4,15 @@ import { colors } from "../../../assets/colors";
 import IconButton from '@mui/material/IconButton';
 
 export const Header = styled.div`
+>h1{
+  width: 269.53px;
+  text-align: center;
+}
+
         font-family: Roboto;
         color: ${colors.orange};
         font-weight: 700;
-        font-size: 35px;
+        font-size: 32px;
         display: flex;
         justify-content: center;
         margin-bottom: 30px;
@@ -81,11 +86,16 @@ export const UploadImageContainer = styled.div`
 position: relative;
 `;
 
-export const PreviewPic = styled.img`
+type PicProps = {
+  color: string
+}
+
+export const PreviewPic = styled.img<PicProps>`
     width: 45px;
     border-radius: 10px;
     margin-right: 7px;
     object-fit: cover;
+    border: 2px dotted ${p => p.theme};
 `
 
 export const UploadPicContainer = styled.div`
