@@ -3,8 +3,6 @@ import { ThemeProps, WelcomeMessageProps, ButtonProps } from "./propsTypes";
 import { Link } from "react-router-dom";
 import { colors } from "../../../assets/colors";
 
-
-
 export const Background = styled.div<ThemeProps>`
   background-color: ${p => p.backgroundColor};
   height: 100%;
@@ -36,7 +34,7 @@ export const SwitchThemes = styled.div`
 `;
 
 export const TopContainer = styled.div`
-  height: 77%;
+  height: fit-content;
   position: relative;
   display: flex;
   flex-direction:column;
@@ -46,6 +44,7 @@ export const TopContainer = styled.div`
 `
 
 export const WelcomeMessage = styled.div<WelcomeMessageProps>`
+margin-top: 170px;
 width: 280px;
 text-align: center;
 font-family: Roboto;
@@ -63,6 +62,7 @@ cursor: default;
   >h3{
     font-size: 13px;
     margin-top: 25px;
+    font-weight: 500;
   }
 `
 
@@ -70,6 +70,7 @@ export const BottomContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-top: 230px;
 `
 
 export const StartButton = styled(Link) <ButtonProps>`
