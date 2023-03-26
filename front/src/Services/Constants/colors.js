@@ -4,5 +4,3 @@ export const colors = {
     pink: "#D13B60",
     white: "#FFFFFF"
 }
-
-//frase => esportistas e entusiastas
