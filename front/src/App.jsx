@@ -12,7 +12,10 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<WelcomePage />} />
-          <Route path="/sign-up" element={<SignUpPage loading={loading} setLoading={setLoading} />} />
+          <Route
+            path="/sign-up"
+            element={<SignUpPage loading={loading} setLoading={setLoading} />}
+          />
         </Routes>
       </BrowserRouter>
     </ThemeProvider>
