@@ -16,7 +16,7 @@ export default function WelcomePage() {
     <Background theme={theme}>
       <SwitchThemesContainer>
         <BsFillSunFill />
-        <label class="switch">
+        <label className="switch">
           {theme === themes.lightTheme ? (
             <input onClick={() => setTheme(themes.darkTheme)} type="checkbox" />
           ) : (
@@ -26,7 +26,7 @@ export default function WelcomePage() {
               type="checkbox"
             />
           )}
-          <span class="slider round"></span>
+          <span className="slider round"></span>
         </label>
         <BsFillMoonStarsFill />
       </SwitchThemesContainer>
@@ -39,7 +39,7 @@ export default function WelcomePage() {
           Connect with fellow sports enthusiasts and fuel your passion with our
           vibrant community of like-minded individuals.
         </p>
-        <StartButton onClick={() => navigate("/sign-in")}>Get Started</StartButton>
+        <StartButton onClick={() => navigate("/sign-up")}>Get Started</StartButton>
       </WelcomeMessage>
     </Background>
   );
