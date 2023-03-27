@@ -46,11 +46,10 @@ export default function SignUpPage({ loading, setLoading }) {
 }
 
 const Title = styled.div`
-
   margin-top: 29px;
   display: flex;
   justify-content: center;
-  >h1{
+  > h1 {
     font-size: 30px;
     font-weight: 600;
     color: ${colors.pink};

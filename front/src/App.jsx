@@ -1,4 +1,5 @@
 import ThemeProvider from "./Contexts/ThemeContext";
+import UserInfoProvider from "./Contexts/UserInfoContext";
 import { useState } from "react";
 import WelcomePage from "./Pages/WelcomePage";
 import SignUpPage from "./Pages/SignUpPage";
@@ -10,19 +11,18 @@ function App() {
 
   return (
     <ThemeProvider>
-      <BrowserRouter>
-        <Routes>
-          <Route
-            path="/"
-            element={<WelcomePage />}
-          />
-          <Route
-            path="/sign-up"
-            element={<SignUpPage  loading={loading} setLoading={setLoading} />}
-          />
-          <Route path="/sign-in" element={<SignInPage/>}/>
-        </Routes>
-      </BrowserRouter>
+      <UserInfoProvider>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<WelcomePage />} />
+            <Route
+              path="/sign-up"
+              element={<SignUpPage loading={loading} setLoading={setLoading} />}
+            />
+            <Route path="/sign-in" element={<SignInPage />} />
+          </Routes>
+        </BrowserRouter>
+      </UserInfoProvider>
     </ThemeProvider>
   );
 }

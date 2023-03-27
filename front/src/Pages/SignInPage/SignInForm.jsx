@@ -4,7 +4,7 @@ import Input from "../Constants/Input";
 import { colors } from "../../Services/Constants/colors";
 import { Link } from "react-router-dom";
 import api from "../../Services/Api/api.js"
-
+import { useUserInfo } from "../../Contexts/UserInfoContext";
 /* {
   "id": 2,
   "fullName": "iboselai da silva",
@@ -16,6 +16,7 @@ import api from "../../Services/Api/api.js"
 
 export default function SignInForm({ theme, loading, setLoading }) {
   const [form, setForm] = useState({});
+  const { userInfo, setUserInfo } = useUserInfo();
 
   function handleForm({ target: { value, name } }) {
     setForm({ ...form, [name]: value });
@@ -31,6 +32,7 @@ export default function SignInForm({ theme, loading, setLoading }) {
     api.post("/users/sign-in", form)
     .then( res => {
       console.log(res.data)
+      setUserInfo(res.data);
       alert('Successfully logged in')
       //navigate to timeline
     })
