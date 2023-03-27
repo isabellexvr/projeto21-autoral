@@ -3,9 +3,9 @@ import Input from "../Constants/Input";
 import { useState } from "react";
 import { AiFillCamera } from "react-icons/ai";
 import { colors } from "../../Services/Constants/colors";
+import { uploadImage, convertBase64 } from "./helpers";
 
 export default function SignUpForm({ theme, loading, setLoading }) {
-    
   const [form, setForm] = useState({});
   const [url, setUrl] = useState(null);
 
@@ -14,6 +14,8 @@ export default function SignUpForm({ theme, loading, setLoading }) {
     console.log(form);
   }
 
+  console.log(form)
+
   return (
     <FormContainer>
       <Form>
@@ -21,7 +23,7 @@ export default function SignUpForm({ theme, loading, setLoading }) {
           type={"text"}
           placeholder={"Full Name"}
           name={"fullName"}
-          onChange={handleForm}
+          handleForm={handleForm}
           loading={loading}
           theme={theme}
         />
@@ -29,7 +31,7 @@ export default function SignUpForm({ theme, loading, setLoading }) {
           type={"text"}
           placeholder={"Username"}
           name={"userName"}
-          onChange={handleForm}
+          handleForm={handleForm}
           loading={loading}
           theme={theme}
         />
@@ -37,13 +39,14 @@ export default function SignUpForm({ theme, loading, setLoading }) {
           type={"email"}
           placeholder={"E-mail"}
           name={"email"}
-          onChange={handleForm}
+          handleForm={handleForm}
           loading={loading}
           theme={theme}
         />
 
         <UploadButton>
-            Upload a Profile Picture
+          Upload a Profile Picture
+          <input onChange={uploadImage} type="file" accept="image/*" />
           <AiFillCamera />
         </UploadButton>
 
@@ -51,21 +54,20 @@ export default function SignUpForm({ theme, loading, setLoading }) {
           type={"password"}
           placeholder={"Password"}
           name={"password"}
-          onChange={handleForm}
+          handleForm={handleForm}
           loading={loading}
           theme={theme}
         />
-                <Input
+        <Input
           type={"password"}
           placeholder={"Confirm Password"}
           name={"confirmPassword"}
-          onChange={handleForm}
+          handleForm={handleForm}
           loading={loading}
           theme={theme}
         />
         <ConfirmButton>Sign Up!</ConfirmButton>
       </Form>
-      
     </FormContainer>
   );
 }
@@ -83,7 +85,7 @@ const Form = styled.form`
 `;
 
 const UploadButton = styled.button`
-all: unset;
+  all: unset;
   width: 270px;
   height: 52px;
   cursor: pointer;
@@ -97,19 +99,30 @@ all: unset;
   filter: drop-shadow(0px 0px 2px ${colors.orange});
   font-weight: 500;
   font-size: 17px;
-  >svg{
+  position: relative;
+  > input {
+    all: unset;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: red;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+    opacity: 0;
+  }
+  > svg {
     font-size: 25px;
   }
-  :hover{
+  :hover {
     background-color: ${colors.orange};
     transition: 500ms;
-    
   }
 `;
 
 const ConfirmButton = styled.button`
-    all: unset;
-    width: 270px;
+  all: unset;
+  width: 270px;
   height: 52px;
   cursor: pointer;
   box-sizing: border-box;
@@ -121,9 +134,8 @@ const ConfirmButton = styled.button`
   font-size: 17px;
   filter: drop-shadow(0px 0px 2px ${colors.orange});
   border-radius: 8px;
-  :hover{
+  :hover {
     background-color: ${colors.pink};
     transition: 500ms;
-    
   }
 `;
