@@ -15,9 +15,9 @@ export const convertBase64 = (file) => {
   });
 };
 
-export const uploadImage = async (setUrl, event) => {
+export const uploadImage = async (setLoading, setUrl, event) => {
   event.preventDefault();
-
+  setLoading(true);
   const file = event.target.files[0];
   const hashed = await convertBase64(file);
 
@@ -26,11 +26,13 @@ export const uploadImage = async (setUrl, event) => {
     .then((res) => {
       setUrl(res.data);
       console.log(res.data)
+      setLoading(false);
       alert("deu bom")
 
     })
     .catch((err) => {
       console.log(err)
+      setLoading(false);
       alert("Algo deu errado ao importar a foto.");
 
     });

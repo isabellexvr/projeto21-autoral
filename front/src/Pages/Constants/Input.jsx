@@ -1,8 +1,32 @@
 import styled from "styled-components";
 
-export default function Input({type, placeholder, name, handleForm, loading, theme}) {
-
-    return <InputStyle type={type} placeholder={placeholder} name={name} onChange={handleForm} theme={theme}/>
+export default function Input({
+  type,
+  placeholder,
+  name,
+  handleForm,
+  loading,
+  theme,
+}) {
+  return (
+    <>
+      {loading && (
+        <InputStyle
+        disabled
+          theme={theme}
+        ></InputStyle>
+      )}
+      {!loading && (
+        <InputStyle
+          type={type}
+          placeholder={placeholder}
+          name={name}
+          onChange={handleForm}
+          theme={theme}
+        />
+      )}
+    </>
+  );
 }
 
 const InputStyle = styled.input`
@@ -16,6 +40,9 @@ const InputStyle = styled.input`
   color: ${(p) => p.theme.backgroundColor};
   ::placeholder {
     color: ${(p) => p.theme.backgroundColor};
+    opacity: 0.5;
+  }
+  :disabled{
     opacity: 0.5;
   }
 `;

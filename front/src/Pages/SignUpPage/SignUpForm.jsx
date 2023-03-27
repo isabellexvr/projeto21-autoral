@@ -4,6 +4,7 @@ import { useState } from "react";
 import { AiFillCamera } from "react-icons/ai";
 import { colors } from "../../Services/Constants/colors";
 import { uploadImage, convertBase64 } from "./helpers";
+import { ThreeDots } from "react-loader-spinner";
 
 export default function SignUpForm({ theme, loading, setLoading }) {
   const [form, setForm] = useState({});
@@ -14,11 +15,19 @@ export default function SignUpForm({ theme, loading, setLoading }) {
     console.log(form);
   }
 
-  console.log(url)
+  function sendForm(event) {
+    event.preventDefault();
+    e.target.reset();
+    if (form.password !== form.confirmPassword) {
+      alert("As senhas não correspondem.");
+      return;
+    }
+    console.log(form);
+  }
 
   return (
     <FormContainer>
-      <Form>
+      <Form onSubmit={sendForm}>
         <Input
           type={"text"}
           placeholder={"Full Name"}
@@ -44,11 +53,40 @@ export default function SignUpForm({ theme, loading, setLoading }) {
           theme={theme}
         />
 
-        <UploadButton>
-          Upload a Profile Picture
-          <input onChange={(e) => uploadImage(setUrl, e)} type="file" accept="image/*" />
-          <AiFillCamera />
-        </UploadButton>
+        {loading ? (
+          <UploadButton disabled>
+            <ThreeDots
+              height="50"
+              width="50"
+              radius="9"
+              color={theme.fontColor}
+              ariaLabel="three-dots-loading"
+              wrapperStyle={{}}
+              wrapperClassName=""
+              visible={true}
+            />
+          </UploadButton>
+        ) : !url ? (
+          <UploadButton>
+            Upload a Profile Picture
+            <input
+              onChange={(e) => uploadImage(setLoading, setUrl, e)}
+              type="file"
+              accept="image/*"
+            />
+            <AiFillCamera />
+          </UploadButton>
+        ) : (
+          <UploadButton>
+            Change Your Photo
+            <PicPreview src={url} />
+            <input
+              onChange={(e) => uploadImage(setLoading, setUrl, e)}
+              type="file"
+              accept="image/*"
+            />
+          </UploadButton>
+        )}
 
         <Input
           type={"password"}
@@ -66,7 +104,23 @@ export default function SignUpForm({ theme, loading, setLoading }) {
           loading={loading}
           theme={theme}
         />
-        <ConfirmButton>Sign Up!</ConfirmButton>
+
+        {loading ? (
+          <ConfirmButton disabled>
+            <ThreeDots
+              height="50"
+              width="50"
+              radius="9"
+              color={theme.fontColor}
+              ariaLabel="three-dots-loading"
+              wrapperStyle={{}}
+              wrapperClassName=""
+              visible={true}
+            />
+          </ConfirmButton>
+        ) : (
+          <ConfirmButton type="submit">Sign Up!</ConfirmButton>
+        )}
       </Form>
     </FormContainer>
   );
@@ -118,6 +172,10 @@ const UploadButton = styled.button`
     background-color: ${colors.orange};
     transition: 500ms;
   }
+  :disabled {
+    cursor: default;
+    opacity: 0.6;
+  }
 `;
 
 const ConfirmButton = styled.button`
@@ -138,4 +196,13 @@ const ConfirmButton = styled.button`
     background-color: ${colors.pink};
     transition: 500ms;
   }
+  :disabled {
+    opacity: 0.6;
+    cursor: default;
+  }
+`;
+
+const PicPreview = styled.img`
+  width: 40px;
+  object-fit: cover;
 `;
