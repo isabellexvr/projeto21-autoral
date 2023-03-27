@@ -1,6 +1,6 @@
 import { bodyValidation } from "../middlewares";
 import { Router } from "express";
-import { createUser, login } from "../controllers";
+import { createUser, login, upload } from "../controllers";
 import { signupSchema, signInSchema } from "../schemas";
 
 const usersRouter = Router();
@@ -8,6 +8,8 @@ const usersRouter = Router();
 usersRouter.post("/sign-up", bodyValidation(signupSchema), createUser);
 
 usersRouter.post("/sign-in", bodyValidation(signInSchema), login);
+
+usersRouter.post("/upload-image", upload);
 
 //logout => retirar token do localstorage => expira em 3 horas
 

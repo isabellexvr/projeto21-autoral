@@ -22,7 +22,7 @@ export const uploadImage = async (setLoading, setUrl, event) => {
   const hashed = await convertBase64(file);
 
   api
-    .post("/upload-images", { image: hashed })
+    .post("/users/upload-image", { image: hashed })
     .then((res) => {
       setUrl(res.data);
       setLoading(false)

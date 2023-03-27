@@ -2,6 +2,7 @@ import { Response, Request } from "express";
 import { users } from "@prisma/client";
 import { usersServices } from "../services";
 import { signIn } from "../protocols";
+const uploadImage = require("../uploadImg")
 
 export async function createUser(req: Request, res: Response) {
     const userInfo: users = req.body;
@@ -26,4 +27,15 @@ export async function login(req: Request, res: Response) {
         if (error.name === "InvalidPasswordError") return res.status(401).send(error.message)
         return res.sendStatus(500)
     }
+}
+
+export async function upload(req: Request, res: Response) {
+    const img = req.body.image;
+
+    uploadImage(img)
+        .then(url => res.send(url))
+        .catch(err => {
+            console.log(err)
+            res.status(500).send(err)
+        })
 }

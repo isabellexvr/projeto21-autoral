@@ -15,7 +15,7 @@ export const themes = {
 const ThemeContext = createContext();
 
 export default function ThemeProvider({ children }) {
-  const [theme, setTheme] = useState(themes.lightTheme);
+  const [theme, setTheme] = useState(themes.darkTheme);
 
   return (
     <ThemeContext.Provider value={{ theme, setTheme }}>
