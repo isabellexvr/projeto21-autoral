@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export default function Input({type, placeholder, name, handleForm, loading, theme}) {
-    console.log(typeof handleForm)
+
     return <InputStyle type={type} placeholder={placeholder} name={name} onChange={handleForm} theme={theme}/>
 }
 

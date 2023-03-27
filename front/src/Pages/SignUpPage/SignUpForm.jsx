@@ -14,7 +14,7 @@ export default function SignUpForm({ theme, loading, setLoading }) {
     console.log(form);
   }
 
-  console.log(form)
+  console.log(url)
 
   return (
     <FormContainer>
@@ -46,7 +46,7 @@ export default function SignUpForm({ theme, loading, setLoading }) {
 
         <UploadButton>
           Upload a Profile Picture
-          <input onChange={uploadImage} type="file" accept="image/*" />
+          <input onChange={(e) => uploadImage(setUrl, e)} type="file" accept="image/*" />
           <AiFillCamera />
         </UploadButton>
 
