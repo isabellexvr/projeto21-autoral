@@ -5,6 +5,15 @@ import { colors } from "../../Services/Constants/colors";
 import { Link } from "react-router-dom";
 import api from "../../Services/Api/api.js"
 
+/* {
+  "id": 2,
+  "fullName": "iboselai da silva",
+  "userName": "ayaya",
+  "picture": "https://res.cloudinary.com/dbxhasetw/image/upload/v1679893671/dpewyxrkvos7od1vtwwu.png",
+  "email": "ayaya@gmail.com",
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsImlhdCI6MTY3OTg5NDE5MiwiZXhwIjoxNjc5OTA0OTkyfQ.d8M2K1zDTZwyUHA_CmwZQRoilrm6C5LjLASPmUQUoJI"
+} */
+
 export default function SignInForm({ theme, loading, setLoading }) {
   const [form, setForm] = useState({});
 
@@ -14,8 +23,21 @@ export default function SignInForm({ theme, loading, setLoading }) {
   function sendForm(event) {
     event.preventDefault();
     console.log(form)
+    if(!form.email || !form.password){
+      alert("Please, fill all the fields before logginin.")
+      return
+    }
     //pode ser email ou username :o
-    api.post("/sign-in")
+    api.post("/users/sign-in", form)
+    .then( res => {
+      console.log(res.data)
+      alert('Successfully logged in')
+      //navigate to timeline
+    })
+    .catch( err => {
+      console.log(err)
+      alert('deu ruim :(')
+    })
   }
 
   return (
