@@ -81,4 +81,5 @@ const LinkToSignUp = styled(Link)`
   all: unset;
   width: 250px;
   cursor: pointer;
+  line-height: 20px;
 `;

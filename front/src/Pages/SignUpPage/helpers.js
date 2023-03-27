@@ -25,15 +25,11 @@ export const uploadImage = async (setLoading, setUrl, event) => {
     .post("/upload-images", { image: hashed })
     .then((res) => {
       setUrl(res.data);
-      console.log(res.data)
-      setLoading(false);
-      alert("deu bom")
-
+      setLoading(false)
     })
     .catch((err) => {
       console.log(err)
       setLoading(false);
       alert("Algo deu errado ao importar a foto.");
-
     });
 };

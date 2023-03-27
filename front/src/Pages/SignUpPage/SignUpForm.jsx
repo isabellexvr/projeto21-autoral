@@ -1,16 +1,25 @@
-import styled from "styled-components";
 import Input from "../Constants/Input";
 import { useState } from "react";
 import { AiFillCamera } from "react-icons/ai";
-import { colors } from "../../Services/Constants/colors";
-import { uploadImage, convertBase64 } from "./helpers";
+import {
+  FormContainer,
+  Form,
+  UploadButton,
+  ConfirmButton,
+  PicPreview,
+  LinkToSignIn,
+} from "./styles";
+import { uploadImage } from "./helpers";
 import { ThreeDots } from "react-loader-spinner";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import api from "../../Services/Api/api.js";
 
 export default function SignUpForm({ theme, loading, setLoading }) {
   const [form, setForm] = useState({});
   const [url, setUrl] = useState(null);
-  const [uploadLoading, setUploadLoading ] = useState(false);
+  const [uploadLoading, setUploadLoading] = useState(false);
+
+  const navigate = useNavigate();
 
   function handleForm({ target: { value, name } }) {
     setForm({ ...form, [name]: value });
@@ -23,10 +32,22 @@ export default function SignUpForm({ theme, loading, setLoading }) {
       alert("As senhas não correspondem.");
       return;
     }
-    event.target.reset();
+
     delete form.confirmPassword;
     const sendObj = { ...form, picture: url };
     console.log(sendObj);
+    api
+      .post("/users/sign-up", sendObj)
+      .then((res) => {
+        console.log(res.data)
+        alert("Usuário registrado com sucesso!");
+        navigate("/sign-in");
+        event.target.reset();
+      })
+      .catch((err) => {
+        console.log(err)
+        alert("Algo deu errado durante o registro.");
+      });
     console.log(form);
   }
 
@@ -57,7 +78,7 @@ export default function SignUpForm({ theme, loading, setLoading }) {
           loading={loading}
           theme={theme}
         />
-                {uploadLoading ? (
+        {uploadLoading ? (
           <UploadButton disabled>
             <ThreeDots
               height="50"
@@ -131,92 +152,3 @@ export default function SignUpForm({ theme, loading, setLoading }) {
     </FormContainer>
   );
 }
-
-const FormContainer = styled.div``;
-
-const Form = styled.form`
-  margin-top: 15px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  height: 500px;
-
-  justify-content: space-around;
-`;
-
-const UploadButton = styled.button`
-  all: unset;
-  width: 270px;
-  height: 52px;
-  cursor: pointer;
-  box-sizing: border-box;
-  border: 2px solid;
-  border-color: ${colors.orange};
-  border-radius: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: space-evenly;
-  filter: drop-shadow(0px 0px 2px ${colors.orange});
-  font-weight: 500;
-  font-size: 17px;
-  position: relative;
-  > input {
-    all: unset;
-    position: absolute;
-    top: 0;
-    left: 0;
-    background-color: red;
-    width: 100%;
-    height: 100%;
-    cursor: pointer;
-    opacity: 0;
-  }
-  > svg {
-    font-size: 25px;
-  }
-  :hover {
-    background-color: ${colors.orange};
-    transition: 500ms;
-  }
-  :disabled {
-    cursor: default;
-    opacity: 0.6;
-  }
-`;
-
-const ConfirmButton = styled.button`
-  all: unset;
-  width: 270px;
-  height: 52px;
-  cursor: pointer;
-  box-sizing: border-box;
-  background-color: ${colors.orange};
-  display: flex;
-  align-items: center;
-  justify-content: space-evenly;
-  font-weight: 500;
-  font-size: 17px;
-  filter: drop-shadow(0px 0px 2px ${colors.orange});
-  border-radius: 8px;
-  :hover {
-    background-color: ${colors.pink};
-    transition: 500ms;
-  }
-  :disabled {
-    opacity: 0.6;
-    cursor: default;
-  }
-`;
-
-const PicPreview = styled.img`
-  width: 35px;
-  object-fit: cover;
-  border-radius: 5px;
-`;
-
-const LinkToSignIn = styled(Link)`
-  all: unset;
-  width: 250px;
-  cursor: pointer;
-
-`;
