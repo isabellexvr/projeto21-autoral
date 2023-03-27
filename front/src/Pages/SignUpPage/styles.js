@@ -80,6 +80,7 @@ export const ConfirmButton = styled.button`
 
 export const PicPreview = styled.img`
   width: 35px;
+  height: 35px;
   object-fit: cover;
   border-radius: 5px;
 `;
