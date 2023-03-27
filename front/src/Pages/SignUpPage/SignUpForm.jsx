@@ -5,6 +5,7 @@ import { AiFillCamera } from "react-icons/ai";
 import { colors } from "../../Services/Constants/colors";
 import { uploadImage, convertBase64 } from "./helpers";
 import { ThreeDots } from "react-loader-spinner";
+import { Link } from "react-router-dom";
 
 export default function SignUpForm({ theme, loading, setLoading }) {
   const [form, setForm] = useState({});
@@ -121,6 +122,7 @@ export default function SignUpForm({ theme, loading, setLoading }) {
         ) : (
           <ConfirmButton type="submit">Sign Up!</ConfirmButton>
         )}
+        <LinkToSignIn to="/sign-in">Do you already have an account? Sign in instead!</LinkToSignIn>
       </Form>
     </FormContainer>
   );
@@ -133,7 +135,7 @@ const Form = styled.form`
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 440px;
+  height: 480px;
 
   justify-content: space-around;
 `;
@@ -206,3 +208,9 @@ const PicPreview = styled.img`
   width: 40px;
   object-fit: cover;
 `;
+
+const LinkToSignIn = styled(Link)`
+    all: unset;
+    width: 250px;
+    cursor: pointer;
+`

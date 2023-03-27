@@ -49,7 +49,7 @@ export default function SignUpPage({ loading, setLoading }) {
 
 const Title = styled.div`
 
-  margin-top: 35px;
+  margin-top: 29px;
   display: flex;
   justify-content: center;
   >h1{
