@@ -3,6 +3,7 @@ import { useState } from "react";
 import Input from "../Constants/Input";
 import { colors } from "../../Services/Constants/colors";
 import { Link } from "react-router-dom";
+import api from "../../Services/Api/api.js"
 
 export default function SignInForm({ theme, loading, setLoading }) {
   const [form, setForm] = useState({});
@@ -10,8 +11,15 @@ export default function SignInForm({ theme, loading, setLoading }) {
   function handleForm({ target: { value, name } }) {
     setForm({ ...form, [name]: value });
   }
+  function sendForm(event) {
+    event.preventDefault();
+    console.log(form)
+    //pode ser email ou username :o
+    api.post("/sign-in")
+  }
+
   return (
-    <Form>
+    <Form onSubmit={sendForm}>
         <Input
           type={"email"}
           placeholder={"E-mail"}
@@ -29,7 +37,7 @@ export default function SignInForm({ theme, loading, setLoading }) {
           loading={loading}
           theme={theme}
         />
-        <ConfirmButton>Sign In!</ConfirmButton>
+        <ConfirmButton type="submit">Sign In!</ConfirmButton>
         <LinkToSignUp to="/sign-up">Don't have an account yet? Create a one!</LinkToSignUp>
     </Form>
   )

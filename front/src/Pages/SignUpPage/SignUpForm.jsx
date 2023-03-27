@@ -10,6 +10,7 @@ import { Link } from "react-router-dom";
 export default function SignUpForm({ theme, loading, setLoading }) {
   const [form, setForm] = useState({});
   const [url, setUrl] = useState(null);
+  const [uploadLoading, setUploadLoading ] = useState(false);
 
   function handleForm({ target: { value, name } }) {
     setForm({ ...form, [name]: value });
@@ -32,40 +33,6 @@ export default function SignUpForm({ theme, loading, setLoading }) {
   return (
     <FormContainer>
       <Form onSubmit={sendForm}>
-        {loading ? (
-          <UploadButton disabled>
-            <ThreeDots
-              height="50"
-              width="50"
-              radius="9"
-              color={theme.fontColor}
-              ariaLabel="three-dots-loading"
-              wrapperStyle={{}}
-              wrapperClassName=""
-              visible={true}
-            />
-          </UploadButton>
-        ) : !url ? (
-          <UploadButton>
-            Upload a Profile Picture
-            <input
-              onChange={(e) => uploadImage(setLoading, setUrl, e)}
-              type="file"
-              accept="image/*"
-            />
-            <AiFillCamera />
-          </UploadButton>
-        ) : (
-          <UploadButton>
-            Change Your Photo
-            <PicPreview src={url} />
-            <input
-              onChange={(e) => uploadImage(setLoading, setUrl, e)}
-              type="file"
-              accept="image/*"
-            />
-          </UploadButton>
-        )}
         <Input
           type={"text"}
           placeholder={"Full Name"}
@@ -90,7 +57,40 @@ export default function SignUpForm({ theme, loading, setLoading }) {
           loading={loading}
           theme={theme}
         />
-
+                {uploadLoading ? (
+          <UploadButton disabled>
+            <ThreeDots
+              height="50"
+              width="50"
+              radius="9"
+              color={theme.fontColor}
+              ariaLabel="three-dots-loading"
+              wrapperStyle={{}}
+              wrapperClassName=""
+              visible={true}
+            />
+          </UploadButton>
+        ) : !url ? (
+          <UploadButton>
+            Upload a Profile Picture
+            <input
+              onChange={(e) => uploadImage(setUploadLoading, setUrl, e)}
+              type="file"
+              accept="image/*"
+            />
+            <AiFillCamera />
+          </UploadButton>
+        ) : (
+          <UploadButton>
+            Change Your Photo
+            <PicPreview src={url} />
+            <input
+              onChange={(e) => uploadImage(setUploadLoading, setUrl, e)}
+              type="file"
+              accept="image/*"
+            />
+          </UploadButton>
+        )}
         <Input
           type={"password"}
           placeholder={"Password"}
@@ -209,12 +209,14 @@ const ConfirmButton = styled.button`
 `;
 
 const PicPreview = styled.img`
-  width: 40px;
+  width: 35px;
   object-fit: cover;
+  border-radius: 5px;
 `;
 
 const LinkToSignIn = styled(Link)`
   all: unset;
   width: 250px;
   cursor: pointer;
+
 `;

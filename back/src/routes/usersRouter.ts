@@ -5,9 +5,9 @@ import { signupSchema, signInSchema } from "../schemas";
 
 const usersRouter = Router();
 
-usersRouter.post("/signup", bodyValidation(signupSchema), createUser);
+usersRouter.post("/sign-up", bodyValidation(signupSchema), createUser);
 
-usersRouter.post("/signin", bodyValidation(signInSchema), login);
+usersRouter.post("/sign-in", bodyValidation(signInSchema), login);
 
 //logout => retirar token do localstorage => expira em 3 horas
 
