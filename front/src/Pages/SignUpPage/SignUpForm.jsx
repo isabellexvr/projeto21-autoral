@@ -13,7 +13,6 @@ export default function SignUpForm({ theme, loading, setLoading }) {
 
   function handleForm({ target: { value, name } }) {
     setForm({ ...form, [name]: value });
-    console.log(form);
   }
 
   function sendForm(event) {

@@ -1,9 +1,7 @@
-import { convertBase64, uploadImage } from "./helpers";
 import {
   Background,
   SwitchThemesContainer,
 } from "../Constants/HomePagesBackground";
-import { useState } from "react";
 import { themes } from "../../Contexts/ThemeContext";
 import { useTheme } from "../../Contexts/ThemeContext";
 import { BsFillMoonStarsFill, BsFillSunFill } from "react-icons/bs";
