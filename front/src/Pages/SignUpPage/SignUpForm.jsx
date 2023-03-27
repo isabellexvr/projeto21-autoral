@@ -18,42 +18,21 @@ export default function SignUpForm({ theme, loading, setLoading }) {
 
   function sendForm(event) {
     event.preventDefault();
-    e.target.reset();
+
     if (form.password !== form.confirmPassword) {
       alert("As senhas não correspondem.");
       return;
     }
+    event.target.reset();
+    delete form.confirmPassword;
+    const sendObj = { ...form, picture: url };
+    console.log(sendObj);
     console.log(form);
   }
 
   return (
     <FormContainer>
       <Form onSubmit={sendForm}>
-        <Input
-          type={"text"}
-          placeholder={"Full Name"}
-          name={"fullName"}
-          handleForm={handleForm}
-          loading={loading}
-          theme={theme}
-        />
-        <Input
-          type={"text"}
-          placeholder={"Username"}
-          name={"userName"}
-          handleForm={handleForm}
-          loading={loading}
-          theme={theme}
-        />
-        <Input
-          type={"email"}
-          placeholder={"E-mail"}
-          name={"email"}
-          handleForm={handleForm}
-          loading={loading}
-          theme={theme}
-        />
-
         {loading ? (
           <UploadButton disabled>
             <ThreeDots
@@ -88,6 +67,30 @@ export default function SignUpForm({ theme, loading, setLoading }) {
             />
           </UploadButton>
         )}
+        <Input
+          type={"text"}
+          placeholder={"Full Name"}
+          name={"fullName"}
+          handleForm={handleForm}
+          loading={loading}
+          theme={theme}
+        />
+        <Input
+          type={"text"}
+          placeholder={"Username"}
+          name={"userName"}
+          handleForm={handleForm}
+          loading={loading}
+          theme={theme}
+        />
+        <Input
+          type={"email"}
+          placeholder={"E-mail"}
+          name={"email"}
+          handleForm={handleForm}
+          loading={loading}
+          theme={theme}
+        />
 
         <Input
           type={"password"}
@@ -122,7 +125,9 @@ export default function SignUpForm({ theme, loading, setLoading }) {
         ) : (
           <ConfirmButton type="submit">Sign Up!</ConfirmButton>
         )}
-        <LinkToSignIn to="/sign-in">Do you already have an account? Sign in instead!</LinkToSignIn>
+        <LinkToSignIn to="/sign-in">
+          Do you already have an account? Sign in instead!
+        </LinkToSignIn>
       </Form>
     </FormContainer>
   );
@@ -131,11 +136,11 @@ export default function SignUpForm({ theme, loading, setLoading }) {
 const FormContainer = styled.div``;
 
 const Form = styled.form`
-  margin-top: 20px;
+  margin-top: 15px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 480px;
+  height: 500px;
 
   justify-content: space-around;
 `;
@@ -210,7 +215,7 @@ const PicPreview = styled.img`
 `;
 
 const LinkToSignIn = styled(Link)`
-    all: unset;
-    width: 250px;
-    cursor: pointer;
-`
+  all: unset;
+  width: 250px;
+  cursor: pointer;
+`;
