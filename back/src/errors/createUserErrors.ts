@@ -1,7 +1,4 @@
-type AppError = {
-    name: string,
-    message: string
-}
+import { AppError } from "./protocols"
 
 export function usernameConflictError():AppError {
     return {
