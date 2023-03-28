@@ -12,7 +12,9 @@ app
     .use(express.json({ limit: "25mb" }))
     .use(express.urlencoded({ limit: "25mb", extended: true }))
     .get("/health", (req, res) => res.sendStatus(200))
-    .use("/users", usersRouter);
+    .use("/users", usersRouter)
+    .use("/publications", )
+    ;
 const port = process.env.PORT || 3000;
 
 app.listen(port, () => {

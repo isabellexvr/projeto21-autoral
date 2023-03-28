@@ -13,16 +13,15 @@ model categories {
   description String
   icon        String
   communities communities[]
-  posts       posts[]
 }
 
 model comments {
   id      Int    @id(map: "comments_pk") @default(autoincrement())
-  postId  Int
   ownerId Int
+  postId  Int
   comment String
-  posts   posts  @relation(fields: [postId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "comments_fk0")
-  users   users  @relation(fields: [ownerId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "comments_fk1")
+  users   users  @relation(fields: [ownerId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "comments_fk0")
+  posts   posts  @relation(fields: [postId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "comments_fk1")
 }
 
 model communities {
@@ -32,8 +31,16 @@ model communities {
   icon             String?
   categoryId       Int
   categories       categories         @relation(fields: [categoryId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "communities_fk0")
-  posts            posts[]
+  communitiesPosts communitiesPosts[]
   usersCommunities usersCommunities[]
+}
+
+model communitiesPosts {
+  id          Int         @id(map: "communitiesPosts_pk") @default(autoincrement())
+  communityId Int
+  postId      Int
+  communities communities @relation(fields: [communityId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "communitiesPosts_fk0")
+  posts       posts       @relation(fields: [postId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "communitiesPosts_fk1")
 }
 
 model likes {
@@ -45,33 +52,23 @@ model likes {
 }
 
 model posts {
-  id                Int               @id(map: "posts_pk") @default(autoincrement())
-  ownerId           Int
-  categoryId        Int
-  communityId       Int
-  description       String
-  contentTypeId     Int
-  comments          comments[]
-  likes             likes[]
-  users             users             @relation(fields: [ownerId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "posts_fk0")
-  categories        categories        @relation(fields: [categoryId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "posts_fk1")
-  communities       communities       @relation(fields: [communityId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "posts_fk2")
-  postsContentTypes postsContentTypes @relation(fields: [contentTypeId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "posts_fk3")
-}
-
-model postsContentTypes {
-  id    Int     @id(map: "postsContentTypes_pk") @default(autoincrement())
-  name  String  @unique
-  posts posts[]
+  id               Int                @id(map: "posts_pk") @default(autoincrement())
+  ownerId          Int
+  description      String
+  media            String?
+  comments         comments[]
+  communitiesPosts communitiesPosts[]
+  likes            likes[]
+  users            users              @relation(fields: [ownerId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "posts_fk0")
 }
 
 model users {
   id               Int                @id(map: "users_pk") @default(autoincrement())
   fullName         String             @default(cuid()) @db.VarChar(25)
   userName         String             @unique @default(cuid()) @db.VarChar(25)
-  picture          String             @default("")
+  picture          String?
   email            String             @unique
-  password         String
+  password         String             @unique
   comments         comments[]
   likes            likes[]
   posts            posts[]
