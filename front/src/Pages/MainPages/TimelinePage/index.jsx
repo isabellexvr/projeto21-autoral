@@ -1,5 +1,12 @@
 import styled from "styled-components";
+import { useTheme } from "../../../Contexts/ThemeContext";
+import { Background } from "../Constants/styles";
 
 export default function TimelinePage() {
-    return 
+    const {theme, setTheme} = useTheme();
+    return (
+        <Background theme={theme}>
+
+        </Background>
+    )
 }
