@@ -12,7 +12,7 @@ import {
 import { uploadImage } from "./helpers";
 import { ThreeDots } from "react-loader-spinner";
 import { useNavigate } from "react-router-dom";
-import api from "../../Services/Api/api.js";
+import api from "../../../Services/Api/api.js";
 
 export default function SignUpForm({ theme, loading, setLoading }) {
   const [form, setForm] = useState({});

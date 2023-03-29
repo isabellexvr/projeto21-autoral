@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { colors } from "../../Services/Constants/colors";
+import { colors } from "../../../Services/Constants/colors";
 
 export const WelcomeMessage = styled.div`
 position: relative;

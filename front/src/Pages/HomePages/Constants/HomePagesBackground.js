@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { colors } from "../../Services/Constants/colors";
+import { colors } from "../../../Services/Constants/colors";
 
 export const Background = styled.div`
   background-color: ${(p) => p.theme.backgroundColor};
@@ -83,7 +83,7 @@ export const SwitchThemesContainer = styled.div`
   right: 20px;
   top: 15px;
   z-index: 2;
-  >svg{
+  > svg {
     font-size: 20px;
   }
-`
+`;

@@ -1,10 +1,10 @@
 import styled from "styled-components";
 import { useState } from "react";
 import Input from "../Constants/Input";
-import { colors } from "../../Services/Constants/colors";
+import { colors } from "../../../Services/Constants/colors";
 import { Link } from "react-router-dom";
-import api from "../../Services/Api/api.js"
-import { useUserInfo } from "../../Contexts/UserInfoContext";
+import api from "../../../Services/Api/api.js"
+import { useUserInfo } from "../../../Contexts/UserInfoContext";
 /* {
   "id": 2,
   "fullName": "iboselai da silva",

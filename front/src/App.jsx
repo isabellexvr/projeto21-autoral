@@ -1,10 +1,10 @@
 import ThemeProvider from "./Contexts/ThemeContext";
 import UserInfoProvider from "./Contexts/UserInfoContext";
 import { useState } from "react";
-import WelcomePage from "./Pages/WelcomePage";
-import SignUpPage from "./Pages/SignUpPage";
+import WelcomePage from "./Pages/HomePages/WelcomePage";
+import SignUpPage from "./Pages/HomePages/SignUpPage";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import SignInPage from "./Pages/SignInPage";
+import SignInPage from "./Pages/HomePages/SignInPage";
 
 function App() {
   const [loading, setLoading] = useState(false);

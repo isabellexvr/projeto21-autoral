@@ -1,17 +1,16 @@
-import { useTheme } from "../../Contexts/ThemeContext";
 import { BsFillMoonStarsFill, BsFillSunFill } from "react-icons/bs";
 import {
   Background,
   SwitchThemesContainer,
 } from "../Constants/HomePagesBackground";
-import { themes } from "../../Contexts/ThemeContext";
-import styled from "styled-components";
-import { colors } from "../../Services/Constants/colors";
-import Header from "../Constants/Header";
-import SignInForm from "./SignInForm";
+import { useTheme, themes } from "../../../Contexts/ThemeContext";
+import { WelcomeMessage, StartButton, Logo } from "./styles";
+import logo from "./2.png"
+import { useNavigate } from "react-router-dom";
 
-export default function SignInPage({ loading, setLoading }) {
+export default function WelcomePage() {
   const { theme, setTheme } = useTheme();
+  const navigate = useNavigate();
 
   return (
     <Background theme={theme}>
@@ -31,23 +30,17 @@ export default function SignInPage({ loading, setLoading }) {
         </label>
         <BsFillMoonStarsFill />
       </SwitchThemesContainer>
-      <Header/>
-      <Title>
-        <h1>Login</h1>
-      </Title>
-      <SignInForm theme={theme} loading={loading} setLoading={setLoading}/>
+      <Logo src={logo} />
+      <WelcomeMessage theme={theme}>
+        <h1>
+          Find Your Group With <strong>SportSphere</strong>
+        </h1>
+        <p>
+          Connect with fellow sports enthusiasts and fuel your passion with our
+          vibrant community of like-minded individuals.
+        </p>
+        <StartButton onClick={() => navigate("/sign-up")}>Get Started</StartButton>
+      </WelcomeMessage>
     </Background>
   );
 }
-
-const Title = styled.div`
-  margin-top: 29px;
-  display: flex;
-  justify-content: center;
-  > h1 {
-    font-size: 30px;
-    font-weight: 600;
-    color: ${colors.pink};
-    filter: drop-shadow(0px 0px 2px ${colors.pink});
-  }
-`;

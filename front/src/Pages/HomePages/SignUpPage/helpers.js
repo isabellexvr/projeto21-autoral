@@ -1,4 +1,4 @@
-import api from "../../Services/Api/api.js";
+import api from "../../../Services/Api/api.js";
 
 export const convertBase64 = (file) => {
   return new Promise((resolve, reject) => {

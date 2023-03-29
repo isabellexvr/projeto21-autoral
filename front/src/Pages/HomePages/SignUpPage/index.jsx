@@ -2,12 +2,12 @@ import {
   Background,
   SwitchThemesContainer,
 } from "../Constants/HomePagesBackground";
-import { themes } from "../../Contexts/ThemeContext";
-import { useTheme } from "../../Contexts/ThemeContext";
+import { themes } from "../../../Contexts/ThemeContext";
+import { useTheme } from "../../../Contexts/ThemeContext";
 import { BsFillMoonStarsFill, BsFillSunFill } from "react-icons/bs";
 import styled from "styled-components";
 import Header from "../Constants/Header";
-import { colors } from "../../Services/Constants/colors";
+import { colors } from "../../../Services/Constants/colors";
 import SignUpForm from "./SignUpForm";
 
 export default function SignUpPage({ loading, setLoading }) {
