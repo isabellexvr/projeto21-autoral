@@ -4,7 +4,7 @@ import styled from "styled-components";
 
 export const Background = styled.div`
   background-color: ${(p) => p.theme.backgroundColor};
-  height: 150vh;
+  height: fit-content;
   margin-top: 80px;
   color: ${(p) => p.theme.fontColor};
   display: flex;
