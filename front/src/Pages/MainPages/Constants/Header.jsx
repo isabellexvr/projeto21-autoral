@@ -26,11 +26,11 @@ export default function Header({theme}) {
 const HeaderStyle = styled.div`
   @import url('https://fonts.googleapis.com/css2?family=Audiowide&display=swap');
   background-color: ${(p) => p.theme.backgroundColor};
-  position: fixed;
-  top: 0;
-  left: 0;
+
   width: 100%;
   height: 80px;
+  top: 0;
+  position: absolute;
   display: flex;
   justify-content: center;
   align-items: center;

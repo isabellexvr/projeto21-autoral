@@ -3,45 +3,43 @@ import { themes } from "../../../Contexts/ThemeContext";
 import { colors } from "../../../Services/Constants/colors";
 import { BsPlusLg } from "react-icons/bs";
 import { RiHome6Fill } from "react-icons/ri";
-import {FaUserAlt} from "react-icons/fa"
+import { FaUserAlt } from "react-icons/fa";
 import { useState } from "react";
 
 export default function Footer({ theme }) {
   console.log(theme == themes.darkTheme);
   console.log(themes.darkTheme);
 
-  const [selectedIcon, setSelectedIcon] = useState()
+  const [selectedIcon, setSelectedIcon] = useState();
 
   return (
     <FooterContainer>
-        <FooterStyle theme={theme}>
-      <Container>
-        <Button className="home">
-          <RiHome6Fill />
-        </Button>
+      <FooterStyle theme={theme}>
+        <Container>
+          <Button className="home">
+            <RiHome6Fill />
+          </Button>
 
-        <Button className="profile">
-            <FaUserAlt/>
-        </Button>
-      </Container>
-    </FooterStyle>
-        <NewPostButton theme={theme}>
-          <BsPlusLg />
-        </NewPostButton>
+          <Button className="profile">
+            <FaUserAlt />
+          </Button>
+        </Container>
+      </FooterStyle>
+      <NewPostButton theme={theme}>
+        <BsPlusLg />
+      </NewPostButton>
     </FooterContainer>
-
   );
 }
 
 const FooterContainer = styled.div`
-    height: 80px;
-    width: 100%;
-position: relative;
-position: fixed;
-bottom: 0;
+  height: 80px;
+  width: 100%;
+  position: relative;
+  position: fixed;
+  bottom: 0;
   right: 0;
-`
-
+`;
 
 const FooterStyle = styled.div`
   background-color: ${(p) =>
@@ -53,7 +51,11 @@ const FooterStyle = styled.div`
   align-items: center;
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;
-  -webkit-mask-image: radial-gradient(circle at top, transparent 40px, black 42px);
+  -webkit-mask-image: radial-gradient(
+    circle at top,
+    transparent 40px,
+    black 42px
+  );
 `;
 
 const Container = styled.div`
@@ -76,10 +78,10 @@ const NewPostButton = styled.button`
   align-items: center;
   justify-content: center;
   filter: drop-shadow(1px 12px 20px ${colors.orange});
-    position: absolute;
+  position: absolute;
   left: 50%;
   transform: translate(-50%, -50%);
-    bottom: 22px;
+  bottom: 22px;
   z-index: 2;
   > svg {
     font-size: 22px;
