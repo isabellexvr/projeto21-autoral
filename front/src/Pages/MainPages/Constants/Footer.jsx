@@ -81,7 +81,7 @@ const NewPostButton = styled.button`
   position: absolute;
   left: 50%;
   transform: translate(-50%, -50%);
-  bottom: 22px;
+  bottom: 20px;
   z-index: 2;
   > svg {
     font-size: 22px;

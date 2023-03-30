@@ -28,13 +28,13 @@ export default function TimelinePage() {
             {postsMocked.map((c) => (
               <Community
                 communityPic={
-                  "https://www.chess.com/bundles/web/images/offline-play/standardboard.1d6f9426.png"
+                  "https://assets.dicebreaker.com/chess-playing-hand.jpeg/BROK/thumbnail/1600x900/quality/100/chess-playing-hand.jpeg"
                 }
               >
                 <CommunityFooter>
                   <h1>Chess</h1>
                 </CommunityFooter>
-                <CommunityIcon src="https://www.freeiconspng.com/thumbs/chess-icon/chess-icon-28.png" />
+                <CommunityIcon src="https://cdn-icons-png.flaticon.com/512/2500/2500116.png" />
               </Community>
             ))}
           </CommunitiesContainer>
@@ -101,30 +101,32 @@ const CommunitiesContainer = styled.div`
 
 const Community = styled.div`
   background-image: url(${(p) => p.communityPic});
-  background-size: contain;
+  background-size: cover;
   background-repeat: no-repeat;
   height: 160px;
   width: 120px;
   margin-right: 15px;
   border-radius: 15px;
-  border: 1px solid gray;
+
   box-sizing: border-box;
   position: relative;
 `;
 
 const CommunityFooter = styled.div`
-  width: 100%;
+  width: 102%;
   height: 50px;
   background-color: ${colors.lighterBlack};
   -webkit-mask-image: radial-gradient(
     circle at top,
-    transparent 15px,
-    black 5px
+    transparent 16px,
+    black 17px
   );
   border-bottom-right-radius: 15px;
   border-bottom-left-radius: 15px;
   position: absolute;
-  bottom: 0;
+    bottom: -25px;
+  left: 50%;
+  transform: translate(-50%, -50%);
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
   display: flex;
@@ -140,4 +142,7 @@ const CommunityIcon = styled.img`
   bottom: 21px;
   left: 50%;
   transform: translate(-50%, -50%);
+  box-sizing: border-box;
+  border: 2px solid ${colors.pink};
+  filter: drop-shadow(1px 1px 12px ${colors.pink});
 `;

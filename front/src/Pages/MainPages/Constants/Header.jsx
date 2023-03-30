@@ -48,7 +48,6 @@ const LogoName = styled.h1`
   font-size: 25px;
   font-weight: 700;
   color: ${p => p.theme.fontColor};
-  filter: drop-shadow(1px 1px 10px ${p => p.theme.fontColor});
   > strong {
     font-size: 33px;
     color: ${colors.pink};

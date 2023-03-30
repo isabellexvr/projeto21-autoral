@@ -1,23 +1,24 @@
 import { colors } from "../../../../Services/Constants/colors";
 import styled from "styled-components";
-import {SlOptions} from "react-icons/sl"
+import { SlOptions } from "react-icons/sl";
 
 export default function Post() {
   return (
     <PostContainer>
       <HeaderContainer>
         <LeftHeaderContainer>
-          <img src="https://res.cloudinary.com/dbxhasetw/image/upload/v1679935205/d1kvjwxkr1clyi2vdhld.jpg" />
+          <img src="https://t4.ftcdn.net/jpg/03/36/26/53/360_F_336265345_U65QKmIeAmmpaPM2C1QaQKhDG7AxoMl9.jpg" />
           <TextInfo>
-            <h1>iboselai da silva</h1>
-            <h2>@iboselai</h2>
+            <h1>Nome Completo do Usuário</h1>
+            <h2>@username</h2>
             <h3>5 mins ago</h3>
           </TextInfo>
         </LeftHeaderContainer>
-
-        <OptionsButton>
-            <SlOptions/>
-        </OptionsButton>
+        <RightHeaderContainer>
+          <OptionsButton>
+            <SlOptions />
+          </OptionsButton>
+        </RightHeaderContainer>
       </HeaderContainer>
     </PostContainer>
   );
@@ -35,7 +36,7 @@ const PostContainer = styled.div`
 `;
 
 const HeaderContainer = styled.div`
-    margin-top: 10px;
+  margin-top: 20px;
   height: 60px;
   width: 90%;
 
@@ -46,11 +47,13 @@ const HeaderContainer = styled.div`
 `;
 
 const TextInfo = styled.div`
+  width: 75%;
   > h1 {
     cursor: pointer;
+    line-height: 17px;
   }
   > h2 {
-    margin-top: 5px;
+    margin-top: 3px;
     font-size: 13px;
     color: blue;
     cursor: pointer;
@@ -72,13 +75,14 @@ const OptionsButton = styled.button`
   align-items: center;
   justify-content: center;
   opacity: 0.5;
-  >svg{
+  > svg {
     font-size: 16px;
   }
 `;
 
 const LeftHeaderContainer = styled.div`
   display: flex;
+
   > img {
     width: 45px;
     height: 45px;
@@ -87,4 +91,11 @@ const LeftHeaderContainer = styled.div`
     margin-right: 10px;
     object-fit: cover;
   }
+`;
+
+const RightHeaderContainer = styled.div`
+  display: flex;
+  align-items: flex-start;
+
+  height: 100%;
 `;
