@@ -53,7 +53,7 @@ const FooterStyle = styled.div`
   align-items: center;
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;
-  -webkit-mask-image: radial-gradient(circle at top, transparent 40px, black 20.3%);
+  -webkit-mask-image: radial-gradient(circle at top, transparent 40px, black 42px);
 `;
 
 const Container = styled.div`
@@ -75,10 +75,11 @@ const NewPostButton = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
-  filter: drop-shadow(1px 12px 15px ${colors.orange});
+  filter: drop-shadow(1px 12px 20px ${colors.orange});
     position: absolute;
-    right: 42%;
-    bottom: 49px;
+  left: 50%;
+  transform: translate(-50%, -50%);
+    bottom: 22px;
   z-index: 2;
   > svg {
     font-size: 22px;

@@ -5,9 +5,7 @@ import Header from "../Constants/Header";
 import Footer from "../Constants/Footer";
 import { themes } from "../../../Contexts/ThemeContext";
 
-const postsMocked = [
-  1,2,3,4,5
-]
+const postsMocked = [1, 2, 3, 4, 5];
 
 export default function TimelinePage() {
   const { theme, setTheme } = useTheme();
@@ -16,9 +14,9 @@ export default function TimelinePage() {
     <>
       <Background theme={theme}>
         <Header theme={theme} />
-          {postsMocked.map(p => <Post>
-
-          </Post>)}
+        {postsMocked.map((p) => (
+          <Post></Post>
+        ))}
         <Footer theme={theme} />
       </Background>
     </>
@@ -26,8 +24,8 @@ export default function TimelinePage() {
 }
 
 const Post = styled.div`
-  width:80%;
+  width: 80%;
   height: 100px;
   margin-bottom: 20px;
   background-color: yellow;
-`
+`;

@@ -9,4 +9,5 @@ margin-top: 80px;
   color: ${(p) => p.theme.fontColor};
   display: flex;
   flex-direction: column;
+  align-items: center;
 `;
