@@ -31,14 +31,20 @@ export default function TimelinePage() {
                   "https://www.chess.com/bundles/web/images/offline-play/standardboard.1d6f9426.png"
                 }
               >
-                <CommunityFooter>chess</CommunityFooter>
+                <CommunityFooter>
+                  <h1>Chess</h1>
+                </CommunityFooter>
+                <CommunityIcon src="https://www.freeiconspng.com/thumbs/chess-icon/chess-icon-28.png" />
               </Community>
             ))}
           </CommunitiesContainer>
         </FirstSection>
         <TimelineSelection>
           {TIMELINESTYPES.map((t, i) => (
-            <TimelineButton isSelected={selectedTimeline === i} onClick={() => setSelectedTimeline(i)}>
+            <TimelineButton
+              isSelected={selectedTimeline === i}
+              onClick={() => setSelectedTimeline(i)}
+            >
               {t}
             </TimelineButton>
           ))}
@@ -59,7 +65,7 @@ const TimelineButton = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: ${p => p.isSelected ? colors.orange : "none"};
+  background-color: ${(p) => (p.isSelected ? colors.orange : "none")};
   border-radius: 50px;
   font-size: 17px;
 `;
@@ -108,7 +114,7 @@ const Community = styled.div`
 
 const CommunityFooter = styled.div`
   width: 100%;
-  height: 47px;
+  height: 50px;
   background-color: ${colors.lighterBlack};
   -webkit-mask-image: radial-gradient(
     circle at top,
@@ -121,4 +127,17 @@ const CommunityFooter = styled.div`
   bottom: 0;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const CommunityIcon = styled.img`
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  position: absolute;
+  bottom: 21px;
+  left: 50%;
+  transform: translate(-50%, -50%);
 `;
