@@ -6,7 +6,7 @@ import { RiHome6Fill } from "react-icons/ri";
 import { FaUserAlt } from "react-icons/fa";
 import { useState } from "react";
 
-export default function Footer({ theme }) {
+export default function Footer({ theme, setIsModalOpened }) {
   console.log(theme == themes.darkTheme);
   console.log(themes.darkTheme);
 
@@ -25,7 +25,7 @@ export default function Footer({ theme }) {
           </Button>
         </Container>
       </FooterStyle>
-      <NewPostButton theme={theme}>
+      <NewPostButton onClick={() => setIsModalOpened(true)} theme={theme}>
         <BsPlusLg />
       </NewPostButton>
     </FooterContainer>

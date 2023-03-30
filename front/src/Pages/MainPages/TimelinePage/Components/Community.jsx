@@ -37,7 +37,7 @@ const Footer = styled.div`
   border-bottom-right-radius: 15px;
   border-bottom-left-radius: 15px;
   position: absolute;
-  bottom: -25px;
+  bottom: -26px;
   left: 50%;
   transform: translate(-50%, -50%);
   border-top-left-radius: 10px;
@@ -52,7 +52,7 @@ const Icon = styled.img`
   height: 30px;
   border-radius: 50%;
   position: absolute;
-  bottom: 21px;
+  bottom: 20px;
   left: 50%;
   transform: translate(-50%, -50%);
   box-sizing: border-box;
