@@ -13,28 +13,39 @@ export default function Footer({ theme }) {
   const [selectedIcon, setSelectedIcon] = useState()
 
   return (
-    <FooterStyle theme={theme}>
+    <FooterContainer>
+        <FooterStyle theme={theme}>
       <Container>
-        <NewPostButton theme={theme}>
-          <BsPlusLg />
-        </NewPostButton>
         <Button className="home">
           <RiHome6Fill />
         </Button>
+
         <Button className="profile">
             <FaUserAlt/>
         </Button>
       </Container>
     </FooterStyle>
+        <NewPostButton theme={theme}>
+          <BsPlusLg />
+        </NewPostButton>
+    </FooterContainer>
+
   );
 }
+
+const FooterContainer = styled.div`
+    height: 80px;
+    width: 100%;
+position: relative;
+position: fixed;
+bottom: 0;
+  right: 0;
+`
+
 
 const FooterStyle = styled.div`
   background-color: ${(p) =>
     p.theme == themes.darkTheme ? colors.lighterBlack : "lightgrey"};
-  position: fixed;
-  bottom: 0;
-  right: 0;
   width: 100%;
   height: 80px;
   display: flex;
@@ -42,6 +53,7 @@ const FooterStyle = styled.div`
   align-items: center;
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;
+  -webkit-mask-image: radial-gradient(circle at top, transparent 40px, black 20.3%);
 `;
 
 const Container = styled.div`
@@ -51,6 +63,7 @@ const Container = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  z-index: 0;
 `;
 
 const NewPostButton = styled.button`
@@ -62,12 +75,14 @@ const NewPostButton = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
-  position: absolute;
-  top: -35%;
-  right: 37.5%;
-  border: 6px solid ${(p) => p.theme.backgroundColor};
+  filter: drop-shadow(1px 12px 15px ${colors.orange});
+    position: absolute;
+    right: 42%;
+    bottom: 49px;
+  z-index: 2;
   > svg {
     font-size: 22px;
+    color: ${(p) => p.theme.fontColor};
   }
 `;
 
@@ -80,6 +95,7 @@ const Button = styled.button`
   justify-content: center;
   border-radius: 50%;
   background-color: gray;
+  opacity: 0.6;
   > svg {
     color: ${(p) => p.theme.fontColor};
     font-size: 20px;

@@ -5,6 +5,10 @@ import Header from "../Constants/Header";
 import Footer from "../Constants/Footer";
 import { themes } from "../../../Contexts/ThemeContext";
 
+const postsMocked = [
+  1,2,3,4,5
+]
+
 export default function TimelinePage() {
   const { theme, setTheme } = useTheme();
   console.log(theme);
@@ -12,15 +16,18 @@ export default function TimelinePage() {
     <>
       <Background theme={theme}>
         <Header theme={theme} />
-        <button
-          onClick={() => {
-            setTheme(themes.darkTheme);
-          }}
-        >
-          aaa
-        </button>
+          {postsMocked.map(p => <Post>
+
+          </Post>)}
         <Footer theme={theme} />
       </Background>
     </>
   );
 }
+
+const Post = styled.div`
+  width:80%;
+  height: 100px;
+  margin-bottom: 20px;
+  background-color: yellow;
+`
