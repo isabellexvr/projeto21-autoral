@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { BsFillChatSquareTextFill } from "react-icons/bs";
 import {HiMenu} from "react-icons/hi"
+import { colors } from "../../../Services/Constants/colors";
 
 export default function Header({theme}) {
     console.log(theme);
@@ -24,9 +25,7 @@ export default function Header({theme}) {
 }
 
 const HeaderStyle = styled.div`
-  @import url('https://fonts.googleapis.com/css2?family=Audiowide&display=swap');
   background-color: ${(p) => p.theme.backgroundColor};
-
   width: 100%;
   height: 80px;
   top: 0;
@@ -46,14 +45,13 @@ const IconsContainer = styled.div`
 `;
 
 const LogoName = styled.h1`
-  @import url('https://fonts.googleapis.com/css2?family=Audiowide&display=swap');
-  font-family: "Audiowide", cursive;
-  font-size: 20px;
+  font-size: 25px;
   font-weight: 700;
   color: ${p => p.theme.fontColor};
+  filter: drop-shadow(1px 1px 10px ${p => p.theme.fontColor});
   > strong {
-    font-size: 30px;
-    font-family: "Audiowide", cursive;
+    font-size: 33px;
+    color: ${colors.pink};
   }
 `;
 

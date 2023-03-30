@@ -55,7 +55,7 @@ export default function TimelinePage() {
 const TimelineButton = styled.button`
   all: unset;
   width: 50%;
-  height: 90%;
+  border: 4px solid ${colors.lighterBlack};
   display: flex;
   justify-content: center;
   align-items: center;
@@ -66,7 +66,7 @@ const TimelineButton = styled.button`
 
 const TimelineSelection = styled.div`
   width: 82%;
-  height: 40px;
+  height: 45px;
   background-color: ${colors.lighterBlack};
   border-radius: 50px;
   margin-top: 20px;
@@ -75,7 +75,7 @@ const TimelineSelection = styled.div`
 `;
 
 const FirstSectionTitle = styled.h1`
-  font-size: 22px;
+  font-size: 19px;
   margin-bottom: 10px;
   width: 82%;
 `;

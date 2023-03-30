@@ -83,7 +83,7 @@ const LeftHeaderContainer = styled.div`
     width: 45px;
     height: 45px;
     border-radius: 50%;
-    border: 2px solid ${colors.orange};
+    border: 2px solid ${colors.pink};
     margin-right: 10px;
     object-fit: cover;
   }
