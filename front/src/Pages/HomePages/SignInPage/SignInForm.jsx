@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { useState } from "react";
 import Input from "../Constants/Input";
 import { colors } from "../../../Services/Constants/colors";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import api from "../../../Services/Api/api.js"
 import { useUserInfo } from "../../../Contexts/UserInfoContext";
 /* {
@@ -16,7 +16,15 @@ import { useUserInfo } from "../../../Contexts/UserInfoContext";
 
 export default function SignInForm({ theme, loading, setLoading }) {
   const [form, setForm] = useState({});
-  const { userInfo, setUserInfo } = useUserInfo();
+  const { setUserInfo } = useUserInfo();
+  const navigate = useNavigate();
+
+  const isLoggedIn = localStorage.getItem("userInfo");
+  if(isLoggedIn) {
+    const userInfo = JSON.parse(isLoggedIn);
+    setUserInfo(userInfo);
+    navigate("/timeline");
+  }
 
   function handleForm({ target: { value, name } }) {
     setForm({ ...form, [name]: value });
@@ -33,7 +41,10 @@ export default function SignInForm({ theme, loading, setLoading }) {
     .then( res => {
       console.log(res.data)
       setUserInfo(res.data);
+      const serialized = JSON.stringify(res.data);
+      localStorage.setItem("userInfo", serialized)
       alert('Successfully logged in')
+      navigate("/timeline");
       //navigate to timeline
     })
     .catch( err => {

@@ -70,6 +70,7 @@ const Container = styled.div`
 
 const NewPostButton = styled.button`
   all: unset;
+  cursor: pointer;
   width: 60px;
   height: 60px;
   border-radius: 50%;
@@ -86,6 +87,10 @@ const NewPostButton = styled.button`
   > svg {
     font-size: 22px;
     color: ${(p) => p.theme.fontColor};
+  }
+  :hover{
+    transition: 1s;
+    background-color: ${colors.pink};
   }
 `;
 
