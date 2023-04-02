@@ -16,6 +16,14 @@ export async function createPost(req: AuthenticatedRequest, res: Response) {
         await publicationsServices.createPost(postInfo, Number(communityId), userId);
         res.status(201).send('Post created successfully')
     }catch (error) {
+        return res.status(500).send(error)
+    }
+}
+
+export async function findAllPosts(req: AuthenticatedRequest, res: Response) {
+    try{
+        
+    }catch(error){
 
     }
 }

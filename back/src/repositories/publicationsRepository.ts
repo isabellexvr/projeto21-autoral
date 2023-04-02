@@ -12,17 +12,22 @@ type NewCommunityPost = {
     postId: number, communityId: number
 }
 
-export function createPost(data: NewPost) {
+function createPost(data: NewPost) {
     return db.prisma.posts.create({
         data
     })
 }
 
-export function setCommunityPost(data: NewCommunityPost){
-    return db.prisma.communitiesPosts.create({data});
+function setCommunityPost(data: NewCommunityPost) {
+    return db.prisma.communitiesPosts.create({ data });
+}
+
+function findAll() {
+    return db.prisma.posts.findMany({ orderBy: { id: 'desc' } });
 }
 
 export const publicationsRepository = {
     createPost,
-    setCommunityPost
+    setCommunityPost,
+    findAll
 }

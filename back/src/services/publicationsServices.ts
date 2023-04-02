@@ -22,6 +22,12 @@ async function createPost(info: newPost, communityId: number | null, userId: num
     return
 }
 
+async function findAll(){
+    const posts = await publicationsRepository.findAll();
+    return posts
+}
+
 export const publicationsServices = {
-    createPost
+    createPost,
+    findAll
 }
