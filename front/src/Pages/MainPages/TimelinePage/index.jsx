@@ -8,6 +8,7 @@ import Post from "./Components/Post";
 import { useState } from "react";
 import Modal from "react-modal";
 import Community from "./Components/Community";
+import { RiCloseCircleFill } from "react-icons/ri";
 
 const postsMocked = [1, 2, 3, 4, 5];
 
@@ -15,22 +16,24 @@ const user = {};
 
 const modalStyles = {
   overlay: {
-    position: 'fixed',
+    position: "fixed",
     top: 0,
     left: 0,
     right: 0,
     bottom: 0,
-    backgroundColor: 'rgba(26, 25, 25, 0.75)',
+    backgroundColor: "rgba(26, 25, 25, 0.75)",
+    cursor: "pointer",
   },
   content: {
-    top: '50%',
-    left: '50%',
-    right: 'auto',
-    bottom: 'auto',
-    marginRight: '-50%',
-    transform: 'translate(-50%, -50%)',
+    top: "50%",
+    left: "50%",
+    right: "auto",
+    bottom: "auto",
+    marginRight: "-50%",
+    transform: "translate(-50%, -50%)",
+    cursor: "default",
   },
-}
+};
 
 const TIMELINESTYPES = ["My Timeline", "Communities"];
 
@@ -39,8 +42,8 @@ export default function TimelinePage() {
   const [selectedTimeline, setSelectedTimeline] = useState(0);
   const [isModalOpened, setIsModalOpened] = useState(false);
   console.log(theme);
-  function handleCloseModal(){
-    setIsModalOpened(false)
+  function handleCloseModal() {
+    setIsModalOpened(false);
   }
   return (
     <>
@@ -75,8 +78,40 @@ export default function TimelinePage() {
           <Post></Post>
         ))}
         <Footer theme={theme} setIsModalOpened={setIsModalOpened} />
-        <ModalStyle shouldCloseOnOverlayClick={true} onRequestClose={handleCloseModal} style={modalStyles} isOpen={isModalOpened}>
-          4846513
+        <ModalStyle
+          shouldCloseOnOverlayClick={true}
+          onRequestClose={handleCloseModal}
+          style={modalStyles}
+          isOpen={isModalOpened}
+        >
+          <ModalTitle theme={theme}>
+            <h1>Create A New Post</h1>
+          </ModalTitle>
+          <ModalHeader theme={theme}>
+            <div className="left-container">
+              <img src="https://t4.ftcdn.net/jpg/03/36/26/53/360_F_336265345_U65QKmIeAmmpaPM2C1QaQKhDG7AxoMl9.jpg" />
+              <div className="username-select">
+                <h1>Nome de Usuário</h1>
+                <select>
+                  <option>My Timeline</option>
+                  <option>Chess Comunity</option>
+                </select>
+              </div>
+            </div>
+            <div className="right-container">
+              <div className="close-button">
+                <RiCloseCircleFill onClick={() => setIsModalOpened(false)} />
+              </div>
+            </div>
+          </ModalHeader>
+          <NewPostContent theme={theme}>
+            <textarea
+              placeholder="What's up?"
+              className="description"
+            ></textarea>
+            <input type="file" name="file" id="file" className="media" />
+            <label for="file">Add Some Media</label>
+          </NewPostContent>
         </ModalStyle>
       </Background>
     </>
@@ -87,13 +122,137 @@ const ModalStyle = styled(Modal)`
   width: 85vw;
   height: 300px;
   background-color: ${colors.lighterBlack};
-  border-radius: 10px;
+  border-radius: 15px;
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+`;
+
+const ModalHeader = styled.div`
+  display: flex;
+  justify-content: space-around;
+  width: 87%;
+  height: 60px;
+  > .left-container {
+    width: 80%;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    > img {
+      width: 45px;
+      height: 45px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid ${colors.pink};
+      margin-right: 13px;
+    }
+    > .username-select {
+      height: 50px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+      color: ${(p) => p.theme.fontColor};
+      > select {
+        cursor: pointer;
+        color: ${(p) => p.theme.fontColor};
+        font-weight: 600;
+        background-color: ${colors.orange};
+        border-radius: 5px;
+        margin: 0;
+        border: none;
+        width: fit-content;
+        height: 22px;
+        font-family: inherit;
+        font-size: 14px;
+        line-height: inherit;
+        outline: none;
+        > option {
+          all: unset;
+        }
+      }
+    }
+  }
+  > .right-container {
+    width: 20%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    > .close-button {
+      width: 55px;
+      display: flex;
+      justify-content: flex-end;
+      align-items: flex-start;
+      > svg {
+        font-size: 25px;
+        color: red;
+        cursor: pointer;
+      }
+    }
+  }
+`;
+
+const ModalTitle = styled.div`
+  color: ${colors.orange};
+  border-bottom: 1px solid ${p => p.theme.fontColor};
+  font-weight: 500;
+  font-size: 22px;
+  width: 100%;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+  > h1 {
+    filter: drop-shadow(0px 0px 10px ${colors.pink});
+  }
+`;
+
+const NewPostContent = styled.div`
+  height: 55%;
+  width: 87%;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  border-radius: 10px;
+  margin-bottom: 15px;
+
+  > .description {
+    all: unset;
+    background-color: ${(p) => p.theme.fontColor};
+    height: 90%;
+    width: 80%;
+    box-sizing: border-box;
+    padding: 15px;
+    border-radius: 10px;
+  }
+  > .media {
+    display: none;
+  }
+  > label {
+    opacity: 0.5;
+    width: 45px;
+    background-color: ${(p) => p.theme.backgroundColor};
+    border: 2px solid ${(p) => p.theme.fontColor};
+    height: 45px;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 10px;
+    text-align: center;
+    color: ${(p) => p.theme.fontColor};
+    font-weight: 700;
+    margin-bottom: 5px;
+  }
 `;
 
 const TimelineButton = styled.button`
@@ -128,11 +287,12 @@ const FirstSection = styled.section`
   height: fit-content;
   width: 82%;
   overflow-x: scroll;
-  > h1:first-child {
-  }
+  scroll-snap-align: start;
 `;
 
 const CommunitiesContainer = styled.div`
   display: flex;
   width: fit-content;
+  height: fit-content;
+  scroll-snap-align: center;
 `;

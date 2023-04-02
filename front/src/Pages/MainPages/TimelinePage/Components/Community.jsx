@@ -16,11 +16,10 @@ const CommunityContainer = styled.div`
   background-image: url(${(p) => p.communityCover});
   background-size: cover;
   background-repeat: no-repeat;
-  height: 160px;
+  height: 158px;
   width: 120px;
   margin-right: 15px;
   border-radius: 15px;
-
   box-sizing: border-box;
   position: relative;
 `;
