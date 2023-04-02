@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { themes } from "../../../Contexts/ThemeContext";
-import { colors } from "../../../Services/Constants/colors";
+import { colors } from "../../Assets/colors";
 import { BsPlusLg } from "react-icons/bs";
 import { RiHome6Fill } from "react-icons/ri";
 import { FaUserAlt } from "react-icons/fa";

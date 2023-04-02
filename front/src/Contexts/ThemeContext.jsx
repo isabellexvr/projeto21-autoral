@@ -1,5 +1,5 @@
 import { useContext, useState, createContext } from "react";
-import { colors } from "../Services/Constants/colors";
+import { colors } from "../Pages/Assets/colors";
 
 export const themes = {
   darkTheme: {

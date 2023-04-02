@@ -26,27 +26,37 @@ export default function SignUpForm({ theme, loading, setLoading }) {
   }
 
   function sendForm(event) {
+
     event.preventDefault();
+
+    setLoading(true);
 
     if (form.password !== form.confirmPassword) {
       alert("As senhas não correspondem.");
+      setLoading(false);
       return;
     }
 
     delete form.confirmPassword;
-    const sendObj = { ...form, picture: url };
-    console.log(sendObj);
+
+    let finalObj;
+    url ? (finalObj = { ...form }) : (finalObj = { ...form, picture: url });
+    console.log(finalObj);
+
     api
-      .post("/users/sign-up", sendObj)
+      .post("/users/sign-up", finalObj)
       .then((res) => {
-        console.log(res.data)
-        alert("Usuário registrado com sucesso!");
+        console.log(res.data);
+        alert("Successfully registered!");
         navigate("/sign-in");
+        setLoading(false);
         event.target.reset();
       })
       .catch((err) => {
-        console.log(err)
-        alert("Algo deu errado durante o registro.");
+        console.log(err.response.data)
+        alert("Something went wrong while registering.");
+        setLoading(false);
+        
       });
     console.log(form);
   }

@@ -5,7 +5,7 @@ import {
 } from "../Constants/HomePagesBackground";
 import { useTheme, themes } from "../../../Contexts/ThemeContext";
 import { WelcomeMessage, StartButton, Logo } from "./styles";
-import logo from "./2.png"
+import logo from "./logo.png"
 import { useNavigate } from "react-router-dom";
 
 export default function WelcomePage() {

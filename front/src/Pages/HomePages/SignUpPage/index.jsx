@@ -1,14 +1,13 @@
 import {
   Background,
-  SwitchThemesContainer,
+  SwitchThemesContainer
 } from "../Constants/HomePagesBackground";
 import { themes } from "../../../Contexts/ThemeContext";
 import { useTheme } from "../../../Contexts/ThemeContext";
 import { BsFillMoonStarsFill, BsFillSunFill } from "react-icons/bs";
-import styled from "styled-components";
 import Header from "../Constants/Header";
-import { colors } from "../../../Services/Constants/colors";
 import SignUpForm from "./SignUpForm";
+import { Title } from "./styles";
 
 export default function SignUpPage({ loading, setLoading }) {
   const { theme, setTheme } = useTheme();
@@ -44,15 +43,3 @@ export default function SignUpPage({ loading, setLoading }) {
     </>
   );
 }
-
-const Title = styled.div`
-  margin-top: 29px;
-  display: flex;
-  justify-content: center;
-  > h1 {
-    font-size: 30px;
-    font-weight: 600;
-    color: ${colors.pink};
-    filter: drop-shadow(0px 0px 2px ${colors.pink});
-  }
-`;

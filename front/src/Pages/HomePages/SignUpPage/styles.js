@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { colors } from "../../../Services/Constants/colors";
+import { colors } from "../../Assets/colors";
 import { Link } from "react-router-dom";
 
 export const FormContainer = styled.div``;
@@ -90,4 +90,16 @@ export const LinkToSignIn = styled(Link)`
   width: 250px;
   cursor: pointer;
   line-height: 20px;
+`;
+
+export const Title = styled.div`
+  margin-top: 29px;
+  display: flex;
+  justify-content: center;
+  > h1 {
+    font-size: 30px;
+    font-weight: 600;
+    color: ${colors.pink};
+    filter: drop-shadow(0px 0px 2px ${colors.pink});
+  }
 `;

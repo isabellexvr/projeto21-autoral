@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { colors } from "../../../Services/Constants/colors";
+import { colors } from "../../Assets/colors";
 import logo from "../../Assets/2.png";
 
 export default function Header() {

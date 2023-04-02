@@ -6,9 +6,9 @@ import {
 } from "../Constants/HomePagesBackground";
 import { themes } from "../../../Contexts/ThemeContext";
 import styled from "styled-components";
-import { colors } from "../../../Services/Constants/colors";
 import Header from "../Constants/Header";
 import SignInForm from "./SignInForm";
+import { colors } from "../../Assets/colors";
 
 export default function SignInPage({ loading, setLoading }) {
   const { theme, setTheme } = useTheme();

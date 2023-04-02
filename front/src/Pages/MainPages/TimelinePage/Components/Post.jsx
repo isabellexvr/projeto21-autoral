@@ -1,4 +1,4 @@
-import { colors } from "../../../../Services/Constants/colors";
+import { colors } from "../../../Assets/colors";
 import styled from "styled-components";
 import { SlOptions } from "react-icons/sl";
 

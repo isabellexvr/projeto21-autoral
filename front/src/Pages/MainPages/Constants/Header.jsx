@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { BsFillChatSquareTextFill } from "react-icons/bs";
 import {HiMenu} from "react-icons/hi"
-import { colors } from "../../../Services/Constants/colors";
+import { colors } from "../../Assets/colors";
 
 export default function Header({theme}) {
     console.log(theme);
