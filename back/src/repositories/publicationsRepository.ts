@@ -1,4 +1,4 @@
-import { db } from "config/db";
+import { db } from "../config/db";
 import { posts } from "@prisma/client";
 import { communitiesPosts } from "@prisma/client";
 

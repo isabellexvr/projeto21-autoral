@@ -1,6 +1,6 @@
 import { Response } from "express";
-import { AuthenticatedRequest } from "middlewares/authMiddleware";
-import { publicationsServices } from "services/publicationsServices";
+import { AuthenticatedRequest } from "../middlewares/authMiddleware";
+import { publicationsServices } from "../services/publicationsServices";
 
 export type newPost = {
     description: string,

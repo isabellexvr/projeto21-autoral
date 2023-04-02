@@ -1,8 +1,7 @@
 import { Router } from "express";
-import { bodyValidation } from "middlewares";
-import { authToken } from "middlewares/authMiddleware";
-import { newPostSchema } from "schemas/publicationsSchemas";
-import { createPost } from "controllers/publicationsControllers";
+import { bodyValidation, authToken } from "../middlewares";
+import { newPostSchema } from "../schemas/publicationsSchemas";
+import { createPost } from "../controllers/publicationsControllers";
 
 const publicationsRouter = Router();
 

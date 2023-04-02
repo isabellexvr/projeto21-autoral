@@ -18,6 +18,7 @@ export default function Input({
       )}
       {!loading && (
         <InputStyle
+        required
           type={type}
           placeholder={placeholder}
           name={name}
