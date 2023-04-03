@@ -23,7 +23,14 @@ function setCommunityPost(data: NewCommunityPost) {
 }
 
 function findAll() {
-    return db.prisma.posts.findMany({ orderBy: { id: 'desc' } });
+    return db.prisma.posts.findMany({
+        orderBy: { id: 'desc' },
+        include: {
+            _count: {
+                select: { likes: true, comments: true }
+            }
+        }
+    });
 }
 
 export const publicationsRepository = {

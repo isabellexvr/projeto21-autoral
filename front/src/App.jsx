@@ -20,7 +20,7 @@ function App() {
               path="/sign-up"
               element={<SignUpPage loading={loading} setLoading={setLoading} />}
             />
-            <Route path="/sign-in" element={<SignInPage />} />
+            <Route path="/sign-in" element={<SignInPage loading={loading} setLoading={setLoading} />} />
             <Route path="/timeline" element={<TimelinePage/>}/>
           </Routes>
         </BrowserRouter>

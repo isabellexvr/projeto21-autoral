@@ -9,7 +9,7 @@ import {
   PicPreview,
   LinkToSignIn,
 } from "./styles";
-import { uploadImage } from "./helpers";
+import { uploadImage } from "../../../Services/Api/uploadImage.js";
 import { ThreeDots } from "react-loader-spinner";
 import { useNavigate } from "react-router-dom";
 import api from "../../../Services/Api/api.js";

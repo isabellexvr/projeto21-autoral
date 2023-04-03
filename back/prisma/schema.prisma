@@ -30,7 +30,9 @@ model communities {
   description      String?
   icon             String?
   categoryId       Int
+  adminId          Int
   categories       categories         @relation(fields: [categoryId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "communities_fk0")
+  users            users              @relation(fields: [adminId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "communities_fk1")
   communitiesPosts communitiesPosts[]
   usersCommunities usersCommunities[]
 }
@@ -41,6 +43,14 @@ model communitiesPosts {
   postId      Int
   communities communities @relation(fields: [communityId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "communitiesPosts_fk0")
   posts       posts       @relation(fields: [postId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "communitiesPosts_fk1")
+}
+
+model followers {
+  id                                Int   @id(map: "followers_pk") @default(autoincrement())
+  followerId                        Int
+  followedId                        Int
+  users_followers_followerIdTousers users @relation("followers_followerIdTousers", fields: [followerId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "followers_fk0")
+  users_followers_followedIdTousers users @relation("followers_followedIdTousers", fields: [followedId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "followers_fk1")
 }
 
 model likes {
@@ -55,7 +65,7 @@ model posts {
   id               Int                @id(map: "posts_pk") @default(autoincrement())
   ownerId          Int
   description      String
-  media            String?
+  media            String?            @default("null")
   comments         comments[]
   communitiesPosts communitiesPosts[]
   likes            likes[]
@@ -63,16 +73,19 @@ model posts {
 }
 
 model users {
-  id               Int                @id(map: "users_pk") @default(autoincrement())
-  fullName         String             @default(cuid()) @db.VarChar(25)
-  userName         String             @unique @default(cuid()) @db.VarChar(25)
-  picture          String?
-  email            String             @unique
-  password         String             @unique
-  comments         comments[]
-  likes            likes[]
-  posts            posts[]
-  usersCommunities usersCommunities[]
+  id                                    Int                @id(map: "users_pk") @default(autoincrement())
+  fullName                              String             @db.VarChar(25)
+  userName                              String             @unique @db.VarChar(25)
+  picture                               String?
+  email                                 String             @unique
+  password                              String             @unique
+  comments                              comments[]
+  communities                           communities[]
+  followers_followers_followerIdTousers followers[]        @relation("followers_followerIdTousers")
+  followers_followers_followedIdTousers followers[]        @relation("followers_followedIdTousers")
+  likes                                 likes[]
+  posts                                 posts[]
+  usersCommunities                      usersCommunities[]
 }
 
 model usersCommunities {

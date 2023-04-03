@@ -22,8 +22,9 @@ export async function createPost(req: AuthenticatedRequest, res: Response) {
 
 export async function findAllPosts(req: AuthenticatedRequest, res: Response) {
     try{
-        
+        const posts = await publicationsServices.findAll()
+        res.status(200).send(posts)
     }catch(error){
-
+        return res.status(500).send(error)
     }
 }

@@ -7,7 +7,7 @@ const publicationsRouter = Router();
 
 publicationsRouter
     .all("/*", authToken)
-    .post("/new-post", bodyValidation(newPostSchema), createPost)
-    .get("/find-all-posts", findAllPosts)
+    .post("/new", bodyValidation(newPostSchema), createPost)
+    .get("/findAll", findAllPosts)
 
 export { publicationsRouter }
