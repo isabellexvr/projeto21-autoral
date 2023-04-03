@@ -15,9 +15,13 @@ export async function authToken(req: AuthenticatedRequest, res: Response, next: 
     const token = authHeader.split(" ")[1];
     if (!token) return res.status(403).send(UnauthorizedError());
 
-    const { userId } = jwt.verify(token, process.env.JWT_SECRET) as JWTPayload;
+    try {
+        const { userId } = jwt.verify(token, process.env.JWT_SECRET) as JWTPayload;
+        req.userId = userId;
+    } catch (error) {
+        if(error.name === "TokenExpiredError") return res.status(403).send(error.message)
+        return res.status(500).send(error)
+    }
 
-    req.userId = userId;
-    
     return next()
 }

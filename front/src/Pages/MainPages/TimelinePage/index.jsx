@@ -3,7 +3,7 @@ import { Background } from "../Constants/styles";
 import Header from "../Constants/Header";
 import Footer from "../Constants/Footer";
 import Post from "./Components/Post";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Community from "./Components/Community";
 import { RiCloseCircleFill } from "react-icons/ri";
 import {
@@ -16,8 +16,11 @@ import {
   FirstSectionTitle,
   FirstSection,
   CommunitiesContainer,
-  modalStyles
+  modalStyles,
 } from "./TimelineStyles";
+import api from "../../Services/Api/api.js";
+import { useUserInfo } from "../../../Contexts/UserInfoContext";
+import { useNavigate } from "react-router-dom";
 
 const postsMocked = [1, 2, 3, 4, 5];
 
@@ -25,12 +28,49 @@ const TIMELINESTYPES = ["My Timeline", "Communities"];
 
 export default function TimelinePage() {
   const { theme, setTheme } = useTheme();
+  const { userInfo, setUserInfo } = useUserInfo();
   const [selectedTimeline, setSelectedTimeline] = useState(0);
   const [isModalOpened, setIsModalOpened] = useState(false);
-  console.log(theme);
+  const [posts, setPosts] = useState([]);
+  const [communities, setCommunities] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+
   function handleCloseModal() {
     setIsModalOpened(false);
   }
+
+  useEffect(() => {
+    const isLoggedIn = localStorage.getItem("userInfo");
+    if (!isLoggedIn) {
+      navigate("/sign-in");
+      return;
+    } else {
+      const info = JSON.parse(isLoggedIn);
+      setUserInfo(info);
+      setLoading(true)
+    }
+  }, []);
+
+  useEffect(()=>{
+    if (userInfo) {
+      api
+        .get("/publications/findAll", {
+          headers: { Authorization: "Bearer " + userInfo.token },
+        })
+        .then((res) => {
+          setPosts(res.data);
+          console.log(res.data);
+          setLoading(false)
+        })
+        .catch((err) => {
+          console.log(err);
+          setLoading(false)
+        });
+        api.get("/")
+    }
+  },[loading])
+
   return (
     <>
       <Background theme={theme}>
@@ -60,9 +100,18 @@ export default function TimelinePage() {
             </TimelineButton>
           ))}
         </TimelineSelection>
-        {postsMocked.map((p) => (
-          <Post></Post>
-        ))}
+        {loading ? (
+          <>Carregando...</>
+        ) : (
+          posts?.map((p) => (
+            <Post
+              fullName={userInfo?.fullName}
+              userName={userInfo?.userName}
+              picture={userInfo?.picture}
+            ></Post>
+          ))
+        )}
+
         <Footer theme={theme} setIsModalOpened={setIsModalOpened} />
         <ModalStyle
           shouldCloseOnOverlayClick={true}

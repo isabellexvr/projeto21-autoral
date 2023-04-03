@@ -9,9 +9,24 @@ import styled from "styled-components";
 import Header from "../Constants/Header";
 import SignInForm from "./SignInForm";
 import { colors } from "../../Assets/colors";
+import { useUserInfo } from "../../../Contexts/UserInfoContext";
+import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 export default function SignInPage({ loading, setLoading }) {
   const { theme, setTheme } = useTheme();
+  const { setUserInfo } = useUserInfo();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const isLoggedIn = localStorage.getItem("userInfo");
+    if (isLoggedIn) {
+      const userInfo = JSON.parse(isLoggedIn);
+      setUserInfo(userInfo);
+      navigate("/timeline");
+      return;
+    }
+  }, []);
 
   return (
     <Background theme={theme}>

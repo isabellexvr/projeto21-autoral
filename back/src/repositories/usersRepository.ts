@@ -13,6 +13,10 @@ function findUserByEmail(email: string) {
     })
 }
 
+function findUserById(id: number) {
+    return db.prisma.users.findFirst({where: {id}})
+}
+
 function createNewUser(data: users) {
     return db.prisma.users.create({ data });
 }
@@ -20,5 +24,6 @@ function createNewUser(data: users) {
 export const usersRepository = {
     findUserByUsername,
     findUserByEmail,
+    findUserById,
     createNewUser
 };

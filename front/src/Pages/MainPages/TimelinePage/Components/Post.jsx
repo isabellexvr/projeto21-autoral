@@ -2,15 +2,15 @@ import { colors } from "../../../Assets/colors";
 import styled from "styled-components";
 import { SlOptions } from "react-icons/sl";
 
-export default function Post() {
+export default function Post({fullName, userName, picture}) {
   return (
     <PostContainer>
       <HeaderContainer>
         <LeftHeaderContainer>
-          <img src="https://t4.ftcdn.net/jpg/03/36/26/53/360_F_336265345_U65QKmIeAmmpaPM2C1QaQKhDG7AxoMl9.jpg" />
+          <img src={picture} />
           <TextInfo>
-            <h1>Nome Completo do Usuário</h1>
-            <h2>@username</h2>
+            <h1>{fullName}</h1>
+            <h2>@{userName}</h2>
             <h3>5 mins ago</h3>
           </TextInfo>
         </LeftHeaderContainer>

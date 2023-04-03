@@ -4,7 +4,7 @@ import {HiMenu} from "react-icons/hi"
 import { colors } from "../../Assets/colors";
 
 export default function Header({theme}) {
-    console.log(theme);
+
   return (
     <HeaderStyle theme={theme}>
       <IconsContainer>

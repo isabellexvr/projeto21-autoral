@@ -16,12 +16,13 @@ model categories {
 }
 
 model comments {
-  id      Int    @id(map: "comments_pk") @default(autoincrement())
-  ownerId Int
-  postId  Int
-  comment String
-  users   users  @relation(fields: [ownerId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "comments_fk0")
-  posts   posts  @relation(fields: [postId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "comments_fk1")
+  id        Int       @id(map: "comments_pk") @default(autoincrement())
+  ownerId   Int
+  postId    Int
+  comment   String
+  createdAt DateTime? @default(now()) @db.Date
+  users     users     @relation(fields: [ownerId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "comments_fk0")
+  posts     posts     @relation(fields: [postId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "comments_fk1")
 }
 
 model communities {
@@ -31,6 +32,7 @@ model communities {
   icon             String?
   categoryId       Int
   adminId          Int
+  createdAt        DateTime?          @default(now()) @db.Date
   categories       categories         @relation(fields: [categoryId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "communities_fk0")
   users            users              @relation(fields: [adminId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "communities_fk1")
   communitiesPosts communitiesPosts[]
@@ -66,6 +68,7 @@ model posts {
   ownerId          Int
   description      String
   media            String?            @default("null")
+  createdAt        DateTime?          @default(now()) @db.Date
   comments         comments[]
   communitiesPosts communitiesPosts[]
   likes            likes[]
@@ -79,6 +82,7 @@ model users {
   picture                               String?
   email                                 String             @unique
   password                              String             @unique
+  createdAt                             DateTime?          @default(now()) @db.Date
   comments                              comments[]
   communities                           communities[]
   followers_followers_followerIdTousers followers[]        @relation("followers_followerIdTousers")

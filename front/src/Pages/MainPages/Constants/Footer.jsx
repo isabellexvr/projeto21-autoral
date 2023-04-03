@@ -7,9 +7,6 @@ import { FaUserAlt } from "react-icons/fa";
 import { useState } from "react";
 
 export default function Footer({ theme, setIsModalOpened }) {
-  console.log(theme == themes.darkTheme);
-  console.log(themes.darkTheme);
-
   const [selectedIcon, setSelectedIcon] = useState();
 
   return (

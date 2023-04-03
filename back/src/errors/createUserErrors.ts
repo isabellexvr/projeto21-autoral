@@ -29,3 +29,10 @@ export function invalidPasswordError(): AppError {
         message: "Invalid password."
     }
 }
+
+export function userDoesntExist(): AppError {
+    return {
+        name: "UserDoesNotExist",
+        message: "This user doesn't exist."
+    }
+}

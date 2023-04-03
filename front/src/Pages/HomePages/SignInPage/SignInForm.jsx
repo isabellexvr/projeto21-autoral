@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Input from "../Constants/Input";
 import { useNavigate } from "react-router-dom";
-import api from "../../../Services/Api/api.js";
+import api from "../../Services/Api/api.js";
 import { useUserInfo } from "../../../Contexts/UserInfoContext";
 import { Form, ConfirmButton, LinkToSignUp } from "./styles.js";
 /* {
@@ -17,13 +17,6 @@ export default function SignInForm({ theme, loading, setLoading }) {
   const [form, setForm] = useState({});
   const { setUserInfo } = useUserInfo();
   const navigate = useNavigate();
-
-  const isLoggedIn = localStorage.getItem("userInfo");
-  if (isLoggedIn) {
-    const userInfo = JSON.parse(isLoggedIn);
-    setUserInfo(userInfo);
-    navigate("/timeline");
-  }
 
   function handleForm({ target: { value, name } }) {
     setForm({ ...form, [name]: value });

@@ -28,3 +28,15 @@ export async function findAllPosts(req: AuthenticatedRequest, res: Response) {
         return res.status(500).send(error)
     }
 }
+
+// procura a timeline (posts do usuário + posts dos quais ele segue)
+export async function findTimelineById(req: AuthenticatedRequest, res: Response) {
+    const userId = req.userId
+    try{
+        const posts = await publicationsServices.findUserTimeline(userId);
+        res.status(200).send(posts);
+    }catch(error){
+        if(error.name === "UserDoesNotExist") return res.status(404).send(error.message);
+        return res.status(500).send(error);
+    }
+}
