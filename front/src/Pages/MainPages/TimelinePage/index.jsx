@@ -111,7 +111,11 @@ export default function TimelinePage() {
               key={i}
               fullName={p.users.fullName}
               userName={p.users.userName}
-              picture={p.users.picture}
+              userPicture={p.users.picture}
+              postMedia={p.media}
+              postDescription={p.description}
+              likesCount={p._count.likes}
+              commentsCount={p._count.comments}
             ></Post>
           ))
         ) : (
