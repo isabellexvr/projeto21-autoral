@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { SlOptions } from "react-icons/sl";
 
 export default function Post({fullName, userName, picture}) {
+
   return (
     <PostContainer>
       <HeaderContainer>

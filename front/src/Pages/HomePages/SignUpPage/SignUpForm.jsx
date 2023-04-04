@@ -20,7 +20,7 @@ export default function SignUpForm({ theme, loading, setLoading }) {
   const [uploadLoading, setUploadLoading] = useState(false);
 
   const navigate = useNavigate();
-
+  
   function handleForm({ target: { value, name } }) {
     setForm({ ...form, [name]: value });
   }
@@ -28,8 +28,9 @@ export default function SignUpForm({ theme, loading, setLoading }) {
   function sendForm(event) {
 
     event.preventDefault();
+    console.log({...form, picture: url})
 
-    setLoading(true);
+     setLoading(true);
 
     if (form.password !== form.confirmPassword) {
       alert("As senhas não correspondem.");
@@ -40,8 +41,7 @@ export default function SignUpForm({ theme, loading, setLoading }) {
     delete form.confirmPassword;
 
     let finalObj;
-    url ? (finalObj = { ...form }) : (finalObj = { ...form, picture: url });
-    console.log(finalObj);
+    url ? (finalObj = { ...form, picture: url }) : (finalObj = { ...form });
 
     api
       .post("/users/sign-up", finalObj)
@@ -57,8 +57,8 @@ export default function SignUpForm({ theme, loading, setLoading }) {
         alert("Something went wrong while registering.");
         setLoading(false);
         
-      });
-    console.log(form);
+      }); 
+
   }
 
   return (
@@ -88,6 +88,7 @@ export default function SignUpForm({ theme, loading, setLoading }) {
           loading={loading}
           theme={theme}
         />
+
         {uploadLoading ? (
           <UploadButton disabled>
             <ThreeDots
@@ -122,6 +123,7 @@ export default function SignUpForm({ theme, loading, setLoading }) {
             />
           </UploadButton>
         )}
+
         <Input
           type={"password"}
           placeholder={"Password"}

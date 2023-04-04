@@ -6,6 +6,7 @@ import { signIn } from "../protocols";
 import jwt from "jsonwebtoken";
 
 async function createUser(userInfo: users) {
+    console.log(userInfo)
 
     await checkUsername(userInfo.userName);
 

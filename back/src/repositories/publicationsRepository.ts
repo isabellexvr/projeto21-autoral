@@ -24,26 +24,15 @@ function setCommunityPost(data: NewCommunityPost) {
 
 function findAll() {
   return db.prisma.posts.findMany({
-    orderBy: { id: 'desc' },
+    orderBy: {id: 'desc'},
     include: {
+      users: true,
       _count: {
-        select: { likes: true, comments: true }
+        select: { likes: true, comments: true}
       }
     }
-  });
+  })
 }
-
-/* const results = await db.prisma.user.findUnique({
-    where: { id: userId },
-    select: {
-      followers: {
-        where: { followedId: userId }
-      },
-      posts: {
-        where: { ownerId: userId }
-      }
-    }
-  }); */
 
 type CompletePost = {
   id: number;

@@ -5,23 +5,19 @@ import Footer from "../Constants/Footer";
 import Post from "./Components/Post";
 import { useEffect, useState } from "react";
 import Community from "./Components/Community";
-import { RiCloseCircleFill } from "react-icons/ri";
 import {
   ModalStyle,
-  ModalHeader,
-  ModalTitle,
-  NewPostContent,
   TimelineButton,
   TimelineSelection,
   FirstSectionTitle,
   FirstSection,
   CommunitiesContainer,
   modalStyles,
-  SubmitPostButton,
 } from "./TimelineStyles";
 import api from "../../Services/Api/api.js";
 import { useUserInfo } from "../../../Contexts/UserInfoContext";
 import { useNavigate } from "react-router-dom";
+import NewPostForm from "./Components/NewPostForm";
 
 const postsMocked = [1, 2, 3, 4, 5];
 
@@ -35,33 +31,13 @@ export default function TimelinePage() {
   const [posts, setPosts] = useState([]);
   const [communities, setCommunities] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [form, setForm] = useState({});
-  const [media, setMedia] = useState(null);
+
   const navigate = useNavigate();
+
+  ModalStyle.setAppElement();
 
   function handleCloseModal() {
     setIsModalOpened(false);
-  }
-
-  function handleForm({ target: { value, name } }) {
-    setForm({ ...form, [name]: value });
-  }
-
-  function sendForm(e) {
-    e.preventDefault();
-    //   setLoading(true)
-    console.log(form);
-    let finalObj;
-    media ? (finalObj = { ...form, media }) : (finalObj = { ...form });
-
-    api
-      .post("/publications/new", finalObj, {
-        headers: { Authorization: "Bearer " + userInfo.token },
-      })
-      .then((res) => {
-        console.log(res.data);
-      })
-      .catch((err) => console.log(err));
   }
 
   useEffect(() => {
@@ -89,9 +65,9 @@ export default function TimelinePage() {
         })
         .catch((err) => {
           console.log(err);
-          if(err.response.status === 403){
-            const al = alert("Your session has expired.")
-            localStorage.removeItem("userInfo")
+          if (err.response.status === 403) {
+            const al = alert("Your session has expired.");
+            localStorage.removeItem("userInfo");
             navigate("/sign-in");
           }
           setLoading(false);
@@ -130,11 +106,12 @@ export default function TimelinePage() {
         {loading ? (
           <>Carregando...</>
         ) : posts.length > 0 ? (
-          posts?.map((p) => (
+          posts?.map((p, i) => (
             <Post
-              fullName={userInfo?.fullName}
-              userName={userInfo?.userName}
-              picture={userInfo?.picture}
+              key={i}
+              fullName={p.users.fullName}
+              userName={p.users.userName}
+              picture={p.users.picture}
             ></Post>
           ))
         ) : (
@@ -148,39 +125,13 @@ export default function TimelinePage() {
           style={modalStyles}
           isOpen={isModalOpened}
         >
-          <ModalTitle theme={theme}>
-            <h1>Create A New Post</h1>
-          </ModalTitle>
-          <ModalHeader theme={theme}>
-            <div className="left-container">
-              <img src="https://t4.ftcdn.net/jpg/03/36/26/53/360_F_336265345_U65QKmIeAmmpaPM2C1QaQKhDG7AxoMl9.jpg" />
-              <div className="username-select">
-                <h1>Nome de Usuário</h1>
-                <select>
-                  <option>My Timeline</option>
-                  <option>Chess Comunity</option>
-                </select>
-              </div>
-            </div>
-            <div className="right-container">
-              <div className="close-button">
-                <RiCloseCircleFill onClick={() => setIsModalOpened(false)} />
-              </div>
-            </div>
-          </ModalHeader>
-          <NewPostContent theme={theme}>
-            <textarea
-              placeholder="What's up?"
-              className="description"
-              name="description"
-              onChange={handleForm}
-            ></textarea>
-            <input type="file" name="file" id="file" className="media" />
-            <label for="file">Add Some Media</label>
-          </NewPostContent>
-          <SubmitPostButton theme={theme} type="submit" onClick={sendForm}>
-            Post
-          </SubmitPostButton>
+          <NewPostForm
+            userInfo={userInfo}
+            theme={theme}
+            setIsModalOpened={setIsModalOpened}
+            loading={loading}
+            setLoading={setLoading}
+          />
         </ModalStyle>
       </Background>
     </>
