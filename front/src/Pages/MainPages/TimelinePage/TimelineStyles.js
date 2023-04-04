@@ -84,12 +84,13 @@ export const ModalHeader = styled.div`
 
 export const ModalTitle = styled.div`
   color: ${colors.orange};
-  border-bottom: 1px solid ${p => p.theme.fontColor};
+  border-bottom: 1px outset ${p => p.theme.fontColor};
   font-weight: 500;
-  font-size: 22px;
+  font-size: 18px;
   width: 100%;
-  padding-top: 10px;
+
   padding-bottom: 10px;
+
   display: flex;
   align-items: center;
   justify-content: center;
@@ -101,18 +102,17 @@ export const ModalTitle = styled.div`
 `;
 
 export const NewPostContent = styled.div`
-  height: 55%;
+  height: fit-content;
+
   width: 87%;
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
   border-radius: 10px;
-  margin-bottom: 15px;
-
   > .description {
     all: unset;
     background-color: ${(p) => p.theme.fontColor};
-    height: 90%;
+    height: 100px;
     width: 80%;
     box-sizing: border-box;
     padding: 15px;
@@ -125,7 +125,7 @@ export const NewPostContent = styled.div`
     opacity: 0.5;
     width: 45px;
     background-color: ${(p) => p.theme.backgroundColor};
-    border: 2px solid ${(p) => p.theme.fontColor};
+    border: 2px outset ${(p) => p.theme.fontColor};
     height: 45px;
     border-radius: 10px;
     display: flex;
@@ -135,8 +135,20 @@ export const NewPostContent = styled.div`
     text-align: center;
     color: ${(p) => p.theme.fontColor};
     font-weight: 700;
-    margin-bottom: 5px;
   }
+`;
+
+export const SubmitPostButton = styled.button`
+  all: unset;
+  width: 80px;
+  height: 30px;
+  background-color: ${colors.pink};
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  color: ${p => p.theme.fontColor};
+  border-radius: 10px;
 `;
 
 export const TimelineButton = styled.button`
