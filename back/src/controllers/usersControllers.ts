@@ -10,9 +10,9 @@ export async function createUser(req: Request, res: Response) {
         await usersServices.createUser(userInfo);
         return res.send("User created succesfully").status(201);
     } catch (error) {
-        if (error.name === "UsernameConflictError") return res.status(409).send(error.message)
-        if (error.name === "EmailConflictError") return res.status(409).send(error.message)
-        return res.sendStatus(500)
+        if (error.name === "UsernameConflictError") return res.status(409).send(error);
+        if (error.name === "EmailConflictError") return res.status(409).send(error);
+        return res.sendStatus(500);
     }
 }
 
