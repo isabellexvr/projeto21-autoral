@@ -4,7 +4,10 @@
       "esModuleInterop": true,
       "module": "CommonJS",
       "target": "es2020",
-      "rootDir": "src",
+      "rootDirs": [
+        "src",
+        "tests"
+      ],
       "baseUrl": "src",
     },
     "ts-node": {

@@ -8,5 +8,9 @@ export async function cleanDb() {
     await db.prisma.usersCommunities.deleteMany({});
     await db.prisma.communities.deleteMany({});
     await db.prisma.users.deleteMany({});
-    await db.prisma.categories.deleteMany({});
+}
+
+export async function disconnectDb(){
+    await db.prisma.$disconnect();
+    process.exit(1);
 }
