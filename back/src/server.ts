@@ -5,8 +5,6 @@ const uploadImage = require("./uploadImg")
 
 const app = express();
 
-console.log(typeof uploadImage)
-
 app
     .use(cors())
     .use(express.json({ limit: "25mb" }))
