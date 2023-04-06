@@ -21,6 +21,7 @@ async function createUser(userInfo: users) {
 
 async function checkUsername(username: string) {
     const userExists = await usersRepository.findUserByUsername(username);
+    console.log(userExists)
 
     if (userExists) throw usernameConflictError();
 };
@@ -60,6 +61,7 @@ const findUserByEmailOrFail = async (email: string) => {
 
 const findUserByUsernameOrFail = async (username: string) => {
     const user = await usersRepository.findUserByUsername(username);
+    console.log(user);
     if (!user) throw userNotFoundError("username");
     return user
 }

@@ -10,6 +10,10 @@ export async function cleanDb() {
     await db.prisma.users.deleteMany({});
 }
 
+export async function cleanUsers() {
+    await db.prisma.users.deleteMany({});
+}
+
 export async function disconnectDb(){
     await db.prisma.$disconnect();
     process.exit(1);
