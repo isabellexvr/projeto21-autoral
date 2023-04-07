@@ -29,7 +29,7 @@ export default function NewPostForm({
 
   function sendForm(e) {
     e.preventDefault();
-    //setLoading(true);
+    setLoading(true);
     console.log(form);
     let finalObj;
     media ? (finalObj = { ...form, media }) : (finalObj = { ...form });
@@ -40,10 +40,13 @@ export default function NewPostForm({
       })
       .then((res) => {
         alert("Successfully publicated!");
+        setIsModalOpened(false);
+        setLoading(false);
       })
       .catch((err) => {
         alert("Something went wrong while publicating!");
-        console.log(err);
+        setLoading(false);
+        console.log(err.response);
       });
   }
 

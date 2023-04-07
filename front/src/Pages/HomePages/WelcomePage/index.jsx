@@ -22,7 +22,7 @@ export default function WelcomePage() {
           ) : (
             <input
               onClick={() => setTheme(themes.lightTheme)}
-              checked
+              defaultChecked
               type="checkbox"
             />
           )}

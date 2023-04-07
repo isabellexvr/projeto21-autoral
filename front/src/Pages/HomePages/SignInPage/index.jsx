@@ -38,7 +38,7 @@ export default function SignInPage({ loading, setLoading }) {
           ) : (
             <input
               onClick={() => setTheme(themes.lightTheme)}
-              checked
+              defaultChecked
               type="checkbox"
             />
           )}

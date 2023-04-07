@@ -16,8 +16,13 @@ export default function Post({
 }) {
   const [liked, setLiked] = useState(false);
 
+  console.log(postMedia)
+
   return (
-    <PostContainer>
+
+    <>
+    {postMedia && (
+          <PostContainer>
       <HeaderContainer>
         <LeftHeaderContainer>
           <img src={userPicture} />
@@ -51,6 +56,9 @@ export default function Post({
         </InfoContainer>
       </PostContent>
     </PostContainer>
+    )}
+    </>
+
   );
 }
 
