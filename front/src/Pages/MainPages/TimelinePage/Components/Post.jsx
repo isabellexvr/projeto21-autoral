@@ -31,10 +31,11 @@ export default function Post({
 
   return (
     <>
-      {postMedia === "null" && (
+      
         <PostContainer>
           <HeaderContainer>
             <LeftHeaderContainer>
+              
               <img src={userPicture} />
               <TextInfo>
                 <h1>{fullName}</h1>
@@ -49,42 +50,8 @@ export default function Post({
             </RightHeaderContainer>
           </HeaderContainer>
           <PostContent>
-          <h1><strong>-</strong> {postDescription}</h1>
-            <ButtonContainer>
-              {liked ? (
-                <HiHeart color={"red"} onClick={() => setLiked(false)} />
-              ) : (
-                <HiOutlineHeart onClick={() => setLiked(true)} />
-              )}
-              <AiOutlineComment />
-            </ButtonContainer>
-            <InfoContainer>
-              <p>{likesCount} Likes&nbsp;</p>
-              <p>&nbsp;•&nbsp;</p>
-              <p>&nbsp;{commentsCount} Comments</p>
-            </InfoContainer>
-          </PostContent>
-        </PostContainer>
-      )}
-      {postMedia !== "null" && (
-        <PostContainer>
-          <HeaderContainer>
-            <LeftHeaderContainer>
-              <img src={userPicture} />
-              <TextInfo>
-                <h1>{fullName}</h1>
-                <h2>@{userName}</h2>
-                <h3>{getTimeAgo(time)}</h3>
-              </TextInfo>
-            </LeftHeaderContainer>
-            <RightHeaderContainer>
-              <OptionsButton>
-                <SlOptions />
-              </OptionsButton>
-            </RightHeaderContainer>
-          </HeaderContainer>
-          <PostContent>
-            <PostMedia src={postMedia} />
+            {postMedia !== "null" && (<PostMedia src={postMedia} />)}
+            
             <h1><strong>-</strong> {postDescription}</h1>
             <ButtonContainer>
               {liked ? (
@@ -101,7 +68,6 @@ export default function Post({
             </InfoContainer>
           </PostContent>
         </PostContainer>
-      )}
     </>
   );
 }
