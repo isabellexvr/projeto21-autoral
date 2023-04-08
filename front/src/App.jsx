@@ -9,6 +9,7 @@ import TimelinePage from "./Pages/MainPages/TimelinePage";
 
 function App() {
   const [loading, setLoading] = useState(false);
+  const [isModalOpened, setIsModalOpened] = useState(false);
 
   return (
     <ThemeProvider>
@@ -21,7 +22,7 @@ function App() {
               element={<SignUpPage loading={loading} setLoading={setLoading} />}
             />
             <Route path="/sign-in" element={<SignInPage loading={loading} setLoading={setLoading} />} />
-            <Route path="/timeline" element={<TimelinePage/>}/>
+            <Route path="/timeline" element={<TimelinePage isModalOpened={isModalOpened} setIsModalOpened={setIsModalOpened} />}/>
           </Routes>
         </BrowserRouter>
       </UserInfoProvider>
