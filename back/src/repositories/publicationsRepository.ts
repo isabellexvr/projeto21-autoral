@@ -40,39 +40,7 @@ type CompletePost = (posts & {
       comments: number;
       likes: number;
   };
-})
-
-/* async function findUserTimeline(userId: number) {
-
-  const followedPosts = await db.prisma.followers.findMany({
-    where: { followedId: userId },
-  });
-  const usersPosts = await db.prisma.posts.findMany({
-    where: { ownerId: userId },
-    include: {
-      users: true,
-      _count: {
-        select: { likes: true, comments: true }
-      }
-    }
-  });
-
-  if (followedPosts.length == 0 && usersPosts.length == 0) {
-    return []
-  }
-
-
-  const concat = [...followedPosts, ...usersPosts];
-  console.log(concat)
-
-  const sorted = concat.sort((objA: CompletePost, objB: CompletePost) => {
-    const dateA = new Date(objA.createdAt);
-    const dateB = new Date(objB.createdAt);
-    return dateA.getTime() - dateB.getTime();
-  })
-
-  return sorted
-} */
+});
 
 async function findUserTimeline(userId: number) {
   const whoUserFollows = await db.prisma.followers.findMany({
@@ -112,6 +80,8 @@ async function findUserTimeline(userId: number) {
   return sorted;
 
 }
+
+async function findCommunitiesTimeline(){}
 
 export const publicationsRepository = {
   createPost,

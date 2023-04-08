@@ -18,6 +18,7 @@ import api from "../../Services/Api/api.js";
 import { useUserInfo } from "../../../Contexts/UserInfoContext";
 import { useNavigate } from "react-router-dom";
 import NewPostForm from "./Components/NewPostForm";
+import LoadingPosts from "./Components/LoadingPosts";
 
 const postsMocked = [1, 2, 3, 4, 5];
 
@@ -61,7 +62,7 @@ export default function TimelinePage() {
         .then((res) => {
           setPosts(res.data);
           console.log(res.data);
-          setLoading(false);
+          setLoading(false)
         })
         .catch((err) => {
           console.log(err);
@@ -102,7 +103,7 @@ export default function TimelinePage() {
           ))}
         </TimelineSelection>
         {loading ? (
-          <>Carregando...</>
+          <LoadingPosts theme={theme}/>
         ) : posts.length > 0 ? (
           posts?.map((p, i) => (
             <Post
