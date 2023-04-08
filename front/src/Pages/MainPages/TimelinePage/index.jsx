@@ -19,6 +19,7 @@ import { useUserInfo } from "../../../Contexts/UserInfoContext";
 import { useNavigate } from "react-router-dom";
 import NewPostForm from "./Components/NewPostForm";
 import LoadingPosts from "./Components/LoadingPosts";
+import NoPostsYet from "./Components/NoPostsYet";
 
 const postsMocked = [1, 2, 3, 4, 5];
 
@@ -60,7 +61,7 @@ export default function TimelinePage() {
           headers: { Authorization: "Bearer " + userInfo.token },
         })
         .then((res) => {
-          setPosts(res.data);
+
           console.log(res.data);
           setLoading(false)
         })
@@ -118,7 +119,7 @@ export default function TimelinePage() {
             ></Post>
           ))
         ) : (
-          <>NAO TEM POST MEU DEUS DO CEU</>
+          <NoPostsYet/>
         )}
 
         <Footer theme={theme} setIsModalOpened={setIsModalOpened} />
