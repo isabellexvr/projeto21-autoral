@@ -79,5 +79,7 @@ export const publicationsRepository = {
   createPost,
   setCommunityPost,
   findAll,
-  findUserTimeline
+  findUserTimeline,
+  postLike,
+  postComment
 }

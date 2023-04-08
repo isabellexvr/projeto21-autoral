@@ -5,3 +5,6 @@ export const newPostSchema = joi.object({
     media: joi.string()
 })
 
+export const newLike = joi.object({
+    postId: joi.number().required()
+})
