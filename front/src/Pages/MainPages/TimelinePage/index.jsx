@@ -63,7 +63,7 @@ export default function TimelinePage() {
         .then((res) => {
           setPosts(res.data);
           console.log(res.data);
-          setLoading(false)
+          setLoading(false);
         })
         .catch((err) => {
           console.log(err);
@@ -83,8 +83,9 @@ export default function TimelinePage() {
         <FirstSectionTitle>Your Communities</FirstSectionTitle>
         <FirstSection>
           <CommunitiesContainer>
-            {postsMocked.map((c) => (
+            {postsMocked.map((c, i) => (
               <Community
+                key={i}
                 communityCover={
                   "https://yt3.googleusercontent.com/UhRgYwlAnZMwGH_SHPSSdaxP-7wc1eEPB9ye_5vJnWNna-RYvetlnxjOMGD3Lr6P2xPvLldDnA=s900-c-k-c0x00ffffff-no-rj"
                 }
@@ -96,6 +97,7 @@ export default function TimelinePage() {
         <TimelineSelection>
           {TIMELINESTYPES.map((t, i) => (
             <TimelineButton
+              key={i}
               isSelected={selectedTimeline === i}
               onClick={() => setSelectedTimeline(i)}
             >
@@ -104,7 +106,7 @@ export default function TimelinePage() {
           ))}
         </TimelineSelection>
         {loading ? (
-          <LoadingPosts theme={theme}/>
+          <LoadingPosts theme={theme} />
         ) : posts.length > 0 ? (
           posts?.map((p, i) => (
             <Post
@@ -120,7 +122,7 @@ export default function TimelinePage() {
             ></Post>
           ))
         ) : (
-          <NoPostsYet/>
+          <NoPostsYet />
         )}
 
         <Footer theme={theme} setIsModalOpened={setIsModalOpened} />

@@ -57,9 +57,10 @@ export default function NewPostForm({
       </ModalTitle>
       <ModalHeader theme={theme}>
         <div className="left-container">
-          <img src="https://t4.ftcdn.net/jpg/03/36/26/53/360_F_336265345_U65QKmIeAmmpaPM2C1QaQKhDG7AxoMl9.jpg" />
+          <img src={userInfo.picture} />
           <div className="username-select">
-            <h1>Nome de Usuário</h1>
+            <h1>{userInfo.fullName}</h1>
+            <h2>@{userInfo.userName}</h2>
             <select name="postType" onChange={handleForm}>
               <option>My Timeline</option>
               <option>Chess Comunity</option>

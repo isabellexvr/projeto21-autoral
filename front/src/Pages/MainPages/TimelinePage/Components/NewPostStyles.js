@@ -6,6 +6,7 @@ export const ModalHeader = styled.div`
   justify-content: space-around;
   width: 87%;
   height: 60px;
+
   > .left-container {
     width: 80%;
     box-sizing: border-box;
@@ -20,6 +21,13 @@ export const ModalHeader = styled.div`
       margin-right: 13px;
     }
     > .username-select {
+      > h2 {
+        color: ${colors.pink};
+        font-weight: 600;
+        margin-top: 3px;
+        margin-bottom: 5px;
+        font-size: 13px;
+      }
       height: 50px;
       display: flex;
       flex-direction: column;
@@ -110,7 +118,7 @@ export const NewPostContent = styled.div`
     flex-direction: column;
     align-items: center;
     justify-content: space-around;
-    >h1{
+    > h1 {
       font-size: 10px;
       color: ${(p) => p.theme.fontColor};
     }

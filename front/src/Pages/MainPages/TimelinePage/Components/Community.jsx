@@ -25,7 +25,7 @@ const CommunityContainer = styled.div`
 
 const Footer = styled.div`
   width: 102%;
-  height: 50px;
+  height: 46px;
   background-color: ${colors.lighterBlack};
   -webkit-mask-image: radial-gradient(
     circle at top,

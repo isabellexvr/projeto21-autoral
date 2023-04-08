@@ -21,7 +21,6 @@ export default function Post({
     const createdAt = new Date(time);
     const now = new Date();
     const subtractMins = now.getMinutes() - createdAt.getMinutes();
-    console.log(now.getMinutes() - createdAt.getMinutes());
     if (subtractMins >= 60) {
       const subtractHours = now.getHours() - createdAt.getHours();
       return `${subtractHours} hours ago`;
