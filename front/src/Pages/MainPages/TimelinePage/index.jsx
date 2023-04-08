@@ -55,7 +55,7 @@ export default function TimelinePage() {
   useEffect(() => {
     if (userInfo) {
       api
-        .get("/publications/findAll", {
+        .get("/publications/findById", {
           headers: { Authorization: "Bearer " + userInfo.token },
         })
         .then((res) => {
@@ -66,13 +66,11 @@ export default function TimelinePage() {
         .catch((err) => {
           console.log(err);
           if (err.response.status === 403) {
-            const al = alert("Your session has expired.");
             localStorage.removeItem("userInfo");
             navigate("/sign-in");
           }
           setLoading(false);
         });
-      api.get("/");
     }
   }, [loading]);
 

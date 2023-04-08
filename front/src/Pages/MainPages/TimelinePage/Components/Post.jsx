@@ -12,53 +12,51 @@ export default function Post({
   postMedia,
   postDescription,
   likesCount,
-  commentsCount
+  commentsCount,
 }) {
   const [liked, setLiked] = useState(false);
 
-  console.log(postMedia)
+  console.log(postMedia);
 
   return (
-
     <>
-    {postMedia && (
-          <PostContainer>
-      <HeaderContainer>
-        <LeftHeaderContainer>
-          <img src={userPicture} />
-          <TextInfo>
-            <h1>{fullName}</h1>
-            <h2>@{userName}</h2>
-            <h3>5 mins ago</h3>
-          </TextInfo>
-        </LeftHeaderContainer>
-        <RightHeaderContainer>
-          <OptionsButton>
-            <SlOptions />
-          </OptionsButton>
-        </RightHeaderContainer>
-      </HeaderContainer>
-      <PostContent>
-        <PostMedia src={postMedia} />
-        <h1>- {postDescription}</h1>
-        <ButtonContainer>
-          {liked ? (
-            <HiHeart color={"red"} onClick={() => setLiked(false)} />
-          ) : (
-            <HiOutlineHeart  onClick={() => setLiked(true)} />
-          )}
-          <AiOutlineComment />
-        </ButtonContainer>
-        <InfoContainer>
-            <p>{likesCount} Likes&nbsp;</p>
-            <p>&nbsp;•&nbsp;</p>
-            <p>&nbsp;{commentsCount} Comments</p>
-        </InfoContainer>
-      </PostContent>
-    </PostContainer>
-    )}
+      {postMedia !== "null" && (
+        <PostContainer>
+          <HeaderContainer>
+            <LeftHeaderContainer>
+              <img src={userPicture} />
+              <TextInfo>
+                <h1>{fullName}</h1>
+                <h2>@{userName}</h2>
+                <h3>5 mins ago</h3>
+              </TextInfo>
+            </LeftHeaderContainer>
+            <RightHeaderContainer>
+              <OptionsButton>
+                <SlOptions />
+              </OptionsButton>
+            </RightHeaderContainer>
+          </HeaderContainer>
+          <PostContent>
+            <PostMedia src={postMedia} />
+            <h1>- {postDescription}</h1>
+            <ButtonContainer>
+              {liked ? (
+                <HiHeart color={"red"} onClick={() => setLiked(false)} />
+              ) : (
+                <HiOutlineHeart onClick={() => setLiked(true)} />
+              )}
+              <AiOutlineComment />
+            </ButtonContainer>
+            <InfoContainer>
+              <p>{likesCount} Likes&nbsp;</p>
+              <p>&nbsp;•&nbsp;</p>
+              <p>&nbsp;{commentsCount} Comments</p>
+            </InfoContainer>
+          </PostContent>
+        </PostContainer>
+      )}
     </>
-
   );
 }
 
@@ -170,7 +168,7 @@ const ButtonContainer = styled.div`
   > svg {
     font-size: 25px;
     margin-right: 10px;
-    color: ${p => p.color};
+    color: ${(p) => p.color};
   }
 `;
 
@@ -179,4 +177,4 @@ const InfoContainer = styled.div`
   width: 93%;
   font-size: 11px;
   margin-top: 6px;
-`
+`;
