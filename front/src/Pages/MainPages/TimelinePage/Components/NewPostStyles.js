@@ -6,7 +6,6 @@ export const ModalHeader = styled.div`
   justify-content: space-around;
   width: 87%;
   height: 60px;
-
   > .left-container {
     width: 80%;
     box-sizing: border-box;

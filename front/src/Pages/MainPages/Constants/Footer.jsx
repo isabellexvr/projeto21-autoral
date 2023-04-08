@@ -5,9 +5,11 @@ import { BsPlusLg } from "react-icons/bs";
 import { RiHome6Fill } from "react-icons/ri";
 import { FaUserAlt } from "react-icons/fa";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function Footer({ theme, setIsModalOpened }) {
   const [selectedIcon, setSelectedIcon] = useState();
+  const navigate = useNavigate()
 
   return (
     <FooterContainer>
@@ -17,7 +19,7 @@ export default function Footer({ theme, setIsModalOpened }) {
             <RiHome6Fill />
           </Button>
 
-          <Button className="profile">
+          <Button onClick={() => navigate("/user")} className="profile">
             <FaUserAlt />
           </Button>
         </Container>

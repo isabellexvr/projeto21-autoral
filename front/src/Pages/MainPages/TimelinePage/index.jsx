@@ -38,6 +38,7 @@ export default function TimelinePage({ isModalOpened, setIsModalOpened }) {
   const navigate = useNavigate();
 
   ModalStyle.setAppElement();
+  console.log(userInfo)
 
   function handleCloseModal() {
     setIsModalOpened(false);

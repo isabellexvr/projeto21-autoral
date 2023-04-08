@@ -11,7 +11,4 @@ export const Background = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  overflow: -moz-scrollbars-horizontal;
-overflow-y: hidden;
-overflow-x: auto;
 `;
