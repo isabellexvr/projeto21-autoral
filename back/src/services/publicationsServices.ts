@@ -45,6 +45,12 @@ async function findUserTimeline(userId: number) {
 
 }
 
+async function findUsersPosts(userId: number) {
+    await checkUserExists(userId);
+    const posts = await publicationsRepository.findUsersPosts(userId);
+    return posts;
+}
+
 async function postLike(data: NewLike) {
     await publicationsRepository.postLike(data);
 }
@@ -57,6 +63,7 @@ export const publicationsServices = {
     createPost,
     findAll,
     findUserTimeline,
+    findUsersPosts,
     postLike,
     postComment
 }

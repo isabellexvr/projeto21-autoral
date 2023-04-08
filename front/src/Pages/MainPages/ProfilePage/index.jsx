@@ -11,6 +11,8 @@ import { colors } from "../../Assets/colors";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import LoadingPosts from "../TimelinePage/Components/LoadingPosts";
+import api from "../../Services/Api/api.js";
+import Post from "../TimelinePage/Components/Post";
 
 const PROFILEVIEWS = ["Posts", "Communities"];
 
@@ -32,8 +34,23 @@ export default function ProfilePage({ isModalOpened, setIsModalOpened }) {
     } else {
       const info = JSON.parse(isLoggedIn);
       setUserInfo(info);
+      setLoading(true)
     }
   }, []);
+
+  useEffect(() => {
+    if (userInfo) {
+      api
+        .get("/publications/findUsers", {
+          headers: { Authorization: "Bearer " + userInfo.token },
+        })
+        .then((res) => {
+          setLoading(false)
+          setUsersPosts(res.data)
+          console.log(res.data)})
+        .catch((err) => console.log(err));
+    }
+  }, [loading]);
 
   return (
     <>
@@ -78,6 +95,21 @@ export default function ProfilePage({ isModalOpened, setIsModalOpened }) {
             ))}
           </ViewSelection>
           {loading && <LoadingPosts theme={theme} />}
+          {!loading && usersPosts.length > 0 && (
+            <>{usersPosts.map((p ,i) => 
+              <Post
+              key={i}
+              fullName={p.users.fullName}
+              userName={p.users.userName}
+              userPicture={p.users.picture}
+              postMedia={p.media}
+              postDescription={p.description}
+              likesCount={p._count.likes}
+              commentsCount={p._count.comments}
+              time={p.createdAt}
+            ></Post>
+              )}</>
+          )}
 
           <Footer theme={theme} setIsModalOpened={setIsModalOpened} />
           <PostModal

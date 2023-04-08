@@ -72,3 +72,14 @@ export async function postComment(req: AuthenticatedRequest, res: Response) {
         return res.status(500).send(error);
     }
 }
+
+export async function findUsersPosts(req: AuthenticatedRequest, res: Response){
+    const userId = req.userId;
+
+    try{
+        const posts = await publicationsServices.findUsersPosts(userId);
+        res.status(200).send(posts);
+    }catch(error){
+        return res.status(500).send(error);
+    }
+}

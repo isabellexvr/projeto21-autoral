@@ -65,6 +65,19 @@ async function findUserTimeline(userId: number) {
 
 }
 
+async function findUsersPosts(userId: number) {
+  return db.prisma.posts.findMany({
+    where: {ownerId: userId},
+    orderBy: {id: "desc"},
+    include: {
+      users: true,
+      _count: {
+        select: {likes: true, comments: true}
+      }
+    }
+  });
+};
+
 async function postLike(data: NewLike) {
   return db.prisma.likes.create({ data });
 }
@@ -80,6 +93,7 @@ export const publicationsRepository = {
   setCommunityPost,
   findAll,
   findUserTimeline,
+  findUsersPosts,
   postLike,
   postComment
 }
