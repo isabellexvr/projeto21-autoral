@@ -13,10 +13,21 @@ export default function Post({
   postDescription,
   likesCount,
   commentsCount,
+  time
 }) {
   const [liked, setLiked] = useState(false);
 
-  console.log(postMedia);
+  function getTimeAgo(time){
+    const createdAt = new Date(time);
+    const now = new Date()
+    const subtractMins = now.getMinutes() - createdAt.getMinutes();
+    console.log(now.getMinutes() - createdAt.getMinutes());
+    if(subtractMins >= 60) {
+      const subtractHours = now.getHours() - createdAt.getHours();
+      return `${subtractHours} hours ago`;
+    }
+    return `${subtractMins} minutes ago`;
+  }
 
   return (
     <>
@@ -28,7 +39,7 @@ export default function Post({
               <TextInfo>
                 <h1>{fullName}</h1>
                 <h2>@{userName}</h2>
-                <h3>5 mins ago</h3>
+                <h3>{getTimeAgo(time)}</h3>
               </TextInfo>
             </LeftHeaderContainer>
             <RightHeaderContainer>
@@ -62,7 +73,7 @@ export default function Post({
 
 const PostContainer = styled.div`
   width: 82%;
-  height: 300px;
+  height: 400px;
   margin-top: 20px;
   background-color: ${colors.lighterBlack};
   border-radius: 15px;
@@ -137,7 +148,7 @@ const RightHeaderContainer = styled.div`
 `;
 
 const PostContent = styled.div`
-  height: 205px;
+  height: 305px;
   width: 90%;
   margin-bottom: 15px;
 
@@ -154,7 +165,7 @@ const PostContent = styled.div`
 `;
 
 const PostMedia = styled.img`
-  height: 130px;
+  height: 230px;
   object-fit: cover;
   border-top-left-radius: 15px;
   border-top-right-radius: 15px;

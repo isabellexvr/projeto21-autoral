@@ -61,7 +61,7 @@ export default function TimelinePage() {
           headers: { Authorization: "Bearer " + userInfo.token },
         })
         .then((res) => {
-
+          setPosts(res.data);
           console.log(res.data);
           setLoading(false)
         })
@@ -116,6 +116,7 @@ export default function TimelinePage() {
               postDescription={p.description}
               likesCount={p._count.likes}
               commentsCount={p._count.comments}
+              time={p.createdAt}
             ></Post>
           ))
         ) : (

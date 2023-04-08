@@ -5,10 +5,12 @@ import { userDoesntExist } from '../errors';
 
 async function createPost(info: newPost, communityId: number | null, userId: number) {
     const { description, media } = info;
+    const presentTime = new Date();
     const newPostData = {
         ownerId: userId,
         description,
-        media
+        media,
+        createdAt: presentTime.toISOString()
     }
     if (!communityId) {
 

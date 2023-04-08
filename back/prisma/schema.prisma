@@ -16,13 +16,13 @@ model categories {
 }
 
 model comments {
-  id        Int       @id(map: "comments_pk") @default(autoincrement())
+  id        Int      @id(map: "comments_pk") @default(autoincrement())
   ownerId   Int
   postId    Int
   comment   String
-  createdAt DateTime? @default(now()) @db.Date
-  users     users     @relation(fields: [ownerId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "comments_fk0")
-  posts     posts     @relation(fields: [postId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "comments_fk1")
+  createdAt DateTime @default(dbgenerated("'22:15:55.247532-03'::time with time zone")) @db.Timetz(6)
+  users     users    @relation(fields: [ownerId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "comments_fk0")
+  posts     posts    @relation(fields: [postId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "comments_fk1")
 }
 
 model communities {
@@ -32,7 +32,7 @@ model communities {
   icon             String?
   categoryId       Int
   adminId          Int
-  createdAt        DateTime?          @default(now()) @db.Date
+  createdAt        DateTime           @default(dbgenerated("'2023-04-07 22:15:55.247532-03'::timestamp with time zone")) @db.Timestamptz(6)
   categories       categories         @relation(fields: [categoryId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "communities_fk0")
   users            users              @relation(fields: [adminId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "communities_fk1")
   communitiesPosts communitiesPosts[]
@@ -68,7 +68,7 @@ model posts {
   ownerId          Int
   description      String
   media            String?            @default("null")
-  createdAt        DateTime?          @default(now()) @db.Date
+  createdAt        DateTime           @default(dbgenerated("'2023-04-07 22:15:55.247532-03'::timestamp with time zone")) @db.Timestamptz(6)
   comments         comments[]
   communitiesPosts communitiesPosts[]
   likes            likes[]
@@ -82,7 +82,6 @@ model users {
   picture                               String?
   email                                 String             @unique
   password                              String             @unique
-  createdAt                             DateTime?          @default(now()) @db.Date
   comments                              comments[]
   communities                           communities[]
   followers_followers_followerIdTousers followers[]        @relation("followers_followerIdTousers")
