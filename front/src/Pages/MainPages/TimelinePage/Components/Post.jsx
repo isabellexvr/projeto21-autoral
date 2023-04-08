@@ -20,9 +20,9 @@ export default function Post({
   function getTimeAgo(time) {
     const createdAt = new Date(time);
     const now = new Date();
-    const subtractMins = now.getMinutes() - createdAt.getMinutes();
+    const subtractMins = createdAt.getMinutes() - now.getMinutes();
     if (subtractMins >= 60) {
-      const subtractHours = now.getHours() - createdAt.getHours();
+      const subtractHours = createdAt.getHours() - now.getHours();
       return `${subtractHours} hours ago`;
     }
     return `${subtractMins} minutes ago`;

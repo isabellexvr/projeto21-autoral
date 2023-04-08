@@ -1,16 +1,7 @@
 import { db } from "../config/db";
-import { posts, users } from "@prisma/client";
-import { communitiesPosts } from "@prisma/client";
+import { NewPost, NewCommunityPost, NewLike, NewComment, CompletePost } from "./protocols";
 
-type NewPost = {
-  ownerId: number,
-  description: string,
-  media?: string
-}
 
-type NewCommunityPost = {
-  postId: number, communityId: number
-}
 
 function createPost(data: NewPost) {
   return db.prisma.posts.create({
@@ -34,13 +25,6 @@ function findAll() {
   })
 }
 
-type CompletePost = (posts & {
-  users: users;
-  _count: {
-      comments: number;
-      likes: number;
-  };
-});
 
 async function findUserTimeline(userId: number) {
   const whoUserFollows = await db.prisma.followers.findMany({
@@ -48,14 +32,14 @@ async function findUserTimeline(userId: number) {
     select: { followedId: true }
   });
 
-  const ids = whoUserFollows.map( obj => obj.followedId);
+  const ids = whoUserFollows.map(obj => obj.followedId);
 
   const followedUsersPosts = await db.prisma.posts.findMany({
-    where: {ownerId: {in: ids}},
+    where: { ownerId: { in: ids } },
     include: {
       users: true,
       _count: {
-        select: {likes: true, comments: true}
+        select: { likes: true, comments: true }
       }
     }
   });
@@ -81,7 +65,15 @@ async function findUserTimeline(userId: number) {
 
 }
 
-async function findCommunitiesTimeline(){}
+async function postLike(data: NewLike) {
+  return db.prisma.likes.create({ data });
+}
+
+async function postComment(data: NewComment) {
+  return db.prisma.comments.create({ data })
+}
+
+async function findCommunitiesTimeline() { }
 
 export const publicationsRepository = {
   createPost,
