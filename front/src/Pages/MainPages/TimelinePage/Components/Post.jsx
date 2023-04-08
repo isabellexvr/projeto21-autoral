@@ -13,16 +13,16 @@ export default function Post({
   postDescription,
   likesCount,
   commentsCount,
-  time
+  time,
 }) {
   const [liked, setLiked] = useState(false);
 
-  function getTimeAgo(time){
+  function getTimeAgo(time) {
     const createdAt = new Date(time);
-    const now = new Date()
+    const now = new Date();
     const subtractMins = now.getMinutes() - createdAt.getMinutes();
     console.log(now.getMinutes() - createdAt.getMinutes());
-    if(subtractMins >= 60) {
+    if (subtractMins >= 60) {
       const subtractHours = now.getHours() - createdAt.getHours();
       return `${subtractHours} hours ago`;
     }
@@ -31,6 +31,41 @@ export default function Post({
 
   return (
     <>
+      {postMedia === "null" && (
+        <PostContainer>
+          <HeaderContainer>
+            <LeftHeaderContainer>
+              <img src={userPicture} />
+              <TextInfo>
+                <h1>{fullName}</h1>
+                <h2>@{userName}</h2>
+                <h3>{getTimeAgo(time)}</h3>
+              </TextInfo>
+            </LeftHeaderContainer>
+            <RightHeaderContainer>
+              <OptionsButton>
+                <SlOptions />
+              </OptionsButton>
+            </RightHeaderContainer>
+          </HeaderContainer>
+          <PostContent>
+          <h1><strong>-</strong> {postDescription}</h1>
+            <ButtonContainer>
+              {liked ? (
+                <HiHeart color={"red"} onClick={() => setLiked(false)} />
+              ) : (
+                <HiOutlineHeart onClick={() => setLiked(true)} />
+              )}
+              <AiOutlineComment />
+            </ButtonContainer>
+            <InfoContainer>
+              <p>{likesCount} Likes&nbsp;</p>
+              <p>&nbsp;•&nbsp;</p>
+              <p>&nbsp;{commentsCount} Comments</p>
+            </InfoContainer>
+          </PostContent>
+        </PostContainer>
+      )}
       {postMedia !== "null" && (
         <PostContainer>
           <HeaderContainer>
@@ -50,7 +85,7 @@ export default function Post({
           </HeaderContainer>
           <PostContent>
             <PostMedia src={postMedia} />
-            <h1>- {postDescription}</h1>
+            <h1><strong>-</strong> {postDescription}</h1>
             <ButtonContainer>
               {liked ? (
                 <HiHeart color={"red"} onClick={() => setLiked(false)} />
@@ -73,7 +108,7 @@ export default function Post({
 
 const PostContainer = styled.div`
   width: 82%;
-  height: 400px;
+  height: fit-content;
   margin-top: 20px;
   background-color: ${colors.lighterBlack};
   border-radius: 15px;
@@ -85,6 +120,7 @@ const PostContainer = styled.div`
 
 const HeaderContainer = styled.div`
   margin-top: 13px;
+  margin-bottom: 10px;
   height: 60px;
   width: 90%;
   display: flex;
@@ -148,7 +184,7 @@ const RightHeaderContainer = styled.div`
 `;
 
 const PostContent = styled.div`
-  height: 305px;
+  height: fit-content;
   width: 90%;
   margin-bottom: 15px;
 
@@ -157,6 +193,9 @@ const PostContent = styled.div`
   flex-direction: column;
   align-items: center;
   > h1 {
+    >strong{
+      color: ${colors.orange};
+    }
     width: 95%;
     text-align: left;
     margin-top: 10px;
@@ -174,11 +213,11 @@ const PostMedia = styled.img`
 
 const ButtonContainer = styled.div`
   display: flex;
-  width: 95%;
-  margin-top: 10px;
+  width: 90%;
+  margin-top: 15px;
   > svg {
     font-size: 25px;
-    margin-right: 10px;
+    margin-right: 36px;
     color: ${(p) => p.color};
   }
 `;
