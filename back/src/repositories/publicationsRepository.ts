@@ -1,3 +1,4 @@
+import { communities } from "@prisma/client";
 import { db } from "../config/db";
 import { NewPost, NewCommunityPost, NewLike, NewComment, CompletePost } from "./protocols";
 
@@ -64,13 +65,31 @@ async function findUsersPosts(userId: number) {
 };
 
 function findPostsByCommunityId(communityId: number) {
-  return db.prisma.communities.findMany({ where: { id: communityId } })
-}
-
-function findPostsByUserCommunities(userId: number) {
   return db.prisma.posts.findMany({
     where: {
-      users: { usersCommunities: { some: { userId } } }
+      communitiesPosts: { some: { communityId } },
+    },
+    include: {
+      users: true,
+      _count: {
+        select: { likes: true, comments: true }
+      }
+    }
+  })
+}
+
+/* const posts = await client.post.findMany({
+  where: {
+    tags: {
+      has: 'databases',
+    },
+  },
+}) */
+
+function findPostsByUserCommunities(userCommunities: number[]) {
+  return db.prisma.posts.findMany({
+    where: {
+      communitiesPosts: { some: { communityId: { in: userCommunities } } }
 
     },
     include: {

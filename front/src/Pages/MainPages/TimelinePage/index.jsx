@@ -22,13 +22,12 @@ import styled from "styled-components";
 
 const TIMELINESTYPES = ["My Timeline", "Communities"];
 
-export default function TimelinePage({ isModalOpened, setIsModalOpened }) {
+export default function TimelinePage({ isModalOpened, setIsModalOpened, loading, setLoading }) {
   const { theme, setTheme } = useTheme();
   const { userInfo, setUserInfo } = useUserInfo();
   const [selectedTimeline, setSelectedTimeline] = useState(0);
   const [posts, setPosts] = useState([]);
   const [communities, setCommunities] = useState([]);
-  const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
 

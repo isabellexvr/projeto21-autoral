@@ -2,6 +2,7 @@ import { usersRepository } from './../repositories/usersRepository';
 import { publicationsRepository } from './../repositories/publicationsRepository';
 import { newPost } from "../controllers/publicationsControllers";
 import { userDoesntExist } from '../errors';
+import { communitiesRepository } from '../repositories';
 
 async function createPost(info: newPost, communityId: number | null, userId: number) {
     const { description, media } = info;
@@ -50,7 +51,9 @@ async function findPostsByCommunity(communityId: number){
 }
 
 async function findPostsByUserCommunities(userId: number){
-    const posts = await publicationsRepository.findPostsByUserCommunities(userId);
+    const userCommunities = await communitiesRepository.findCommunitiesByUserId(userId);
+    const userCommunitiesIds = userCommunities.map( c => c.id)
+    const posts = await publicationsRepository.findPostsByUserCommunities(userCommunitiesIds);
     return posts
 }
 

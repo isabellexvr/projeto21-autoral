@@ -16,14 +16,27 @@ import Post from "../TimelinePage/Components/Post";
 
 const PROFILEVIEWS = ["Posts", "Communities"];
 
-export default function ProfilePage({ isModalOpened, setIsModalOpened }) {
+export default function ProfilePage({ isModalOpened, setIsModalOpened, loading, setLoading }) {
   const { theme, setTheme } = useTheme();
   const { userInfo, setUserInfo } = useUserInfo();
-  const [loading, setLoading] = useState(false);
-  const [view, setView] = useState(0);
-  const [usersPosts, setUsersPosts] = useState([]);
+  const [viewContent, setViewContent] = useState(0);
+  const [content, setContent] = useState([]);
 
   const navigate = useNavigate();
+
+  function handleContent(profileView){
+    if(userInfo && profileView === 1){
+      api
+      .get("/publications/user-communities", {
+        headers: { Authorization: "Bearer " + userInfo.token },
+      })
+      .then((res) => {
+        setLoading(false)
+        setContent(res.data)
+        console.log(res.data)})
+      .catch((err) => console.log(err));
+    }
+  }
 
   useEffect(() => {
     const isLoggedIn = localStorage.getItem("userInfo");
@@ -39,14 +52,14 @@ export default function ProfilePage({ isModalOpened, setIsModalOpened }) {
   }, []);
 
   useEffect(() => {
-    if (userInfo) {
+    if (userInfo && viewContent === 0) {
       api
         .get("/publications/profile", {
           headers: { Authorization: "Bearer " + userInfo.token },
         })
         .then((res) => {
           setLoading(false)
-          setUsersPosts(res.data)
+          setContent(res.data)
           console.log(res.data)})
         .catch((err) => console.log(err));
     }
@@ -89,14 +102,18 @@ export default function ProfilePage({ isModalOpened, setIsModalOpened }) {
           </UserStatisticsContainer>
           <ViewSelection>
             {PROFILEVIEWS.map((v, i) => (
-              <ViewButton isSelected={view === i} onClick={() => setView(i)}>
+              <ViewButton isSelected={viewContent === i} onClick={() => {
+                
+                setViewContent(i)
+                handleContent(i)
+                }}>
                 {v}
               </ViewButton>
             ))}
           </ViewSelection>
           {loading && <LoadingPosts theme={theme} />}
-          {!loading && usersPosts.length > 0 && (
-            <>{usersPosts.map((p ,i) => 
+          {!loading && content.length > 0 && (
+            <>{content.map((p ,i) => 
               <Post
               key={i}
               fullName={p.users.fullName}
