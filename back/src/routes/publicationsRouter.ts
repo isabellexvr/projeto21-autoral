@@ -6,10 +6,11 @@ import { createPost, findPostsByCommunity, findPostsByUserCommunities, findTimel
 const publicationsRouter = Router();
 
 publicationsRouter
+    .get("/profile/:userName", findUsersPosts)
+    
     .all("/*", authToken)
     .post("/new", bodyValidation(newPostSchema), createPost)
     .get("/timeline", findTimelineById)
-    .get("/profile", findUsersPosts)
     .get("/communities/:communityId", findPostsByCommunity)
     .get("/user-communities", findPostsByUserCommunities)
 

@@ -1,7 +1,5 @@
 import Footer from "../Constants/Footer";
-import Header from "../Constants/Header";
 import PostModal from "../Constants/PostModal";
-import { Background } from "../Constants/styles";
 import { useTheme } from "../../../Contexts/ThemeContext";
 import { useUserInfo } from "../../../Contexts/UserInfoContext";
 import styled from "styled-components";
@@ -9,7 +7,7 @@ import { HiArrowNarrowLeft } from "react-icons/hi";
 import { SlOptions } from "react-icons/sl";
 import { colors } from "../../Assets/colors";
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import LoadingPosts from "../TimelinePage/Components/LoadingPosts";
 import api from "../../Services/Api/api.js";
 import Post from "../TimelinePage/Components/Post";
@@ -29,22 +27,22 @@ export default function ProfilePage({
   const [content, setContent] = useState([]);
 
   const navigate = useNavigate();
+  const { userName } = useParams();
+  console.log(userName);
 
   function handleContent(profileView) {
     if (userInfo && profileView === 1) {
       setLoading(true);
       api
-        .get("/communities/user", {
-          headers: { Authorization: "Bearer " + userInfo.token },
-        })
+        .get(`/communities/user/${userName}`)
         .then((res) => {
           setLoading(false);
           setContent(res.data);
           console.log(res.data);
         })
         .catch((err) => console.log(err));
-    } 
-    console.log(profileView)
+    }
+    console.log(profileView);
     if (userInfo && profileView === 0) {
       setLoading(true);
       api
@@ -76,7 +74,7 @@ export default function ProfilePage({
   useEffect(() => {
     if (userInfo && viewContent === 0) {
       api
-        .get("/publications/profile", {
+        .get(`/publications/profile/${userName}`, {
           headers: { Authorization: "Bearer " + userInfo.token },
         })
         .then((res) => {

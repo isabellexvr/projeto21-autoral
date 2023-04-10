@@ -6,6 +6,7 @@ export type NewCommunity = {
     icon?: string,
     categoryId: number,
     adminId: number,
+    cityId: number,
     createdAt?: Date
 }
 

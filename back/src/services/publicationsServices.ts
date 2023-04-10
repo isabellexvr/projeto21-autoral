@@ -39,8 +39,14 @@ async function findUserTimeline(userId: number) {
 
 }
 
-async function findUsersPosts(userId: number) {
-    await checkUserExists(userId);
+async function findUserIdByUsername(userName: string){
+    const user = await usersRepository.findUserByUsername(userName)
+    if(!user) throw userDoesntExist();
+    return user.id
+}
+
+async function findUsersPosts(userName: string) {
+    const userId = await findUserIdByUsername(userName);
     const posts = await publicationsRepository.findUsersPosts(userId);
     return posts;
 }

@@ -18,6 +18,7 @@ export async function createUser(req: Request, res: Response) {
 
 export async function login(req: Request, res: Response) {
     const loginInfo: signIn = req.body;
+    console.log(loginInfo)
 
     try {
         const userInfo = await usersServices.login(loginInfo);

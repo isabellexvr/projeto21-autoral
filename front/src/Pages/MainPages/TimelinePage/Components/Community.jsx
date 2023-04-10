@@ -1,21 +1,29 @@
 import styled from "styled-components";
 import { colors } from "../../../Assets/colors";
-export default function Community({ communityCover, communityIcon, communityName }) {
+import { StyledLink } from "../../../Constants/styles";
+export default function Community({
+  communityCover,
+  communityIcon,
+  communityName,
+}) {
   return (
-    <CommunityContainer communityCover={communityCover}>
-      <Footer>
-        <h1>{communityName}</h1>
-      </Footer>
-      <Icon src={communityIcon} />
-    </CommunityContainer>
+    <StyledLink to="/community/1">
+      <CommunityContainer communityCover={communityCover}>
+        <Footer>
+          <h1>{communityName}</h1>
+        </Footer>
+        <Icon src={communityIcon} />
+      </CommunityContainer>
+    </StyledLink>
   );
 }
 
 const CommunityContainer = styled.div`
-  background-image: url(${(p) => p.communityCover});
+  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+    url(${(p) => p.communityCover});
   background-size: cover;
   background-repeat: no-repeat;
-  height: 158px;
+  height: 155px;
   width: 120px;
   margin-right: 15px;
   border-radius: 15px;
@@ -35,7 +43,7 @@ const Footer = styled.div`
   border-bottom-right-radius: 15px;
   border-bottom-left-radius: 15px;
   position: absolute;
-  bottom: -22px;
+  bottom: -23px;
   left: 50%;
   transform: translate(-50%, -50%);
   border-top-left-radius: 10px;
@@ -50,7 +58,7 @@ const Icon = styled.img`
   height: 30px;
   border-radius: 50%;
   position: absolute;
-  bottom: 20px;
+  bottom: 18px;
   left: 50%;
   transform: translate(-50%, -50%);
   box-sizing: border-box;

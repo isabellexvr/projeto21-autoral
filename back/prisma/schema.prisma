@@ -31,13 +31,41 @@ model communities {
   description      String?
   icon             String?
   cover            String?
+  cityId           Int
   categoryId       Int
   adminId          Int
   createdAt        DateTime           @default(dbgenerated("'2023-04-07 22:15:55.247532-03'::timestamp with time zone")) @db.Timestamptz(6)
   categories       categories         @relation(fields: [categoryId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "communities_fk0")
   users            users              @relation(fields: [adminId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "communities_fk1")
+  cities           cities             @relation(fields: [cityId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "communities_fk2")
   communitiesPosts communitiesPosts[]
   usersCommunities usersCommunities[]
+}
+
+model cities {
+  id          Int           @id(map: "cities_pk") @default(autoincrement())
+  name        String
+  stateId     Int
+  states      states        @relation(fields: [stateId], references: [id], map: "cities_fk0")
+  communities communities[]
+  users       users[]
+  countries   countries?    @relation(fields: [countriesId], references: [id])
+  countriesId Int?
+}
+
+model states {
+  id        Int       @id(map: "states_pk") @default(autoincrement())
+  name      String
+  countryId Int
+  countries countries @relation(fields: [countryId], references: [id], map: "states_fk0")
+  cities    cities[]
+}
+
+model countries {
+  id     Int      @id(map: "countries_pk") @default(autoincrement())
+  name   String
+  cities cities[]
+  states states[]
 }
 
 model communitiesPosts {
@@ -81,12 +109,15 @@ model users {
   fullName                              String             @db.VarChar(25)
   userName                              String             @unique @db.VarChar(25)
   picture                               String?
+  cover                                 String?            @default("https://cdn.pixabay.com/photo/2016/11/19/22/05/sailing-boat-1841376_960_720.jpg")
+  cityId                                Int
   email                                 String             @unique
   password                              String             @unique
   comments                              comments[]
   communities                           communities[]
   followers_followers_followerIdTousers followers[]        @relation("followers_followerIdTousers")
   followers_followers_followedIdTousers followers[]        @relation("followers_followedIdTousers")
+  cities                                cities             @relation(fields: [cityId], references: [id])
   likes                                 likes[]
   posts                                 posts[]
   usersCommunities                      usersCommunities[]

@@ -8,8 +8,10 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 export default function Footer({ theme, setIsModalOpened }) {
+
   const [selectedIcon, setSelectedIcon] = useState();
-  const navigate = useNavigate()
+
+  const navigate = useNavigate();
 
   return (
     <FooterContainer>

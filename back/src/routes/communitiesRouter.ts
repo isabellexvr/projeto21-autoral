@@ -8,8 +8,9 @@ const communitiesRouter = Router();
 
 communitiesRouter
     .get("/category/:categoryId", findCategoryCommunities)
+    .get("/user/:userName", findUsersCommunities)
     .all("*", authToken)
     .post("/create", bodyValidation(newCommunitySchema), createNewCommunity)
-    .get("/user", findUsersCommunities)
+    
 
 export { communitiesRouter };

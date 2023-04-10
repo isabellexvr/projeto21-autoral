@@ -1,5 +1,6 @@
 import { NewCommunity, NewMember, communitiesRepository } from "../repositories/communitiesRepository";
 import { ExceededLimitError, NameAlreadyExistsError, UserIsAlreadyAMember } from "../errors/communitiesErrors";
+import { usersRepository } from "../repositories";
 
 async function createCommunity(data: NewCommunity) {
     checkCommunitiesAmmount(data.adminId);
@@ -33,9 +34,11 @@ async function checkCommunityName(name: string) {
     if (community) throw NameAlreadyExistsError();
 }
 
-async function findUserCommunities(userId: number) {
+async function findUserCommunities(userName: string) {
 
-    const communities = await communitiesRepository.findCommunitiesByUserId(userId);
+    const user = await usersRepository.findUserByUsername(userName);
+
+    const communities = await communitiesRepository.findCommunitiesByUserId(user.id);
     return communities;
 }
 

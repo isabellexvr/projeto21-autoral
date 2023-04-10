@@ -43,7 +43,7 @@ function App() {
               }
             />
             <Route
-              path="/user/:userId"
+              path="/user/:userName"
               element={
                 <ProfilePage
                   isModalOpened={isModalOpened}

@@ -7,6 +7,7 @@ type NewCommunityPayload = {
     description?: string,
     icon?: string,
     categoryId: number,
+    cityId: number,
     createdAt?: Date
 }
 
@@ -25,10 +26,10 @@ export async function createNewCommunity(req: AuthenticatedRequest, res: Respons
 };
 
 export async function findUsersCommunities(req: AuthenticatedRequest, res: Response) {
-    const userId = req.userId;
+    const userName = req.params.userName;
 
     try {
-        const communities = await communitiesServices.findUserCommunities(userId);
+        const communities = await communitiesServices.findUserCommunities(userName);
         res.send(communities).status(200);
     } catch (error) {
         return res.status(500).send(error)

@@ -90,7 +90,7 @@ export default function TimelinePage({ isModalOpened, setIsModalOpened, loading,
             {communities.map((c, i) => (
               <Community
                 key={i}
-                communityCover={""}
+                communityCover={c.cover}
                 communityIcon={c.icon}
                 communityName={c.name}
               />

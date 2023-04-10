@@ -33,10 +33,10 @@ export async function findTimelineById(req: AuthenticatedRequest, res: Response)
 }
 
 export async function findUsersPosts(req: AuthenticatedRequest, res: Response) {
-    const userId = req.userId;
+    const userName = req.params.userName
 
     try {
-        const posts = await publicationsServices.findUsersPosts(userId);
+        const posts = await publicationsServices.findUsersPosts(userName);
         res.status(200).send(posts);
     } catch (error) {
         return res.status(500).send(error);
