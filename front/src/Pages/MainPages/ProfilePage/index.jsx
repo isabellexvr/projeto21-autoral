@@ -13,10 +13,16 @@ import { useNavigate } from "react-router-dom";
 import LoadingPosts from "../TimelinePage/Components/LoadingPosts";
 import api from "../../Services/Api/api.js";
 import Post from "../TimelinePage/Components/Post";
+import Community from "./components/Community";
 
 const PROFILEVIEWS = ["Posts", "Communities"];
 
-export default function ProfilePage({ isModalOpened, setIsModalOpened, loading, setLoading }) {
+export default function ProfilePage({
+  isModalOpened,
+  setIsModalOpened,
+  loading,
+  setLoading,
+}) {
   const { theme, setTheme } = useTheme();
   const { userInfo, setUserInfo } = useUserInfo();
   const [viewContent, setViewContent] = useState(0);
@@ -24,17 +30,18 @@ export default function ProfilePage({ isModalOpened, setIsModalOpened, loading, 
 
   const navigate = useNavigate();
 
-  function handleContent(profileView){
-    if(userInfo && profileView === 1){
+  function handleContent(profileView) {
+    if (userInfo && profileView === 1) {
       api
-      .get("/publications/user-communities", {
-        headers: { Authorization: "Bearer " + userInfo.token },
-      })
-      .then((res) => {
-        setLoading(false)
-        setContent(res.data)
-        console.log(res.data)})
-      .catch((err) => console.log(err));
+        .get("/communities/user", {
+          headers: { Authorization: "Bearer " + userInfo.token },
+        })
+        .then((res) => {
+          setLoading(false);
+          setContent(res.data);
+          console.log(res.data);
+        })
+        .catch((err) => console.log(err));
     }
   }
 
@@ -47,7 +54,7 @@ export default function ProfilePage({ isModalOpened, setIsModalOpened, loading, 
     } else {
       const info = JSON.parse(isLoggedIn);
       setUserInfo(info);
-      setLoading(true)
+      setLoading(true);
     }
   }, []);
 
@@ -58,9 +65,10 @@ export default function ProfilePage({ isModalOpened, setIsModalOpened, loading, 
           headers: { Authorization: "Bearer " + userInfo.token },
         })
         .then((res) => {
-          setLoading(false)
-          setContent(res.data)
-          console.log(res.data)})
+          setLoading(false);
+          setContent(res.data);
+          console.log(res.data);
+        })
         .catch((err) => console.log(err));
     }
   }, [loading]);
@@ -102,30 +110,42 @@ export default function ProfilePage({ isModalOpened, setIsModalOpened, loading, 
           </UserStatisticsContainer>
           <ViewSelection>
             {PROFILEVIEWS.map((v, i) => (
-              <ViewButton isSelected={viewContent === i} onClick={() => {
-                
-                setViewContent(i)
-                handleContent(i)
-                }}>
+              <ViewButton
+                isSelected={viewContent === i}
+                onClick={() => {
+                  setViewContent(i);
+                  handleContent(i);
+                }}
+              >
                 {v}
               </ViewButton>
             ))}
           </ViewSelection>
           {loading && <LoadingPosts theme={theme} />}
           {!loading && content.length > 0 && (
-            <>{content.map((p ,i) => 
-              <Post
-              key={i}
-              fullName={p.users.fullName}
-              userName={p.users.userName}
-              userPicture={p.users.picture}
-              postMedia={p.media}
-              postDescription={p.description}
-              likesCount={p._count.likes}
-              commentsCount={p._count.comments}
-              time={p.createdAt}
-            ></Post>
-              )}</>
+            <>
+              {viewContent === 0
+                ? content.map((p, i) => (
+                    <Post
+                      key={i}
+                      fullName={p.users.fullName}
+                      userName={p.users.userName}
+                      userPicture={p.users.picture}
+                      postMedia={p.media}
+                      postDescription={p.description}
+                      likesCount={p._count.likes}
+                      commentsCount={p._count.comments}
+                      time={p.createdAt}
+                    />
+                  ))
+                : content.map((c, i) => (
+                    <Community
+                      name={c.name}
+                      description={c.description}
+                      icon={c.icon}
+                    />
+                  ))}
+            </>
           )}
 
           <Footer theme={theme} setIsModalOpened={setIsModalOpened} />
