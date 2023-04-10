@@ -1,12 +1,14 @@
 import { Router } from "express";
 import { bodyValidation, authToken } from "../middlewares";
-import { newCommentSchema } from "../schemas";
-import { postComment } from "../controllers/commentsControllers";
+import { commentSchema } from "../schemas";
+import { deleteComment, editComment, postComment } from "../controllers/commentsControllers";
 
 const commentsRouter = Router();
 
 commentsRouter
     .all("/*", authToken)
-    .post("/new", bodyValidation(newCommentSchema), postComment);
+    .post("/new", bodyValidation(commentSchema), postComment)
+    .patch("/edit", bodyValidation(commentSchema), editComment)
+    .delete("/delete", bodyValidation(commentSchema), deleteComment)
 
 export { commentsRouter };
