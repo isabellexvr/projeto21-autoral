@@ -31,6 +31,7 @@ export default function TimelinePage({ isModalOpened, setIsModalOpened, loading,
 
   const navigate = useNavigate();
 
+
   useEffect(() => {
     const isLoggedIn = localStorage.getItem("userInfo");
     if (!isLoggedIn) {
@@ -63,9 +64,7 @@ export default function TimelinePage({ isModalOpened, setIsModalOpened, loading,
         });
 
       api
-        .get("/communities/user", {
-          headers: { Authorization: "Bearer " + userInfo.token },
-        })
+        .get(`/communities/user/${userInfo.userName}`)
         .then((res) => {
           setCommunities(res.data);
           console.log(res.data);

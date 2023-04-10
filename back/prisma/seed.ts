@@ -107,6 +107,33 @@ async function main() {
                 categoryId: 1,
                 adminId: 1
             }
+        });
+
+        await db.prisma.usersCommunities.create({
+            data: {
+                communityId: 1,
+                userId: 1
+            }
+        });
+        
+        await db.prisma.posts.createMany({
+            data: [
+                {
+                    id: 1,
+                    ownerId: 1,
+                    description: "This is my first post!",
+                    media: "https://cdn.pixabay.com/photo/2017/05/25/15/08/jogging-2343558_1280.jpg"
+                },
+                {
+                    id: 2,
+                    ownerId: 1,
+                    description: "This is a community post!",
+                }
+            ]
+        });
+
+        await db.prisma.communitiesPosts.create({
+            data: { communityId: 1, postId: 2 }
         })
     }
 };
