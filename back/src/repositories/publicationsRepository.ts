@@ -1,6 +1,6 @@
-import { communities } from "@prisma/client";
+
 import { db } from "../config/db";
-import { NewPost, NewCommunityPost, NewLike, NewComment, CompletePost } from "./protocols";
+import { NewPost, NewCommunityPost, CompletePost } from "./protocols";
 
 function createPost(data: NewPost) {
   return db.prisma.posts.create({
@@ -18,7 +18,7 @@ async function findUserTimeline(userId: number) {
     select: { followedId: true }
   });
 
-  const ids = whoUserFollows.map(obj => obj.followedId);
+  const ids = whoUserFollows.map(obj => obj.followedId); //1
 
   const followedUsersPosts = await db.prisma.posts.findMany({
     where: { ownerId: { in: ids } },
@@ -42,10 +42,27 @@ async function findUserTimeline(userId: number) {
 
   const concat = [...followedUsersPosts, ...usersPosts];
 
-  const sorted = concat.sort((objA: CompletePost, objB: CompletePost) => {
+  const postsIds = concat.map(p => p.id);//2
+
+  const communityPosts = await db.prisma.communitiesPosts.findMany({
+    where: { postId: { in: postsIds } }
+  });
+
+  const hashtable = {};
+
+  communityPosts.forEach(e => hashtable[e.id] = true)//3
+
+  const subtracted = concat.filter(p => { 
+    if(hashtable[p.id]){
+      return p
+    }
+  })//4
+
+
+  const sorted = subtracted.sort((objA: CompletePost, objB: CompletePost) => {
 
     return objB.id - objA.id
-  });
+  });//5
 
   return sorted;
 
@@ -77,14 +94,6 @@ function findPostsByCommunityId(communityId: number) {
     }
   })
 }
-
-/* const posts = await client.post.findMany({
-  where: {
-    tags: {
-      has: 'databases',
-    },
-  },
-}) */
 
 function findPostsByUserCommunities(userCommunities: number[]) {
   return db.prisma.posts.findMany({
