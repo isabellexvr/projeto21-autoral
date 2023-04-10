@@ -32,13 +32,36 @@ export async function findTimelineById(req: AuthenticatedRequest, res: Response)
     }
 }
 
-export async function findUsersPosts(req: AuthenticatedRequest, res: Response){
+export async function findUsersPosts(req: AuthenticatedRequest, res: Response) {
     const userId = req.userId;
 
-    try{
+    try {
         const posts = await publicationsServices.findUsersPosts(userId);
         res.status(200).send(posts);
-    }catch(error){
+    } catch (error) {
+        return res.status(500).send(error);
+    }
+}
+
+export async function findPostsByCommunity(req: AuthenticatedRequest, res: Response) {
+    const userId = req.userId;
+    const { communityId: number } = req.params;
+
+    try {
+        const posts = await publicationsServices.findPostsByCommunity(communityId);
+        res.status(200).send(posts);
+    } catch (error) {
+        return res.status(500).send(error);
+    }
+}
+
+export async function findPostsByUserCommunities(req: AuthenticatedRequest, res: Response) {
+    const userId = req.userId;
+
+    try {
+        const posts = await publicationsServices.findPostsByUserCommunities(userId);
+        res.status(200).send(posts);
+    } catch (error) {
         return res.status(500).send(error);
     }
 }
