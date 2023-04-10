@@ -1,6 +1,10 @@
 import { db } from "../config/db";
 import { NewComment } from "./protocols";
 
+function findComment(data: NewComment) {
+    return db.prisma.comments.findFirst({ where: data })
+}
+
 function editComment(commentId: number, comment: string) {
     return db.prisma.comments.update({
         where: { id: commentId },
@@ -21,5 +25,6 @@ function deleteComment(commentId: number) {
 export const commentsRepository = {
     editComment,
     postComment,
-    deleteComment
+    deleteComment,
+    findComment
 }

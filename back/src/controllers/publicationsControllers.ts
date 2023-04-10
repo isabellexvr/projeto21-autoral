@@ -32,37 +32,6 @@ export async function findTimelineById(req: AuthenticatedRequest, res: Response)
     }
 }
 
-
-export async function postLike(req: AuthenticatedRequest, res: Response) {
-    const userId = req.userId;
-    const postId: number = req.body.postId;
-    try {
-        const data = { ownerId: userId, postId };
-        await publicationsServices.postLike(data);
-        res.sendStatus(200);
-    } catch (error) {
-        return res.status(500).send(error);
-    }
-}
-
-type PartNewComment = {
-    postId: number;
-    comment: string;
-    createdAt?: Date;
-}
-
-export async function postComment(req: AuthenticatedRequest, res: Response) {
-    const userId = req.userId;
-    const comment: PartNewComment = req.body.postId;
-
-    try {
-        await publicationsServices.postComment({ ...comment, ownerId: userId });
-        res.sendStatus(200);
-    } catch (error) {
-        return res.status(500).send(error);
-    }
-}
-
 export async function findUsersPosts(req: AuthenticatedRequest, res: Response){
     const userId = req.userId;
 
