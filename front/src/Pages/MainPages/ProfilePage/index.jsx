@@ -32,8 +32,23 @@ export default function ProfilePage({
 
   function handleContent(profileView) {
     if (userInfo && profileView === 1) {
+      setLoading(true);
       api
         .get("/communities/user", {
+          headers: { Authorization: "Bearer " + userInfo.token },
+        })
+        .then((res) => {
+          setLoading(false);
+          setContent(res.data);
+          console.log(res.data);
+        })
+        .catch((err) => console.log(err));
+    } 
+    console.log(profileView)
+    if (userInfo && profileView === 0) {
+      setLoading(true);
+      api
+        .get("/publications/profile", {
           headers: { Authorization: "Bearer " + userInfo.token },
         })
         .then((res) => {
@@ -143,6 +158,7 @@ export default function ProfilePage({
                       name={c.name}
                       description={c.description}
                       icon={c.icon}
+                      cover={c.cover}
                     />
                   ))}
             </>

@@ -30,6 +30,7 @@ model communities {
   name             String
   description      String?
   icon             String?
+  cover            String?
   categoryId       Int
   adminId          Int
   createdAt        DateTime           @default(dbgenerated("'2023-04-07 22:15:55.247532-03'::timestamp with time zone")) @db.Timestamptz(6)

@@ -13,35 +13,46 @@
 import styled from "styled-components";
 import { colors } from "../../../Assets/colors";
 
-export default function Community({ name, description, icon, category }) {
+export default function Community({
+  name,
+  description,
+  icon,
+  cover,
+  category,
+}) {
   return (
-    <CommunityContainer>
+    <CommunityContainer cover={cover}>
       <CommunityHeader>
-                <img src={icon} />
+        <img src={icon} />
         <h1>{name}</h1>
-
       </CommunityHeader>
-      <h3><strong>- </strong>{description}</h3>
-
+      <h3>
+        <strong>- </strong>
+        {description}
+      </h3>
     </CommunityContainer>
   );
 }
 
 const CommunityContainer = styled.div`
   width: 82%;
-  height: fit-content;
+  height: 250px;
   margin-top: 20px;
-  background-color: ${colors.lighterBlack};
+  background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),url(${(p) => p.cover});
+  background-repeat: no-repeat;
+  background-size: cover;
   border-radius: 15px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-between;
-  >h3{
-    >strong{
-            color: ${colors.pink};
+  position: relative;
+  > h3 {
+    width: 70%;
+    text-align: center;
+    opacity: 0.65;
+    > strong {
+      color: ${colors.pink};
     }
-
   }
 `;
 
@@ -53,15 +64,14 @@ const CommunityHeader = styled.div`
   align-items: center;
   width: 80%;
   > h1 {
-
     font-size: 18px;
     font-weight: 600;
   }
-  >img{
+  > img {
     width: 45px;
     height: 45px;
     border-radius: 50%;
-    margin-right: 15px; 
+    margin-right: 15px;
     box-sizing: border-box;
     border: 2px solid ${colors.orange};
   }
