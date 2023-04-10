@@ -1,8 +1,6 @@
 import { db } from "../config/db";
 import { NewPost, NewCommunityPost, NewLike, NewComment, CompletePost } from "./protocols";
 
-
-
 function createPost(data: NewPost) {
   return db.prisma.posts.create({
     data
@@ -54,17 +52,36 @@ async function findUserTimeline(userId: number) {
 
 async function findUsersPosts(userId: number) {
   return db.prisma.posts.findMany({
-    where: {ownerId: userId},
-    orderBy: {id: "desc"},
+    where: { ownerId: userId },
+    orderBy: { id: "desc" },
     include: {
       users: true,
       _count: {
-        select: {likes: true, comments: true}
+        select: { likes: true, comments: true }
       }
     }
   });
 };
 
+function findPostsByCommunityId(communityId: number) {
+  return db.prisma.communities.findMany({ where: { id: communityId } })
+}
+
+function findPostsByUserCommunities(userId: number) {
+  return db.prisma.posts.findMany({
+    where: {
+      users: { usersCommunities: { some: { userId } } }
+
+    },
+    include: {
+      users: true,
+      _count: {
+        select: { likes: true, comments: true }
+      }
+    }
+
+  })
+}
 
 
 export const publicationsRepository = {
@@ -72,4 +89,6 @@ export const publicationsRepository = {
   setCommunityPost,
   findUserTimeline,
   findUsersPosts,
+  findPostsByCommunityId,
+  findPostsByUserCommunities
 }

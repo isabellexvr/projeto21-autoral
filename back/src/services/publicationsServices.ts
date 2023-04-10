@@ -1,10 +1,7 @@
-import { NewComment } from './../repositories/protocols';
 import { usersRepository } from './../repositories/usersRepository';
 import { publicationsRepository } from './../repositories/publicationsRepository';
 import { newPost } from "../controllers/publicationsControllers";
 import { userDoesntExist } from '../errors';
-import { NewLike } from '../repositories/protocols';
-import { commentsRepository, likesRepository } from 'repositories';
 
 async function createPost(info: newPost, communityId: number | null, userId: number) {
     const { description, media } = info;
@@ -47,10 +44,22 @@ async function findUsersPosts(userId: number) {
     return posts;
 }
 
+async function findPostsByCommunity(communityId: number){
+    const posts = await publicationsRepository.findPostsByCommunityId(communityId);
+    return posts
+}
+
+async function findPostsByUserCommunities(userId: number){
+    const posts = await publicationsRepository.findPostsByUserCommunities(userId);
+    return posts
+}
+
 
 
 export const publicationsServices = {
     createPost,
     findUserTimeline,
     findUsersPosts,
+    findPostsByCommunity,
+    findPostsByUserCommunities
 }

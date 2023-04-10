@@ -44,11 +44,10 @@ export async function findUsersPosts(req: AuthenticatedRequest, res: Response) {
 }
 
 export async function findPostsByCommunity(req: AuthenticatedRequest, res: Response) {
-    const userId = req.userId;
-    const { communityId: number } = req.params;
+    const communityId = req.params.communityId
 
     try {
-        const posts = await publicationsServices.findPostsByCommunity(communityId);
+        const posts = await publicationsServices.findPostsByCommunity(Number(communityId));
         res.status(200).send(posts);
     } catch (error) {
         return res.status(500).send(error);
