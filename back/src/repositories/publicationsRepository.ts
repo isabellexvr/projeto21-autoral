@@ -65,19 +65,11 @@ async function findUsersPosts(userId: number) {
   });
 };
 
-async function postLike(data: NewLike) {
-  return db.prisma.likes.create({ data });
-}
 
-async function postComment(data: NewComment) {
-  return db.prisma.comments.create({ data })
-}
 
 export const publicationsRepository = {
   createPost,
   setCommunityPost,
   findUserTimeline,
   findUsersPosts,
-  postLike,
-  postComment
 }

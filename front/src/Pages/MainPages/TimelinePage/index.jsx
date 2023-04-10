@@ -6,23 +6,19 @@ import Post from "./Components/Post";
 import { useEffect, useState } from "react";
 import Community from "./Components/Community";
 import {
-  ModalStyle,
   TimelineButton,
   TimelineSelection,
   FirstSectionTitle,
   FirstSection,
   CommunitiesContainer,
-  modalStyles,
 } from "./TimelineStyles";
 import api from "../../Services/Api/api.js";
 import { useUserInfo } from "../../../Contexts/UserInfoContext";
 import { useNavigate } from "react-router-dom";
-import NewPostForm from "./Components/NewPostForm";
 import LoadingPosts from "./Components/LoadingPosts";
 import NoPostsYet from "./Components/NoPostsYet";
 import PostModal from "../Constants/PostModal";
-
-const postsMocked = [1, 2, 3, 4, 5];
+import styled from "styled-components";
 
 const TIMELINESTYPES = ["My Timeline", "Communities"];
 
@@ -30,19 +26,11 @@ export default function TimelinePage({ isModalOpened, setIsModalOpened }) {
   const { theme, setTheme } = useTheme();
   const { userInfo, setUserInfo } = useUserInfo();
   const [selectedTimeline, setSelectedTimeline] = useState(0);
-
   const [posts, setPosts] = useState([]);
   const [communities, setCommunities] = useState([]);
   const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
-
-  ModalStyle.setAppElement();
-  console.log(userInfo)
-
-  function handleCloseModal() {
-    setIsModalOpened(false);
-  }
 
   useEffect(() => {
     const isLoggedIn = localStorage.getItem("userInfo");
@@ -57,14 +45,13 @@ export default function TimelinePage({ isModalOpened, setIsModalOpened }) {
   }, []);
 
   useEffect(() => {
-    if (userInfo) {
+    if (userInfo && selectedTimeline === 0) {
       api
-        .get("/publications/findById", {
+        .get("/publications/timeline", {
           headers: { Authorization: "Bearer " + userInfo.token },
         })
         .then((res) => {
           setPosts(res.data);
-          console.log(res.data);
           setLoading(false);
         })
         .catch((err) => {
@@ -75,8 +62,24 @@ export default function TimelinePage({ isModalOpened, setIsModalOpened }) {
           }
           setLoading(false);
         });
+
+      api
+        .get("/communities/user", {
+          headers: { Authorization: "Bearer " + userInfo.token },
+        })
+        .then((res) => {
+          setCommunities(res.data);
+          console.log(res.data);
+        })
+        .catch((err) => console.log(err));
     }
   }, [loading]);
+
+  function handlePosts(timeline) {
+    if(timeline === 1){
+      //TO-DO: trazer os posts das comunidades do usuário
+    }
+  }
 
   return (
     <>
@@ -85,13 +88,12 @@ export default function TimelinePage({ isModalOpened, setIsModalOpened }) {
         <FirstSectionTitle>Your Communities</FirstSectionTitle>
         <FirstSection>
           <CommunitiesContainer>
-            {postsMocked.map((c, i) => (
+            {communities.map((c, i) => (
               <Community
                 key={i}
-                communityCover={
-                  "https://yt3.googleusercontent.com/UhRgYwlAnZMwGH_SHPSSdaxP-7wc1eEPB9ye_5vJnWNna-RYvetlnxjOMGD3Lr6P2xPvLldDnA=s900-c-k-c0x00ffffff-no-rj"
-                }
-                communityIcon={""}
+                communityCover={""}
+                communityIcon={c.icon}
+                communityName={c.name}
               />
             ))}
           </CommunitiesContainer>
@@ -101,7 +103,10 @@ export default function TimelinePage({ isModalOpened, setIsModalOpened }) {
             <TimelineButton
               key={i}
               isSelected={selectedTimeline === i}
-              onClick={() => setSelectedTimeline(i)}
+              onClick={() => {
+                setSelectedTimeline(i);
+                handlePosts(i);
+              }}
             >
               {t}
             </TimelineButton>
@@ -140,3 +145,9 @@ export default function TimelinePage({ isModalOpened, setIsModalOpened }) {
     </>
   );
 }
+
+const LoadinCommunities = styled.div`
+    height: 158px;
+    width: 100%;
+    background-color: yellow;
+`

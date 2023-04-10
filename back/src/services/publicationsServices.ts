@@ -47,6 +47,7 @@ async function findUsersPosts(userId: number) {
 }
 
 async function postLike(data: NewLike) {
+    
     await publicationsRepository.postLike(data);
 }
 

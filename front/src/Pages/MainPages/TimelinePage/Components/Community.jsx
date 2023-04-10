@@ -1,10 +1,10 @@
 import styled from "styled-components";
 import { colors } from "../../../Assets/colors";
-export default function Community({ communityCover, communityIcon }) {
+export default function Community({ communityCover, communityIcon, communityName }) {
   return (
     <CommunityContainer communityCover={communityCover}>
       <Footer>
-        <h1>Soccer</h1>
+        <h1>{communityName}</h1>
       </Footer>
       <Icon src={communityIcon} />
     </CommunityContainer>
@@ -35,7 +35,7 @@ const Footer = styled.div`
   border-bottom-right-radius: 15px;
   border-bottom-left-radius: 15px;
   position: absolute;
-  bottom: -26px;
+  bottom: -22px;
   left: 50%;
   transform: translate(-50%, -50%);
   border-top-left-radius: 10px;

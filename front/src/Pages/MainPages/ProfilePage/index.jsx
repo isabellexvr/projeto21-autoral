@@ -41,7 +41,7 @@ export default function ProfilePage({ isModalOpened, setIsModalOpened }) {
   useEffect(() => {
     if (userInfo) {
       api
-        .get("/publications/findUsers", {
+        .get("/publications/profile", {
           headers: { Authorization: "Bearer " + userInfo.token },
         })
         .then((res) => {
