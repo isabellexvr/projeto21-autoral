@@ -28,11 +28,6 @@ async function createPost(info: newPost, communityId: number | null, userId: num
     return
 }
 
-async function findAll(){
-    const posts = await publicationsRepository.findAll();
-    return posts
-}
-
 async function checkUserExists(userId: number) {
     const user = await usersRepository.findUserById(userId);
     if(!user) throw userDoesntExist();
@@ -61,7 +56,6 @@ async function postComment(data: NewComment){
 
 export const publicationsServices = {
     createPost,
-    findAll,
     findUserTimeline,
     findUsersPosts,
     postLike,

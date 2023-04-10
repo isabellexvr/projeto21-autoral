@@ -13,19 +13,6 @@ function setCommunityPost(data: NewCommunityPost) {
   return db.prisma.communitiesPosts.create({ data });
 }
 
-function findAll() {
-  return db.prisma.posts.findMany({
-    orderBy: { id: 'desc' },
-    include: {
-      users: true,
-      _count: {
-        select: { likes: true, comments: true }
-      }
-    }
-  })
-}
-
-
 async function findUserTimeline(userId: number) {
   const whoUserFollows = await db.prisma.followers.findMany({
     where: { followerId: userId },
@@ -86,12 +73,9 @@ async function postComment(data: NewComment) {
   return db.prisma.comments.create({ data })
 }
 
-async function findCommunitiesTimeline() { }
-
 export const publicationsRepository = {
   createPost,
   setCommunityPost,
-  findAll,
   findUserTimeline,
   findUsersPosts,
   postLike,
