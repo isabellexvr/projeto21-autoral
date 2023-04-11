@@ -3,6 +3,7 @@ import { db } from "../config/db";
 import { NewPost, NewCommunityPost, CompletePost } from "./protocols";
 
 function createPost(data: NewPost) {
+  console.log(data)
   return db.prisma.posts.create({
     data
   })
@@ -50,10 +51,10 @@ async function findUserTimeline(userId: number) {
 
   const hashtable = {};
 
-  communityPosts.forEach(e => hashtable[e.id] = true)//3
+  communityPosts.forEach(e => hashtable[e.postId] = true)//3
 
   const subtracted = concat.filter(p => { 
-    if(hashtable[p.id]){
+    if(!hashtable[p.id]){
       return p
     }
   })//4

@@ -28,7 +28,7 @@ export default function ProfilePage({
 
   const navigate = useNavigate();
   const { userName } = useParams();
-  console.log(userName);
+  console.log(userInfo);
 
   function handleContent(profileView) {
     if (userInfo && profileView === 1) {
@@ -98,7 +98,7 @@ export default function ProfilePage({
               <SlOptions />
             </button>
           </ProfileHeader>
-          <UsersCover src="https://i.pinimg.com/originals/83/7c/90/837c90d079c6d1fb13d9cfeda0328183.jpg" />
+          <UsersCover src={userInfo.cover} />
           <UserMainInfoContainer>
             <UserProfilePic src={userInfo.picture} />
             <h1>{userInfo.fullName}</h1>

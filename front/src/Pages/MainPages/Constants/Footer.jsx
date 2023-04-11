@@ -7,7 +7,7 @@ import { FaUserAlt } from "react-icons/fa";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-export default function Footer({ theme, setIsModalOpened }) {
+export default function Footer({ theme, setIsModalOpened, userName }) {
 
   const [selectedIcon, setSelectedIcon] = useState();
 
@@ -21,7 +21,7 @@ export default function Footer({ theme, setIsModalOpened }) {
             <RiHome6Fill />
           </Button>
 
-          <Button onClick={() => navigate("/user")} className="profile">
+          <Button onClick={() => navigate("/user/"+userName)} className="profile">
             <FaUserAlt />
           </Button>
         </Container>

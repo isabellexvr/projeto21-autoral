@@ -22,7 +22,12 @@ import styled from "styled-components";
 
 const TIMELINESTYPES = ["My Timeline", "Communities"];
 
-export default function TimelinePage({ isModalOpened, setIsModalOpened, loading, setLoading }) {
+export default function TimelinePage({
+  isModalOpened,
+  setIsModalOpened,
+  loading,
+  setLoading,
+}) {
   const { theme, setTheme } = useTheme();
   const { userInfo, setUserInfo } = useUserInfo();
   const [selectedTimeline, setSelectedTimeline] = useState(0);
@@ -30,7 +35,6 @@ export default function TimelinePage({ isModalOpened, setIsModalOpened, loading,
   const [communities, setCommunities] = useState([]);
 
   const navigate = useNavigate();
-
 
   useEffect(() => {
     const isLoggedIn = localStorage.getItem("userInfo");
@@ -73,9 +77,39 @@ export default function TimelinePage({ isModalOpened, setIsModalOpened, loading,
     }
   }, [loading]);
 
-  function handlePosts(timeline) {
-    if(timeline === 1){
+  function handlePosts(timelineView) {
+    if (userInfo && timelineView === 1) {
       //TO-DO: trazer os posts das comunidades do usuário
+      setLoading(true);
+      api
+        .get(`/publications/user-communities`, {
+          headers: { Authorization: "Bearer " + userInfo.token },
+        })
+        .then((res) => {
+          setLoading(false);
+          setPosts(res.data);
+          console.log(res.data);
+        })
+        .catch((err) => console.log(err));
+    }
+    if (userInfo && timelineView === 0) {
+      setLoading(true);
+      api
+        .get("/publications/timeline", {
+          headers: { Authorization: "Bearer " + userInfo.token },
+        })
+        .then((res) => {
+          setPosts(res.data);
+          setLoading(false);
+        })
+        .catch((err) => {
+          console.log(err);
+          if (err.response.status === 403) {
+            localStorage.removeItem("userInfo");
+            navigate("/sign-in");
+          }
+          setLoading(false);
+        });
     }
   }
 
@@ -130,7 +164,7 @@ export default function TimelinePage({ isModalOpened, setIsModalOpened, loading,
           <NoPostsYet />
         )}
 
-        <Footer theme={theme} setIsModalOpened={setIsModalOpened} />
+        <Footer theme={theme} setIsModalOpened={setIsModalOpened} userName={userInfo.userName}/>
         <PostModal
           isModalOpened={isModalOpened}
           setIsModalOpened={setIsModalOpened}
@@ -145,7 +179,7 @@ export default function TimelinePage({ isModalOpened, setIsModalOpened, loading,
 }
 
 const LoadinCommunities = styled.div`
-    height: 158px;
-    width: 100%;
-    background-color: yellow;
-`
+  height: 158px;
+  width: 100%;
+  background-color: yellow;
+`;

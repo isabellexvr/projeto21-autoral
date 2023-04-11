@@ -9,6 +9,7 @@ export async function createFakeUser(body: Partial<users>) {
 
     return db.prisma.users.create({
         data: {
+            cityId: body.cityId || faker.datatype.number({ max: 20 }),
             fullName: body.fullName || faker.name.fullName(),
             userName: body.userName || faker.name.firstName(),
             picture: body.picture || faker.image.avatar(),
