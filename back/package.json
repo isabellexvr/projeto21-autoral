@@ -7,6 +7,7 @@
     "seed": "dotenv -e .env.development -- ts-node prisma/seed.ts"
   },
   "scripts": {
+    "start:prod": "dotenv -e .env.development prisma migrate deploy && npm start",
     "start": "node dist/src/server.js",
     "build": "npx tsc",
     "dev": "NODE_ENV=development nodemon src/server.ts",
