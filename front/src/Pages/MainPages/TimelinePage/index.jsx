@@ -19,6 +19,7 @@ import LoadingPosts from "../Constants/LoadingPosts";
 import NoPostsYet from "../Constants/NoPostsYet";
 import PostModal from "../Constants/PostModal";
 import styled from "styled-components";
+import { handlePosts } from "./services";
 
 const TIMELINESTYPES = ["My Timeline", "Communities"];
 
@@ -77,41 +78,6 @@ export default function TimelinePage({
     }
   }, [loading, likeLoading]);
 
-  function handlePosts(timelineView) {
-    if (userInfo && timelineView === 1) {
-      //TO-DO: trazer os posts das comunidades do usuário
-      setLoading(true);
-      api
-        .get(`/publications/user-communities`, {
-          headers: { Authorization: "Bearer " + userInfo.token },
-        })
-        .then((res) => {
-          setLoading(false);
-          setPosts(res.data);
-          console.log(res.data);
-        })
-        .catch((err) => console.log(err));
-    }
-    if (userInfo && timelineView === 0) {
-      setLoading(true);
-      api
-        .get("/publications/timeline", {
-          headers: { Authorization: "Bearer " + userInfo.token },
-        })
-        .then((res) => {
-          setPosts(res.data);
-          setLoading(false);
-        })
-        .catch((err) => {
-          console.log(err);
-          if (err.response.status === 403) {
-            localStorage.removeItem("userInfo");
-            navigate("/sign-in");
-          }
-          setLoading(false);
-        });
-    }
-  }
   return (
     <>
       <Background theme={theme}>
@@ -136,7 +102,7 @@ export default function TimelinePage({
               isSelected={selectedTimeline === i}
               onClick={() => {
                 setSelectedTimeline(i);
-                handlePosts(i);
+                handlePosts(i, userInfo, setLoading, setPosts);
               }}
             >
               {t}

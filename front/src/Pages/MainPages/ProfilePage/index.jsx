@@ -25,6 +25,7 @@ export default function ProfilePage({
   const { userInfo, setUserInfo } = useUserInfo();
   const [viewContent, setViewContent] = useState(0);
   const [content, setContent] = useState([]);
+  const [likeLoading, setLikeLoading] = useState(false);
 
   const navigate = useNavigate();
   const { userName } = useParams();
@@ -84,7 +85,7 @@ export default function ProfilePage({
         })
         .catch((err) => console.log(err));
     }
-  }, [loading]);
+  }, [loading, likeLoading]);
 
   return (
     <>
@@ -149,6 +150,11 @@ export default function ProfilePage({
                       likesCount={p._count.likes}
                       commentsCount={p._count.comments}
                       time={p.createdAt}
+                      postId={p.id}
+                      userInfo={userInfo}
+                      likeLoading={likeLoading}
+                      setLikeLoading={setLikeLoading}
+                      likes={p.likes}
                     />
                   ))
                 : content.map((c, i) => (
