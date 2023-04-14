@@ -5,15 +5,15 @@ import { publicationsServices } from "../services/publicationsServices";
 export type newPost = {
     description: string,
     media?: string
+    communityId?: number
 }
 
 export async function createPost(req: AuthenticatedRequest, res: Response) {
     const postInfo: newPost = req.body;
-    const communityId = req.params;
     const userId = req.userId
 
     try {
-        await publicationsServices.createPost(postInfo, Number(communityId), userId);
+        await publicationsServices.createPost(postInfo, userId);
         res.status(201).send('Post created successfully')
     } catch (error) {
         console.log(error)

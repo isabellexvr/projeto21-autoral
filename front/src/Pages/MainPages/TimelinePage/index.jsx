@@ -2,7 +2,7 @@ import { useTheme } from "../../../Contexts/ThemeContext";
 import { Background } from "../Constants/styles";
 import Header from "../Constants/Header";
 import Footer from "../Constants/Footer";
-import Post from "./Components/Post";
+import Post from "../Constants/Post";
 import { useEffect, useState } from "react";
 import Community from "./Components/Community";
 import {
@@ -15,8 +15,8 @@ import {
 import api from "../../Services/Api/api.js";
 import { useUserInfo } from "../../../Contexts/UserInfoContext";
 import { useNavigate } from "react-router-dom";
-import LoadingPosts from "./Components/LoadingPosts";
-import NoPostsYet from "./Components/NoPostsYet";
+import LoadingPosts from "../Constants/LoadingPosts";
+import NoPostsYet from "../Constants/NoPostsYet";
 import PostModal from "../Constants/PostModal";
 import styled from "styled-components";
 
@@ -56,7 +56,6 @@ export default function TimelinePage({
           headers: { Authorization: "Bearer " + userInfo.token },
         })
         .then((res) => {
-          console.log(res.data)
           setPosts(res.data);
           setLoading(false);
         })
@@ -73,7 +72,6 @@ export default function TimelinePage({
         .get(`/communities/user/${userInfo.userName}`)
         .then((res) => {
           setCommunities(res.data);
-          console.log(res.data);
         })
         .catch((err) => console.log(err));
     }
@@ -170,7 +168,11 @@ export default function TimelinePage({
           <NoPostsYet />
         )}
 
-        <Footer theme={theme} setIsModalOpened={setIsModalOpened} userName={userInfo?.userName}/>
+        <Footer
+          theme={theme}
+          setIsModalOpened={setIsModalOpened}
+          userName={userInfo?.userName}
+        />
         <PostModal
           isModalOpened={isModalOpened}
           setIsModalOpened={setIsModalOpened}
@@ -178,6 +180,7 @@ export default function TimelinePage({
           loading={loading}
           setLoading={setLoading}
           userInfo={userInfo}
+          communities={communities}
         />
       </Background>
     </>

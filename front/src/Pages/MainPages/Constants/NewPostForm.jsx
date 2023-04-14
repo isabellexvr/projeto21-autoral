@@ -4,11 +4,12 @@ import {
   NewPostContent,
   SubmitPostButton,
   HandlingMedia,
+  SelectLabel
 } from "./NewPostStyles";
 import { RiCloseCircleFill } from "react-icons/ri";
 import { useState } from "react";
-import api from "../../../Services/Api/api.js";
-import { uploadImage } from "../../../Services/Api/uploadImage";
+import api from "../../Services/Api/api.js"
+import { uploadImage } from "../../Services/Api/uploadImage";
 import { ThreeDots } from "react-loader-spinner";
 
 export default function NewPostForm({
@@ -17,24 +18,30 @@ export default function NewPostForm({
   setIsModalOpened,
   loading,
   setLoading,
+  communities
 }) {
   const [form, setForm] = useState({});
   const [media, setMedia] = useState(null);
   const [uploadLoading, setUploadLoading] = useState(false);
+  const [selectedPostType, setSelectedPostType] = useState("My Timeline")
 
   function handleForm({ target: { value, name } }) {
     setForm({ ...form, [name]: value });
-    console.log(form);
   }
 
   function sendForm(e) {
     e.preventDefault();
     setLoading(true);
-    console.log(form);
     let finalObj;
-    media ? (finalObj = { ...form, media }) : (finalObj = { ...form });
+    media ? (finalObj = { ...form, media }) : (finalObj = { ...form  });
 
-    api
+    selectedPostType !== "My Timeline" ? finalObj = {...finalObj, communityId: Number(selectedPostType)} : ""
+
+    //postid e communityid
+
+    console.log(finalObj)
+
+     api
       .post("/publications/new", finalObj, {
         headers: { Authorization: "Bearer " + userInfo.token },
       })
@@ -46,8 +53,8 @@ export default function NewPostForm({
       .catch((err) => {
         alert("Something went wrong while publicating!");
         setLoading(false);
-        console.log(err.response);
-      });
+        console.log(err.response.data);
+      }); 
   }
 
   return (
@@ -61,10 +68,14 @@ export default function NewPostForm({
           <div className="username-select">
             <h1>{userInfo.fullName}</h1>
             <h2>@{userInfo.userName}</h2>
-            <select name="postType" onChange={handleForm}>
+            <SelectLabel theme={theme}>Select Where to Post:</SelectLabel>
+            <select defaultValue={selectedPostType} name="postType" onChange={(e) => {setSelectedPostType(e.target.value)}}>
               <option>My Timeline</option>
-              <option>Chess Comunity</option>
+              {communities?.map((c,i) => 
+                <option value={c.id} key={i}>{c.name}</option>
+                )}
             </select>
+            
           </div>
         </div>
         <div className="right-container">

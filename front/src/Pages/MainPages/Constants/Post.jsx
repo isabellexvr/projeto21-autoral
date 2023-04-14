@@ -1,10 +1,10 @@
-import { colors } from "../../../Assets/colors";
+import { colors } from "../../Assets/colors";
 import styled from "styled-components";
 import { SlOptions } from "react-icons/sl";
 import { HiHeart, HiOutlineHeart } from "react-icons/hi";
 import { AiOutlineComment } from "react-icons/ai";
 import { useState } from "react";
-import api from "../../../Services/Api/api.js";
+import api from "../../Services/Api/api.js";
 import { useEffect } from "react";
 
 export default function Post({
@@ -22,7 +22,6 @@ export default function Post({
   setLikeLoading,
   likes,
 }) {
-  
   function getTimeAgo(time) {
     const createdAt = new Date(time);
     const now = new Date();

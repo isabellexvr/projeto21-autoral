@@ -4,7 +4,7 @@ import { newPost } from "../controllers/publicationsControllers";
 import { userDoesntExist } from '../errors';
 import { communitiesRepository } from '../repositories';
 
-async function createPost(info: newPost, communityId: number | null, userId: number) {
+async function createPost(info: newPost, userId: number) {
     const { description, media } = info;
     const presentTime = new Date();
     const newPostData = {
@@ -13,7 +13,11 @@ async function createPost(info: newPost, communityId: number | null, userId: num
         media,
         createdAt: presentTime.toISOString()
     }
-    if (!communityId) {
+
+    console.log("id da comunidade ae: ",info.communityId);
+
+
+    if (!info.communityId) {
 
         await publicationsRepository.createPost(newPostData)
         return
@@ -21,7 +25,7 @@ async function createPost(info: newPost, communityId: number | null, userId: num
 
     const post = await publicationsRepository.createPost(newPostData);
     const communityPostData = {
-        postId: post.id, communityId
+        postId: post.id, communityId: info.communityId
     }
     await publicationsRepository.setCommunityPost(communityPostData);
     return

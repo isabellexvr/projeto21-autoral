@@ -3,7 +3,6 @@ import { db } from "../config/db";
 import { NewPost, NewCommunityPost, CompletePost } from "./protocols";
 
 function createPost(data: NewPost) {
-  console.log(data)
   return db.prisma.posts.create({
     data
   })
@@ -90,6 +89,7 @@ function findPostsByCommunityId(communityId: number) {
     where: {
       communitiesPosts: { some: { communityId } },
     },
+    orderBy: {id: "desc"},
     include: {
       users: true,
       likes: true,
@@ -106,6 +106,7 @@ function findPostsByUserCommunities(userCommunities: number[]) {
       communitiesPosts: { some: { communityId: { in: userCommunities } } }
 
     },
+    orderBy: {id: "desc"},
     include: {
       users: true,
       likes: true,

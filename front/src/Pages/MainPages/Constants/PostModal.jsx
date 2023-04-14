@@ -1,10 +1,17 @@
 import { ModalStyle, modalStyles } from "../TimelinePage/TimelineStyles";
-import NewPostForm from "../TimelinePage/Components/NewPostForm";
+import NewPostForm from "./NewPostForm";
 import { useState } from "react";
 
-export default function PostModal({isModalOpened, setIsModalOpened, theme, loading, setLoading, userInfo}) {
-
-  ModalStyle.setAppElement(document.getElementById('root'));
+export default function PostModal({
+  isModalOpened,
+  setIsModalOpened,
+  theme,
+  loading,
+  setLoading,
+  userInfo,
+  communities
+}) {
+  ModalStyle.setAppElement(document.getElementById("root"));
 
   function handleCloseModal() {
     setIsModalOpened(false);
@@ -23,6 +30,7 @@ export default function PostModal({isModalOpened, setIsModalOpened, theme, loadi
         setIsModalOpened={setIsModalOpened}
         loading={loading}
         setLoading={setLoading}
+        communities={communities}
       />
     </ModalStyle>
   );

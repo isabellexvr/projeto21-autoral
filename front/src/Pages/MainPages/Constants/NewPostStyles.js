@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { colors } from "../../../Assets/colors";
+import { colors } from "../../Assets/colors";
 
 export const ModalHeader = styled.div`
   display: flex;
@@ -12,8 +12,8 @@ export const ModalHeader = styled.div`
     display: flex;
     align-items: center;
     > img {
-      width: 45px;
-      height: 45px;
+      width: 52px;
+      height: 52px;
       border-radius: 50%;
       object-fit: cover;
       border: 3px solid ${colors.pink};
@@ -23,7 +23,7 @@ export const ModalHeader = styled.div`
       > h2 {
         color: ${colors.pink};
         font-weight: 600;
-        margin-top: 3px;
+        margin-top: 2px;
         margin-bottom: 5px;
         font-size: 13px;
       }
@@ -43,7 +43,7 @@ export const ModalHeader = styled.div`
         width: fit-content;
         height: 22px;
         font-family: inherit;
-        font-size: 14px;
+        font-size: 12px;
         line-height: inherit;
         outline: none;
         > option {
@@ -177,3 +177,13 @@ export const HandlingMedia = styled.button`
   color: ${(p) => p.theme.fontColor};
   font-weight: 700;
 `;
+
+export const SelectLabel = styled.label`
+  font-size: 11px;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  color: ${p => p.theme.fontColor};
+  font-weight: 600;
+  margin-bottom: 1px;
+`

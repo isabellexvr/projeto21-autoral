@@ -8,9 +8,9 @@ import { SlOptions } from "react-icons/sl";
 import { colors } from "../../Assets/colors";
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import LoadingPosts from "../TimelinePage/Components/LoadingPosts";
+import LoadingPosts from "../Constants/LoadingPosts";
+import Post from "../Constants/Post";
 import api from "../../Services/Api/api.js";
-import Post from "../TimelinePage/Components/Post";
 import Community from "./components/Community";
 
 const PROFILEVIEWS = ["Posts", "Communities"];
