@@ -6,3 +6,10 @@ export function AlreadyLikedError(): AppError{
         message: "You already liked this post."
     }
 };
+
+export function LikeNotFoundError(): AppError{
+    return {
+        name: "LikeNotFoundError",
+        message: "The like you are trying to delete doesn't exist."
+    }
+}

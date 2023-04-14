@@ -1,13 +1,13 @@
 import { Router } from "express";
-import { bodyValidation, authToken } from "../middlewares";
-import { dislike, postLike } from "../controllers/likesControllers";
-import { likeSchema } from "../schemas";
+import { authToken } from "../middlewares";
+import { dislike, findAll, postLike } from "../controllers/likesControllers";
 
 const likesRouter = Router();
 
 likesRouter
+    .get("/find-all/:postId", findAll)
     .all("/*", authToken)
-    .post("/new", bodyValidation(likeSchema), postLike)
-    .delete("/dislike", bodyValidation(likeSchema), dislike)
+    .post("/new/:postId", postLike)
+    .delete("/dislike/:postId", dislike)
 
 export { likesRouter }

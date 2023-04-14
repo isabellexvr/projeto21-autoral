@@ -33,6 +33,7 @@ export default function TimelinePage({
   const [selectedTimeline, setSelectedTimeline] = useState(0);
   const [posts, setPosts] = useState([]);
   const [communities, setCommunities] = useState([]);
+  const [likeLoading, setLikeLoading] = useState(false);
 
   const navigate = useNavigate();
 
@@ -55,6 +56,7 @@ export default function TimelinePage({
           headers: { Authorization: "Bearer " + userInfo.token },
         })
         .then((res) => {
+          console.log(res.data)
           setPosts(res.data);
           setLoading(false);
         })
@@ -75,7 +77,7 @@ export default function TimelinePage({
         })
         .catch((err) => console.log(err));
     }
-  }, [loading]);
+  }, [loading, likeLoading]);
 
   function handlePosts(timelineView) {
     if (userInfo && timelineView === 1) {
@@ -112,7 +114,6 @@ export default function TimelinePage({
         });
     }
   }
-
   return (
     <>
       <Background theme={theme}>
@@ -158,13 +159,18 @@ export default function TimelinePage({
               likesCount={p._count.likes}
               commentsCount={p._count.comments}
               time={p.createdAt}
+              postId={p.id}
+              userInfo={userInfo}
+              likeLoading={likeLoading}
+              setLikeLoading={setLikeLoading}
+              likes={p.likes}
             ></Post>
           ))
         ) : (
           <NoPostsYet />
         )}
 
-        <Footer theme={theme} setIsModalOpened={setIsModalOpened} userName={userInfo.userName}/>
+        <Footer theme={theme} setIsModalOpened={setIsModalOpened} userName={userInfo?.userName}/>
         <PostModal
           isModalOpened={isModalOpened}
           setIsModalOpened={setIsModalOpened}
@@ -177,9 +183,3 @@ export default function TimelinePage({
     </>
   );
 }
-
-const LoadinCommunities = styled.div`
-  height: 158px;
-  width: 100%;
-  background-color: yellow;
-`;

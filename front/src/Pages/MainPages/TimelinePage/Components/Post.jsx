@@ -4,6 +4,8 @@ import { SlOptions } from "react-icons/sl";
 import { HiHeart, HiOutlineHeart } from "react-icons/hi";
 import { AiOutlineComment } from "react-icons/ai";
 import { useState } from "react";
+import api from "../../../Services/Api/api.js";
+import { useEffect } from "react";
 
 export default function Post({
   fullName,
@@ -14,12 +16,15 @@ export default function Post({
   likesCount,
   commentsCount,
   time,
+  postId,
+  userInfo,
+  likeLoading,
+  setLikeLoading,
+  likes,
 }) {
-  const [liked, setLiked] = useState(false);
-
+  
   function getTimeAgo(time) {
     const createdAt = new Date(time);
-    console.log(createdAt)
     const now = new Date();
     const subtractMins = now.getMinutes() - createdAt.getMinutes();
     if (subtractMins >= 60) {
@@ -29,45 +34,91 @@ export default function Post({
     return `${subtractMins} minutes ago`;
   }
 
+  const handleLike = (postId, userInfo) => {
+    setLikeLoading(true);
+    api
+      .post(
+        "/likes/new/" + postId,
+        { postId },
+        {
+          headers: { Authorization: "Bearer " + userInfo.token },
+        }
+      )
+      .then((res) => {
+        setLikeLoading(false);
+        console.log(res.data);
+      })
+      .catch((err) => {
+        setLikeLoading(false);
+        console.log(err);
+      });
+  };
+
+  const handleDislike = (postId, userInfo) => {
+    setLikeLoading(true);
+    console.log(postId);
+    api
+      .delete("/likes/dislike/" + postId, {
+        headers: { Authorization: "Bearer " + userInfo.token },
+      })
+      .then((res) => {
+        setLikeLoading(false);
+        console.log(res.data);
+      })
+      .catch((err) => {
+        setLikeLoading(false);
+        console.log(err);
+      });
+  };
+
   return (
     <>
-      
-        <PostContainer>
-          <HeaderContainer>
-            <LeftHeaderContainer>
-              
-              <img src={userPicture} />
-              <TextInfo>
-                <h1>{fullName}</h1>
-                <h2>@{userName}</h2>
-                <h3>{getTimeAgo(time)}</h3>
-              </TextInfo>
-            </LeftHeaderContainer>
-            <RightHeaderContainer>
-              <OptionsButton>
-                <SlOptions />
-              </OptionsButton>
-            </RightHeaderContainer>
-          </HeaderContainer>
-          <PostContent>
-            {postMedia !== "null" && (<PostMedia src={postMedia} />)}
-            
-            <h1><strong>-</strong> {postDescription}</h1>
-            <ButtonContainer>
-              {liked ? (
-                <HiHeart color={"red"} onClick={() => setLiked(false)} />
-              ) : (
-                <HiOutlineHeart onClick={() => setLiked(true)} />
-              )}
-              <AiOutlineComment />
-            </ButtonContainer>
-            <InfoContainer>
-              <p>{likesCount} Likes&nbsp;</p>
-              <p>&nbsp;•&nbsp;</p>
-              <p>&nbsp;{commentsCount} Comments</p>
-            </InfoContainer>
-          </PostContent>
-        </PostContainer>
+      <PostContainer>
+        <HeaderContainer>
+          <LeftHeaderContainer>
+            <img src={userPicture} />
+            <TextInfo>
+              <h1>{fullName}</h1>
+              <h2>@{userName}</h2>
+              <h3>{getTimeAgo(time)}</h3>
+            </TextInfo>
+          </LeftHeaderContainer>
+          <RightHeaderContainer>
+            <OptionsButton>
+              <SlOptions />
+            </OptionsButton>
+          </RightHeaderContainer>
+        </HeaderContainer>
+        <PostContent>
+          {postMedia !== "null" && <PostMedia src={postMedia} />}
+
+          <h1>
+            <strong>-</strong> {postDescription}
+          </h1>
+          <ButtonContainer>
+            {likes.find((l) => l.ownerId == userInfo.id) ? (
+              <HiHeart
+                color={"red"}
+                onClick={() => handleDislike(postId, userInfo)}
+              />
+            ) : (
+              <HiOutlineHeart onClick={() => handleLike(postId, userInfo)} />
+            )}
+            {/*            <HiOutlineHeart
+              onClick={() => {
+                handleLike(postId, userInfo);
+                setLiked(true);
+              }}
+            /> */}
+            <AiOutlineComment />
+          </ButtonContainer>
+          <InfoContainer>
+            <p>{likesCount} Likes&nbsp;</p>
+            <p>&nbsp;•&nbsp;</p>
+            <p>&nbsp;{commentsCount} Comments</p>
+          </InfoContainer>
+        </PostContent>
+      </PostContainer>
     </>
   );
 }
@@ -159,7 +210,7 @@ const PostContent = styled.div`
   flex-direction: column;
   align-items: center;
   > h1 {
-    >strong{
+    > strong {
       color: ${colors.orange};
     }
     width: 95%;

@@ -14,6 +14,10 @@ async function dislike(likeId: number) {
     })
 }
 
+async function findAll(postId: number) {
+    return db.prisma.likes.findMany({ })
+}
+
 export const likesRepository = {
-    postLike, dislike, findLike
+    postLike, dislike, findLike, findAll
 }

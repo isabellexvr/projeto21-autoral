@@ -17,8 +17,10 @@ export async function authToken(req: AuthenticatedRequest, res: Response, next: 
 
     try {
         const { userId } = jwt.verify(token, process.env.JWT_SECRET) as JWTPayload;
+        console.log(userId)
         req.userId = userId;
     } catch (error) {
+        console.log(error)
         if(error.name === "TokenExpiredError") return res.status(403).send(error.message)
         return res.status(500).send(error)
     }

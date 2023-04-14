@@ -25,6 +25,7 @@ async function findUserTimeline(userId: number) {
     where: { ownerId: { in: ids } },
     include: {
       users: true,
+      likes: true,
       _count: {
         select: { likes: true, comments: true }
       }
@@ -35,6 +36,7 @@ async function findUserTimeline(userId: number) {
     where: { ownerId: userId },
     include: {
       users: true,
+      likes: true,
       _count: {
         select: { likes: true, comments: true }
       }
@@ -75,6 +77,7 @@ async function findUsersPosts(userId: number) {
     orderBy: { id: "desc" },
     include: {
       users: true,
+      likes: true,
       _count: {
         select: { likes: true, comments: true }
       }
@@ -89,6 +92,7 @@ function findPostsByCommunityId(communityId: number) {
     },
     include: {
       users: true,
+      likes: true,
       _count: {
         select: { likes: true, comments: true }
       }
@@ -104,6 +108,7 @@ function findPostsByUserCommunities(userCommunities: number[]) {
     },
     include: {
       users: true,
+      likes: true,
       _count: {
         select: { likes: true, comments: true }
       }
