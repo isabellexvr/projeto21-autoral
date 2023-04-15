@@ -9,12 +9,12 @@ async function createCommunity(data: NewCommunity) {
 
     const community = await communitiesRepository.createCommunity(data);
 
-    addMemberIntoCommunity({ communityId: community.id, userId: community.adminId });
+    await addMemberIntoCommunity({ communityId: community.id, userId: community.adminId });
 }
 
 async function addMemberIntoCommunity(data: NewMember) {
 
-    const user = communitiesRepository.checkUserCommunityMember(data);
+    const user = await communitiesRepository.checkUserCommunityMember(data);
 
     if (user) throw UserIsAlreadyAMember();
 

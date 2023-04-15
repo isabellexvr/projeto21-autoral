@@ -22,6 +22,7 @@ export async function createNewCommunity(req: AuthenticatedRequest, res: Respons
         await communitiesServices.createCommunity(data);
         res.sendStatus(201);
     } catch (error) {
+        console.log(error)
         return res.status(500).send(error)
     };
 };

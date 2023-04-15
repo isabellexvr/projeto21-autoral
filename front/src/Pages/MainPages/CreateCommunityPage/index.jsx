@@ -42,7 +42,7 @@ export default function CreateCommunityPage({
   return (
     <Background theme={theme}>
         <PageTitle  theme={theme}><h1>Create a New Sphere</h1></PageTitle>
-        <NewCommunityForm theme={theme}>
+        <NewCommunityForm token={userInfo.token} theme={theme} navigate={navigate}>
 
         </NewCommunityForm>
       <Footer

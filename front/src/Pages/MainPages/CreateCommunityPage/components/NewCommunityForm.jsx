@@ -12,7 +12,7 @@ import {
   PreviewPic,
 } from "./NewCommunityFormStyles";
 
-export default function NewCommunityForm({ theme }) {
+export default function NewCommunityForm({ token, theme, navigate }) {
   const [form, setForm] = useState({});
   const [categories, setCategories] = useState([]);
 
@@ -29,10 +29,31 @@ export default function NewCommunityForm({ theme }) {
 
   function sendForm(e) {
     e.preventDefault();
-    console.log(form);
-    console.log(category);
-    console.log(icon);
-    console.log(cover);
+    let finalObj;
+
+    if(!category ) {
+      alert("Please, choose an category")
+      return
+    }
+
+    finalObj = {
+      ...form,
+      categoryId: Number(category),
+      createdAt: new Date().toISOString(),
+      icon,
+      cover,
+    };
+
+    console.log(finalObj)
+
+     api.post("/communities/create", finalObj, {
+      headers: { Authorization: "Bearer " + token },
+    }).then(res => {
+      navigate("/timeline")
+      alert('Community created')
+      console.log(res.data)
+
+    }).catch(err => console.log(err))
   }
 
   useEffect(() => {
@@ -50,12 +71,15 @@ export default function NewCommunityForm({ theme }) {
       <InputContainer>
         <label>Choose a Category</label>
         <CategorySelect
+          required
           defaultValue={category}
           onChange={(e) => setCategory(e.target.value)}
         >
           <CategoryOption>Select an Category...</CategoryOption>
           {categories?.map((c, i) => (
-            <CategoryOption key={i}>{c.name}</CategoryOption>
+            <CategoryOption value={c.id} key={i}>
+              {c.name}
+            </CategoryOption>
           ))}
         </CategorySelect>
       </InputContainer>
@@ -63,6 +87,7 @@ export default function NewCommunityForm({ theme }) {
       <InputContainer>
         <label>Choose a name</label>
         <StyledInput
+          required
           placeholder="Name it..."
           onChange={handleForm}
           type="text"
@@ -127,7 +152,7 @@ export default function NewCommunityForm({ theme }) {
           </div>
         </>
       )}
-      
+
       {coverLoading ? (
         <div className="upload">
           <label htmlFor="cover">
