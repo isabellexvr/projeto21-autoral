@@ -3,9 +3,8 @@ import styled from "styled-components";
 import { SlOptions } from "react-icons/sl";
 import { HiHeart, HiOutlineHeart } from "react-icons/hi";
 import { AiOutlineComment } from "react-icons/ai";
-import { useState } from "react";
 import api from "../../Services/Api/api.js";
-import { useEffect } from "react";
+import {services} from "./services"
 
 export default function Post({
   fullName,
@@ -22,16 +21,7 @@ export default function Post({
   setLikeLoading,
   likes,
 }) {
-  function getTimeAgo(time) {
-    const createdAt = new Date(time);
-    const now = new Date();
-    const subtractMins = now.getMinutes() - createdAt.getMinutes();
-    if (subtractMins >= 60) {
-      const subtractHours = createdAt.getHours() - now.getHours();
-      return `${subtractHours} hours ago`;
-    }
-    return `${subtractMins} minutes ago`;
-  }
+
 
   const handleLike = (postId, userInfo) => {
     setLikeLoading(true);
@@ -79,7 +69,7 @@ export default function Post({
             <TextInfo>
               <h1>{fullName}</h1>
               <h2>@{userName}</h2>
-              <h3>{getTimeAgo(time)}</h3>
+              <h3>{services.getTimeAgo(time)}</h3>
             </TextInfo>
           </LeftHeaderContainer>
           <RightHeaderContainer>
