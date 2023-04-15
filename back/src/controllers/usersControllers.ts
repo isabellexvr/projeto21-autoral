@@ -45,7 +45,7 @@ export async function findInfo(req: Request, res: Response) {
     const userName = req.params.userName
     try {
         const userInfo = await usersServices.findInfoByUsername(userName);
-        res.send(userInfo).send(200)
+        res.send(userInfo).status(200)
     } catch (error) {
         return res.send(error).status(500)
     }

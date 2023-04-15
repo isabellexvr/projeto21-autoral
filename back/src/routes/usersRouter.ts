@@ -13,6 +13,6 @@ usersRouter.post("/upload-image", upload);
 
 usersRouter.get("/info/:userName", findInfo)
 
-//logout => retirar token do localstorage => expira em 3 horas
+//TO-DO: tem algumas rotas que são autenticadas e outras não => decidir se um user deslogado pode ver as coisas
 
 export { usersRouter };

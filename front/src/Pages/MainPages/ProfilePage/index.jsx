@@ -24,9 +24,11 @@ export default function ProfilePage({
 }) {
   const { theme, setTheme } = useTheme();
   const { userInfo, setUserInfo } = useUserInfo();
+
   const [viewContent, setViewContent] = useState(0);
   const [content, setContent] = useState([]);
   const [likeLoading, setLikeLoading] = useState(false);
+  const [userProfileInfo, setUserProfileInfo] = useState(null);
 
   const navigate = useNavigate();
   const { userName } = useParams();
@@ -57,14 +59,20 @@ export default function ProfilePage({
         })
         .catch((err) => console.log(err));
 
-        
-
+      api
+        .get(`/users/info/${userName}`)
+        .then((res) => {
+          console.log(res.data);
+          setUserProfileInfo(res.data);
+          setLoading(false);
+        })
+        .catch((err) => console.log(err));
     }
   }, [loading, likeLoading]);
 
   return (
     <>
-      {userInfo && (
+      {userProfileInfo && (
         <ProfileBackground theme={theme}>
           <ProfileHeader>
             <button>
@@ -74,11 +82,11 @@ export default function ProfilePage({
               <SlOptions />
             </button>
           </ProfileHeader>
-          <UsersCover src={userInfo.cover} />
+          <UsersCover src={userProfileInfo.cover} />
           <UserMainInfoContainer>
-            <UserProfilePic src={userInfo.picture} />
-            <h1>{userInfo.fullName}</h1>
-            <h2>@{userInfo.userName}</h2>
+            <UserProfilePic src={userProfileInfo.picture} />
+            <h1>{userProfileInfo.fullName}</h1>
+            <h2>@{userProfileInfo.userName}</h2>
             <UserBiography theme={theme}>
               <strong>-</strong> user's bio
             </UserBiography>
