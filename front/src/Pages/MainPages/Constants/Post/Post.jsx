@@ -16,6 +16,8 @@ import {
 } from "./PostStyles";
 import { services } from "../services";
 import { useState } from "react";
+import CommentsModal from "../CommentsModal";
+import api from "../../../Services/Api/api.js";
 
 const MENUOPTIONS = ["Edit", "Delete"];
 
@@ -33,8 +35,24 @@ export default function Post({
   likeLoading,
   setLikeLoading,
   likes,
+  commentsModalStates,
 }) {
   const [menu, setMenu] = useState(false);
+  const [comments, setComments] = useState([]);
+
+  const { commentsModal, setCommentsModal } = commentsModalStates;
+
+  function handleGetComments(postId) {
+    api
+      .get(`/comments/find/${postId}`, {
+        headers: { Authorization: "Bearer " + userInfo.token },
+      })
+      .then((res) => {
+        setComments(res.data);
+        console.log(res.data);
+      })
+      .catch((err) => console.log(err));
+  }
 
   return (
     <>
@@ -76,7 +94,12 @@ export default function Post({
                 onClick={() => services.handleLike(postId, userInfo)}
               />
             )}
-            <AiOutlineComment />
+            <AiOutlineComment
+              onClick={async() => {
+                await handleGetComments(postId);
+                setCommentsModal(true);
+              }}
+            />
           </ButtonContainer>
           <InfoContainer>
             <p>{likesCount} Likes&nbsp;</p>
@@ -84,6 +107,12 @@ export default function Post({
             <p>&nbsp;{commentsCount} Comments</p>
           </InfoContainer>
         </PostContent>
+        <CommentsModal
+          commentsModalStates={commentsModalStates}
+          comments={comments}
+          postId={postId}
+          userInfo={userInfo}
+        />
       </PostContainer>
     </>
   );

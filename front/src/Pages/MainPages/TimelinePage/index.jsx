@@ -13,16 +13,17 @@ import {
   CommunitiesContainer,
   NewCommunity,
   NewCommunityFooter,
-  NewCommunityIcon
+  NewCommunityIcon,
 } from "./TimelineStyles";
 import api from "../../Services/Api/api.js";
 import { useUserInfo } from "../../../Contexts/UserInfoContext";
-import {  useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import LoadingPosts from "../Constants/LoadingPosts";
 import NoPostsYet from "../Constants/NoPostsYet";
 import PostModal from "../Constants/PostModal";
 import { handlePosts } from "./services";
 import { TiArrowDownThick } from "react-icons/ti";
+
 
 const TIMELINESTYPES = ["My Timeline", "Communities"];
 
@@ -31,6 +32,7 @@ export default function TimelinePage({
   setPublicationModal,
   loading,
   setLoading,
+  commentsModalStates,
 }) {
   const { theme, setTheme } = useTheme();
   const { userInfo, setUserInfo } = useUserInfo();
@@ -38,6 +40,7 @@ export default function TimelinePage({
   const [posts, setPosts] = useState([]);
   const [communities, setCommunities] = useState([]);
   const [likeLoading, setLikeLoading] = useState(false);
+  const { commentsModal, setCommentsModal } = commentsModalStates;
 
   const navigate = useNavigate();
 
@@ -128,22 +131,25 @@ export default function TimelinePage({
           <LoadingPosts theme={theme} />
         ) : posts.length > 0 ? (
           posts?.map((p, i) => (
-            <Post
-              key={i}
-              fullName={p.users.fullName}
-              userName={p.users.userName}
-              userPicture={p.users.picture}
-              postMedia={p.media}
-              postDescription={p.description}
-              likesCount={p._count.likes}
-              commentsCount={p._count.comments}
-              time={p.createdAt}
-              postId={p.id}
-              userInfo={userInfo}
-              likeLoading={likeLoading}
-              setLikeLoading={setLikeLoading}
-              likes={p.likes}
-            ></Post>
+            <>
+              <Post
+                key={i}
+                fullName={p.users.fullName}
+                userName={p.users.userName}
+                userPicture={p.users.picture}
+                postMedia={p.media}
+                postDescription={p.description}
+                likesCount={p._count.likes}
+                commentsCount={p._count.comments}
+                time={p.createdAt}
+                postId={p.id}
+                userInfo={userInfo}
+                likeLoading={likeLoading}
+                setLikeLoading={setLikeLoading}
+                likes={p.likes}
+                commentsModalStates={commentsModalStates}
+              />
+            </>
           ))
         ) : (
           <NoPostsYet />
@@ -154,6 +160,7 @@ export default function TimelinePage({
           setPublicationModal={setPublicationModal}
           userName={userInfo?.userName}
         />
+
         <PostModal
           publicationModal={publicationModal}
           setPublicationModal={setPublicationModal}
@@ -167,4 +174,3 @@ export default function TimelinePage({
     </>
   );
 }
-

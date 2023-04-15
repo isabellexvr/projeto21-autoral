@@ -3,6 +3,7 @@ import { publicationsRepository } from './../repositories/publicationsRepository
 import { newPost } from "../controllers/publicationsControllers";
 import { userDoesntExist } from '../errors';
 import { communitiesRepository } from '../repositories';
+import { PostDoesntExistError } from '../errors/publicationsErrors';
 
 async function createPost(info: newPost, userId: number) {
     const { description, media } = info;
@@ -14,7 +15,7 @@ async function createPost(info: newPost, userId: number) {
         createdAt: presentTime.toISOString()
     }
 
-    console.log("id da comunidade ae: ",info.communityId);
+    console.log("id da comunidade ae: ", info.communityId);
 
 
     if (!info.communityId) {
@@ -33,7 +34,7 @@ async function createPost(info: newPost, userId: number) {
 
 async function checkUserExists(userId: number) {
     const user = await usersRepository.findUserById(userId);
-    if(!user) throw userDoesntExist();
+    if (!user) throw userDoesntExist();
 }
 
 async function findUserTimeline(userId: number) {
@@ -43,10 +44,10 @@ async function findUserTimeline(userId: number) {
 
 }
 
-async function findUserIdByUsername(userName: string){
+async function findUserIdByUsername(userName: string) {
     console.log(userName)
     const user = await usersRepository.findUserByUsername(userName)
-    if(!user) throw userDoesntExist();
+    if (!user) throw userDoesntExist();
     return user.id
 }
 
@@ -56,24 +57,29 @@ async function findUsersPosts(userName: string) {
     return posts;
 }
 
-async function findPostsByCommunity(communityId: number){
+async function findPostsByCommunity(communityId: number) {
     const posts = await publicationsRepository.findPostsByCommunityId(communityId);
     return posts
 }
 
-async function findPostsByUserCommunities(userId: number){
+async function findPostsByUserCommunities(userId: number) {
     const userCommunities = await communitiesRepository.findCommunitiesByUserId(userId);
-    const userCommunitiesIds = userCommunities.map( c => c.id)
+    const userCommunitiesIds = userCommunities.map(c => c.id)
     const posts = await publicationsRepository.findPostsByUserCommunities(userCommunitiesIds);
     return posts
 }
 
-
+async function checkPostExistence(postId: number) {
+    const post = await publicationsRepository.findPostByPostId(postId);
+    if (!post) throw PostDoesntExistError();
+    return post
+}
 
 export const publicationsServices = {
     createPost,
     findUserTimeline,
     findUsersPosts,
     findPostsByCommunity,
-    findPostsByUserCommunities
+    findPostsByUserCommunities,
+    checkPostExistence
 }

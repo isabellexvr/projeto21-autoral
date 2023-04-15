@@ -22,9 +22,14 @@ function deleteComment(commentId: number) {
     return db.prisma.comments.delete({ where: { id: commentId } })
 }
 
+function findCommentsByPostId(postId: number) {
+    return db.prisma.comments.findMany({ where: { postId } });
+}
+
 export const commentsRepository = {
     editComment,
     postComment,
     deleteComment,
-    findComment
+    findComment,
+    findCommentsByPostId
 }

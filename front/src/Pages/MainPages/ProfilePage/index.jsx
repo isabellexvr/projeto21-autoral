@@ -21,9 +21,11 @@ export default function ProfilePage({
   setPublicationModal,
   loading,
   setLoading,
+  commentsModalStates,
 }) {
   const { theme, setTheme } = useTheme();
   const { userInfo, setUserInfo } = useUserInfo();
+  const { commentsModal, setCommentsModal } = commentsModalStates;
 
   const [viewContent, setViewContent] = useState(0);
   const [content, setContent] = useState([]);

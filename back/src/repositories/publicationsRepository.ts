@@ -54,8 +54,8 @@ async function findUserTimeline(userId: number) {
 
   communityPosts.forEach(e => hashtable[e.postId] = true)//3
 
-  const subtracted = concat.filter(p => { 
-    if(!hashtable[p.id]){
+  const subtracted = concat.filter(p => {
+    if (!hashtable[p.id]) {
       return p
     }
   })//4
@@ -89,7 +89,7 @@ function findPostsByCommunityId(communityId: number) {
     where: {
       communitiesPosts: { some: { communityId } },
     },
-    orderBy: {id: "desc"},
+    orderBy: { id: "desc" },
     include: {
       users: true,
       likes: true,
@@ -106,7 +106,7 @@ function findPostsByUserCommunities(userCommunities: number[]) {
       communitiesPosts: { some: { communityId: { in: userCommunities } } }
 
     },
-    orderBy: {id: "desc"},
+    orderBy: { id: "desc" },
     include: {
       users: true,
       likes: true,
@@ -118,6 +118,9 @@ function findPostsByUserCommunities(userCommunities: number[]) {
   })
 }
 
+function findPostByPostId(id: number) {
+  return db.prisma.posts.findFirst({ where: { id } })
+}
 
 export const publicationsRepository = {
   createPost,
@@ -125,5 +128,6 @@ export const publicationsRepository = {
   findUserTimeline,
   findUsersPosts,
   findPostsByCommunityId,
-  findPostsByUserCommunities
+  findPostsByUserCommunities,
+  findPostByPostId
 }

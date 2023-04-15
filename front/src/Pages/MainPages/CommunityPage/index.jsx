@@ -5,12 +5,11 @@ export default function CommunityPage({
   setPublicationModal,
   loading,
   setLoading,
+  commentsModalStates,
 }) {
-    return (
-        <CommunityBackground>
-            comunidade ne pae
-        </CommunityBackground>
-    )
+  const { commentsModal, setCommentsModal } = commentsModalStates;
+
+  return <CommunityBackground>comunidade ne pae</CommunityBackground>;
 }
 
 const CommunityBackground = styled.div`
