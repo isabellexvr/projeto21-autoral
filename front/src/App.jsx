@@ -8,14 +8,15 @@ import SignInPage from "./Pages/HomePages/SignInPage";
 import TimelinePage from "./Pages/MainPages/TimelinePage";
 import ProfilePage from "./Pages/MainPages/ProfilePage";
 import CommunityPage from "./Pages/MainPages/CommunityPage";
+import CreateCommunityPage from "./Pages/MainPages/CreateCommunityPage";
 
 function App() {
   const [loading, setLoading] = useState(false);
-  const [isModalOpened, setIsModalOpened] = useState(false);
+  const [publicationModal, setPublicationModal] = useState(false);
 
   //todo: mandar essas variáveis invés de um por um
   const loadingStates = { loading, setLoading };
-  const modalStates = { isModalOpened, setIsModalOpened };
+  const publicationModalStates = { publicationModal, setPublicationModal };
 
   return (
     <ThemeProvider>
@@ -35,8 +36,8 @@ function App() {
               path="/timeline"
               element={
                 <TimelinePage
-                  isModalOpened={isModalOpened}
-                  setIsModalOpened={setIsModalOpened}
+                  publicationModal={publicationModal}
+                  setPublicationModal={setPublicationModal}
                   loading={loading}
                   setLoading={setLoading}
                 />
@@ -46,8 +47,8 @@ function App() {
               path="/user/:userName"
               element={
                 <ProfilePage
-                  isModalOpened={isModalOpened}
-                  setIsModalOpened={setIsModalOpened}
+                  publicationModal={publicationModal}
+                  setPublicationModal={setPublicationModal}
                   loading={loading}
                   setLoading={setLoading}
                 />
@@ -57,12 +58,20 @@ function App() {
               path="/community/:communityName"
               element={
                 <CommunityPage
-                  isModalOpened={isModalOpened}
-                  setIsModalOpened={setIsModalOpened}
+                  publicationModal={publicationModal}
+                  setPublicationModal={setPublicationModal}
                   loading={loading}
                   setLoading={setLoading}
                 />
               }
+            />
+            <Route
+              path="/create-community"
+              element={<CreateCommunityPage />}
+              publicationModal={publicationModal}
+              setPublicationModal={setPublicationModal}
+              loading={loading}
+              setLoading={setLoading}
             />
           </Routes>
         </BrowserRouter>

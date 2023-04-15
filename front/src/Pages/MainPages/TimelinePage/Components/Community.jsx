@@ -5,10 +5,13 @@ export default function Community({
   communityCover,
   communityIcon,
   communityName,
+  categoryName,
+  theme
 }) {
   return (
     <StyledLink to="/community/1">
       <CommunityContainer communityCover={communityCover}>
+        <Category theme={theme}>{categoryName}</Category>
         <Footer>
           <h1>{communityName}</h1>
         </Footer>
@@ -49,8 +52,12 @@ const Footer = styled.div`
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
+  >h1{
+    font-size: 14px;
+  }
 `;
 
 const Icon = styled.img`
@@ -65,3 +72,20 @@ const Icon = styled.img`
   border: 2px solid ${colors.pink};
   filter: drop-shadow(1px 1px 12px ${colors.pink});
 `;
+
+const Category = styled.h2`
+width: 85%;
+
+top: 15px;
+left: 50%;
+  transform: translate(-50%, -50%);
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  font-size: 12px;
+  padding-top: 6px;
+  font-weight: 600;
+  color: ${p => p.theme.fontColor};
+  filter: drop-shadow(2px 2px 5px ${colors.orange});
+`

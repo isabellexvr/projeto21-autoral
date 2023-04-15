@@ -14,18 +14,21 @@ import {
 } from "./TimelineStyles";
 import api from "../../Services/Api/api.js";
 import { useUserInfo } from "../../../Contexts/UserInfoContext";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import LoadingPosts from "../Constants/LoadingPosts";
 import NoPostsYet from "../Constants/NoPostsYet";
 import PostModal from "../Constants/PostModal";
 import styled from "styled-components";
 import { handlePosts } from "./services";
+import { BsPlusLg } from "react-icons/bs";
+import { colors } from "../../Assets/colors";
+import { TiArrowDownThick } from "react-icons/ti";
 
 const TIMELINESTYPES = ["My Timeline", "Communities"];
 
 export default function TimelinePage({
-  isModalOpened,
-  setIsModalOpened,
+  publicationModal,
+  setPublicationModal,
   loading,
   setLoading,
 }) {
@@ -72,6 +75,7 @@ export default function TimelinePage({
       api
         .get(`/communities/user/${userInfo.userName}`)
         .then((res) => {
+          console.log(res.data);
           setCommunities(res.data);
         })
         .catch((err) => console.log(err));
@@ -85,12 +89,31 @@ export default function TimelinePage({
         <FirstSectionTitle>Your Communities</FirstSectionTitle>
         <FirstSection>
           <CommunitiesContainer>
+            {/*           <Community
+              communityCover={"https://cdn.pixabay.com/photo/2014/11/07/00/00/volleyball-520093_960_720.jpg"}
+              communityIcon={"https://cdn-icons-png.flaticon.com/512/2569/2569195.png"}
+              communityName={"New Community"}
+              categoryName={"Create a Brand New Sphere"}
+              theme={theme}
+              onClick={()=>alert('oi')}
+              /> */}
+            <NewCommunity to="/new-community" theme={theme}>
+              <h1>Create Your Own Sphere!</h1>
+              <TiArrowDownThick />
+              <NewCommunityFooter>
+                <h1>New Community</h1>
+              </NewCommunityFooter>
+              <NewCommunityIcon />
+            </NewCommunity>
+
             {communities.map((c, i) => (
               <Community
                 key={i}
                 communityCover={c.cover}
                 communityIcon={c.icon}
                 communityName={c.name}
+                categoryName={c.categories.name}
+                theme={theme}
               />
             ))}
           </CommunitiesContainer>
@@ -136,12 +159,12 @@ export default function TimelinePage({
 
         <Footer
           theme={theme}
-          setIsModalOpened={setIsModalOpened}
+          setPublicationModal={setPublicationModal}
           userName={userInfo?.userName}
         />
         <PostModal
-          isModalOpened={isModalOpened}
-          setIsModalOpened={setIsModalOpened}
+          publicationModal={publicationModal}
+          setPublicationModal={setPublicationModal}
           theme={theme}
           loading={loading}
           setLoading={setLoading}
@@ -152,3 +175,66 @@ export default function TimelinePage({
     </>
   );
 }
+
+const NewCommunity = styled(Link)`
+  all: unset;
+  border: 2px solid ${colors.lighterBlack};
+  height: 155px;
+  width: 120px;
+  margin-right: 15px;
+  border-radius: 15px;
+  box-sizing: border-box;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  > h1 {
+    text-align: center;
+    line-height: 18px;
+    font-weight: 600;
+    margin-top: 10px;
+    margin-bottom: 15px;
+  }
+`;
+
+const NewCommunityFooter = styled.div`
+  width: 102%;
+  height: 46px;
+  background-color: ${colors.lighterBlack};
+  -webkit-mask-image: radial-gradient(
+    circle at top,
+    transparent 16px,
+    black 17px
+  );
+  border-bottom-right-radius: 15px;
+  border-bottom-left-radius: 15px;
+  position: absolute;
+  bottom: -23px;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  > h1 {
+    font-size: 14px;
+  }
+`;
+
+const NewCommunityIcon = styled(BsPlusLg)`
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  position: absolute;
+  bottom: 18px;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  box-sizing: border-box;
+  border: 2px solid ${colors.pink};
+  filter: drop-shadow(1px 1px 12px ${colors.pink});
+  background-color: ${colors.orange};
+  font-size: 5px;
+`;

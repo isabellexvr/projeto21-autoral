@@ -6,6 +6,7 @@ type NewCommunityPayload = {
     name: string,
     description?: string,
     icon?: string,
+    cover?: string,
     categoryId: number,
     cityId: number,
     createdAt?: Date

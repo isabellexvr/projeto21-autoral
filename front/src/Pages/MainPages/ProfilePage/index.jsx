@@ -16,8 +16,8 @@ import Community from "./components/Community";
 const PROFILEVIEWS = ["Posts", "Communities"];
 
 export default function ProfilePage({
-  isModalOpened,
-  setIsModalOpened,
+  publicationModal,
+  setPublicationModal,
   loading,
   setLoading,
 }) {
@@ -168,10 +168,10 @@ export default function ProfilePage({
             </>
           )}
 
-          <Footer theme={theme} setIsModalOpened={setIsModalOpened} />
+          <Footer theme={theme} setPublicationModal={setPublicationModal} />
           <PostModal
-            isModalOpened={isModalOpened}
-            setIsModalOpened={setIsModalOpened}
+            publicationModal={publicationModal}
+            setPublicationModal={setPublicationModal}
             theme={theme}
             loading={loading}
             setLoading={setLoading}

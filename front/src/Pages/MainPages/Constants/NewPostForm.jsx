@@ -37,10 +37,6 @@ export default function NewPostForm({
 
     selectedPostType !== "My Timeline" ? finalObj = {...finalObj, communityId: Number(selectedPostType)} : ""
 
-    //postid e communityid
-
-    console.log(finalObj)
-
      api
       .post("/publications/new", finalObj, {
         headers: { Authorization: "Bearer " + userInfo.token },

@@ -34,7 +34,8 @@ function findCommunitiesByUserId(userId: number) {
     return db.prisma.communities.findMany({
         where: {
             usersCommunities: { some: { userId } }
-        }
+        },
+        include: {categories: true}
     })
 
 };

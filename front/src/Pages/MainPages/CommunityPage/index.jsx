@@ -1,8 +1,8 @@
 import styled from "styled-components";
 
 export default function CommunityPage({
-  isModalOpened,
-  setIsModalOpened,
+  publicationModal,
+  setPublicationModal,
   loading,
   setLoading,
 }) {
