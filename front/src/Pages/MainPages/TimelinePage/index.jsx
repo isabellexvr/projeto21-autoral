@@ -2,7 +2,7 @@ import { useTheme } from "../../../Contexts/ThemeContext";
 import { Background } from "../Constants/styles";
 import Header from "../Constants/Header";
 import Footer from "../Constants/Footer";
-import Post from "../Constants/Post";
+import Post from "../Constants/Post/Post";
 import { useEffect, useState } from "react";
 import Community from "./Components/Community";
 import {

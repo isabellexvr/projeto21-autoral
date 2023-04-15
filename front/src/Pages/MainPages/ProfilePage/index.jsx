@@ -9,7 +9,7 @@ import { colors } from "../../Assets/colors";
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import LoadingPosts from "../Constants/LoadingPosts";
-import Post from "../Constants/Post";
+import Post from "../Constants/Post/Post";
 import api from "../../Services/Api/api.js";
 import Community from "./components/Community";
 import { handleContent } from "./services";

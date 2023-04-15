@@ -23,4 +23,41 @@ function getTimeAgo(time) {
     return `${seconds} seconds ago`
 }
 
-export const services = { getTimeAgo };
+  const handleLike = (postId, userInfo) => {
+    setLikeLoading(true);
+    api
+      .post(
+        "/likes/new/" + postId,
+        { postId },
+        {
+          headers: { Authorization: "Bearer " + userInfo.token },
+        }
+      )
+      .then((res) => {
+        setLikeLoading(false);
+        console.log(res.data);
+      })
+      .catch((err) => {
+        setLikeLoading(false);
+        console.log(err);
+      });
+  };
+
+  const handleDislike = (postId, userInfo) => {
+    setLikeLoading(true);
+    console.log(postId);
+    api
+      .delete("/likes/dislike/" + postId, {
+        headers: { Authorization: "Bearer " + userInfo.token },
+      })
+      .then((res) => {
+        setLikeLoading(false);
+        console.log(res.data);
+      })
+      .catch((err) => {
+        setLikeLoading(false);
+        console.log(err);
+      });
+  };
+
+export const services = { getTimeAgo, handleLike, handleLike };

@@ -8,7 +8,6 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 export default function Footer({ theme, setPublicationModal, userName }) {
-
   const [selectedIcon, setSelectedIcon] = useState();
 
   const navigate = useNavigate();
@@ -17,11 +16,14 @@ export default function Footer({ theme, setPublicationModal, userName }) {
     <FooterContainer>
       <FooterStyle theme={theme}>
         <Container>
-          <Button className="home">
+          <Button onClick={() => navigate("/timeline")} className="home">
             <RiHome6Fill />
           </Button>
 
-          <Button onClick={() => navigate("/user/"+userName)} className="profile">
+          <Button
+            onClick={() => navigate("/user/" + userName)}
+            className="profile"
+          >
             <FaUserAlt />
           </Button>
         </Container>
@@ -89,7 +91,7 @@ const NewPostButton = styled.button`
     font-size: 22px;
     color: ${(p) => p.theme.fontColor};
   }
-  :hover{
+  :hover {
     transition: 1s;
     background-color: ${colors.pink};
   }
