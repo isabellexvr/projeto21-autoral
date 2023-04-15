@@ -148,6 +148,7 @@ export default function TimelinePage({
                 setLikeLoading={setLikeLoading}
                 likes={p.likes}
                 commentsModalStates={commentsModalStates}
+                theme={theme}
               />
             </>
           ))

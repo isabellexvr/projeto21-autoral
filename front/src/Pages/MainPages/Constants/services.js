@@ -1,3 +1,5 @@
+import api from "../../Services/Api/api.js"
+
 function getTimeAgo(time) {
   const createdAt = new Date(time).getTime();
   const now = new Date().getTime();
@@ -23,7 +25,7 @@ function getTimeAgo(time) {
     return `${seconds} seconds ago`
 }
 
-  const handleLike = (postId, userInfo) => {
+  const handleLike = (postId, userInfo, setLikeLoading) => {
     setLikeLoading(true);
     api
       .post(
@@ -35,15 +37,13 @@ function getTimeAgo(time) {
       )
       .then((res) => {
         setLikeLoading(false);
-        console.log(res.data);
       })
       .catch((err) => {
         setLikeLoading(false);
-        console.log(err);
       });
   };
 
-  const handleDislike = (postId, userInfo) => {
+  const handleDislike = (postId, userInfo, setLikeLoading) => {
     setLikeLoading(true);
     console.log(postId);
     api
@@ -60,4 +60,4 @@ function getTimeAgo(time) {
       });
   };
 
-export const services = { getTimeAgo, handleLike, handleLike };
+export const services = { getTimeAgo, handleLike, handleDislike };

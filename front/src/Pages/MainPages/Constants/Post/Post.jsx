@@ -36,6 +36,7 @@ export default function Post({
   setLikeLoading,
   likes,
   commentsModalStates,
+  theme
 }) {
   const [menu, setMenu] = useState(false);
   const [comments, setComments] = useState([]);
@@ -87,11 +88,11 @@ export default function Post({
             {likes.find((l) => l.ownerId == userInfo.id) ? (
               <HiHeart
                 color={"red"}
-                onClick={() => services.handleDislike(postId, userInfo)}
+                onClick={() => services.handleDislike(postId, userInfo, setLikeLoading)}
               />
             ) : (
               <HiOutlineHeart
-                onClick={() => services.handleLike(postId, userInfo)}
+                onClick={() => services.handleLike(postId, userInfo, setLikeLoading)}
               />
             )}
             <AiOutlineComment
@@ -112,6 +113,7 @@ export default function Post({
           comments={comments}
           postId={postId}
           userInfo={userInfo}
+          theme={theme}
         />
       </PostContainer>
     </>

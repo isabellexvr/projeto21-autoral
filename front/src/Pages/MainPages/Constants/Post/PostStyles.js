@@ -112,6 +112,7 @@ export const ButtonContainer = styled.div`
   width: 90%;
   margin-top: 15px;
   > svg {
+    cursor: pointer;
     font-size: 25px;
     margin-right: 36px;
     color: ${(p) => p.color};
