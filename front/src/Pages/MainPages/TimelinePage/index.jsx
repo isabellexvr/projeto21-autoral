@@ -97,7 +97,7 @@ export default function TimelinePage({
               theme={theme}
               onClick={()=>alert('oi')}
               /> */}
-            <NewCommunity to="/new-community" theme={theme}>
+            <NewCommunity to="/create-community" theme={theme}>
               <h1>Create Your Own Sphere!</h1>
               <TiArrowDownThick />
               <NewCommunityFooter>

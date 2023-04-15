@@ -7,7 +7,7 @@ import { FaUserAlt } from "react-icons/fa";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-export default function Footer({ theme, setIsModalOpened, userName }) {
+export default function Footer({ theme, setPublicationModal, userName }) {
 
   const [selectedIcon, setSelectedIcon] = useState();
 
@@ -26,7 +26,7 @@ export default function Footer({ theme, setIsModalOpened, userName }) {
           </Button>
         </Container>
       </FooterStyle>
-      <NewPostButton onClick={() => setIsModalOpened(true)} theme={theme}>
+      <NewPostButton onClick={() => setPublicationModal(true)} theme={theme}>
         <BsPlusLg />
       </NewPostButton>
     </FooterContainer>

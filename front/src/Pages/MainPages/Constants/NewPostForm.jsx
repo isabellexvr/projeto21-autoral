@@ -15,7 +15,7 @@ import { ThreeDots } from "react-loader-spinner";
 export default function NewPostForm({
   userInfo,
   theme,
-  setIsModalOpened,
+  setPublicationModal,
   loading,
   setLoading,
   communities
@@ -43,7 +43,7 @@ export default function NewPostForm({
       })
       .then((res) => {
         alert("Successfully publicated!");
-        setIsModalOpened(false);
+        setPublicationModal(false);
         setLoading(false);
       })
       .catch((err) => {
@@ -76,7 +76,7 @@ export default function NewPostForm({
         </div>
         <div className="right-container">
           <div className="close-button">
-            <RiCloseCircleFill onClick={() => setIsModalOpened(false)} />
+            <RiCloseCircleFill onClick={() => setPublicationModal(false)} />
           </div>
         </div>
       </ModalHeader>

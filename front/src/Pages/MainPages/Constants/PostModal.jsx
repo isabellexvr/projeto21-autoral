@@ -3,8 +3,8 @@ import NewPostForm from "./NewPostForm";
 import { useState } from "react";
 
 export default function PostModal({
-  isModalOpened,
-  setIsModalOpened,
+  publicationModal,
+  setPublicationModal,
   theme,
   loading,
   setLoading,
@@ -14,7 +14,7 @@ export default function PostModal({
   ModalStyle.setAppElement(document.getElementById("root"));
 
   function handleCloseModal() {
-    setIsModalOpened(false);
+    setPublicationModal(false);
   }
 
   return (
@@ -22,12 +22,12 @@ export default function PostModal({
       shouldCloseOnOverlayClick={true}
       onRequestClose={handleCloseModal}
       style={modalStyles}
-      isOpen={isModalOpened}
+      isOpen={publicationModal}
     >
       <NewPostForm
         userInfo={userInfo}
         theme={theme}
-        setIsModalOpened={setIsModalOpened}
+        setPublicationModal={setPublicationModal}
         loading={loading}
         setLoading={setLoading}
         communities={communities}
