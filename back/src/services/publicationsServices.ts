@@ -44,6 +44,7 @@ async function findUserTimeline(userId: number) {
 }
 
 async function findUserIdByUsername(userName: string){
+    console.log(userName)
     const user = await usersRepository.findUserByUsername(userName)
     if(!user) throw userDoesntExist();
     return user.id

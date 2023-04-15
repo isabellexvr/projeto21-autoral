@@ -10,7 +10,6 @@ export async function createUser(req: Request, res: Response) {
         await usersServices.createUser(userInfo);
         return res.status(201).send("User created succesfully")
     } catch (error) {
-        console.log(error)
         if (error.name === "UsernameConflictError") return res.status(409).send(error);
         if (error.name === "EmailConflictError") return res.status(409).send(error);
         return res.status(500).send(error)
@@ -19,7 +18,6 @@ export async function createUser(req: Request, res: Response) {
 
 export async function login(req: Request, res: Response) {
     const loginInfo: signIn = req.body;
-    console.log(loginInfo)
 
     try {
         const userInfo = await usersServices.login(loginInfo);
@@ -41,4 +39,14 @@ export async function upload(req: Request, res: Response) {
             console.log(err)
             res.status(500).send(err)
         })
+}
+
+export async function findInfo(req: Request, res: Response) {
+    const userName = req.params.userName
+    try {
+        const userInfo = await usersServices.findInfoByUsername(userName);
+        res.send(userInfo).send(200)
+    } catch (error) {
+        return res.send(error).status(500)
+    }
 }

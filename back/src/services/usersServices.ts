@@ -23,6 +23,7 @@ async function checkUsername(username: string) {
     const userExists = await usersRepository.findUserByUsername(username);
 
     if (userExists) throw usernameConflictError();
+
 };
 
 async function checkEmail(email: string) {
@@ -70,6 +71,12 @@ const validatePasswordOrFail = (enteredPassword: string, userPassword: string) =
     if (!isValid) throw invalidPasswordError();
 }
 
+async function findInfoByUsername(userName: string) {
+    const userInfo = await usersRepository.findUserByUsername(userName);
+    delete userInfo.password;
+    return userInfo;
+}
+
 export const usersServices = {
-    createUser, login
+    createUser, login, findInfoByUsername
 };

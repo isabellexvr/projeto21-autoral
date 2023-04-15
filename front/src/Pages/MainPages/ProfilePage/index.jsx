@@ -12,6 +12,7 @@ import LoadingPosts from "../Constants/LoadingPosts";
 import Post from "../Constants/Post";
 import api from "../../Services/Api/api.js";
 import Community from "./components/Community";
+import { handleContent } from "./services";
 
 const PROFILEVIEWS = ["Posts", "Communities"];
 
@@ -29,35 +30,6 @@ export default function ProfilePage({
 
   const navigate = useNavigate();
   const { userName } = useParams();
-  console.log(userInfo);
-
-  function handleContent(profileView) {
-    if (userInfo && profileView === 1) {
-      setLoading(true);
-      api
-        .get(`/communities/user/${userName}`)
-        .then((res) => {
-          setLoading(false);
-          setContent(res.data);
-          console.log(res.data);
-        })
-        .catch((err) => console.log(err));
-    }
-    console.log(profileView);
-    if (userInfo && profileView === 0) {
-      setLoading(true);
-      api
-        .get("/publications/profile", {
-          headers: { Authorization: "Bearer " + userInfo.token },
-        })
-        .then((res) => {
-          setLoading(false);
-          setContent(res.data);
-          console.log(res.data);
-        })
-        .catch((err) => console.log(err));
-    }
-  }
 
   useEffect(() => {
     const isLoggedIn = localStorage.getItem("userInfo");
@@ -84,6 +56,9 @@ export default function ProfilePage({
           console.log(res.data);
         })
         .catch((err) => console.log(err));
+
+        
+
     }
   }, [loading, likeLoading]);
 
