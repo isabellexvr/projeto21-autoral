@@ -2,10 +2,11 @@ import styled from "styled-components";
 import { colors } from "../../../Assets/colors";
 import { useState, useEffect } from "react";
 import { uploadImage } from "../../../Services/Api/uploadImage";
-import api from "../../../Services/Api/api.js"
+import api from "../../../Services/Api/api.js";
 
 export default function NewCommunityForm() {
   const [form, setForm] = useState({});
+  const [categories, setCategories] = useState([]);
 
   const [icon, setIcon] = useState(null);
   const [cover, setCover] = useState(null);
@@ -17,9 +18,15 @@ export default function NewCommunityForm() {
     setForm({ ...form, [name]: value });
   }
 
-  useEffect(()=>{
-    //api.get("")
-  },[])
+  useEffect(() => {
+    api
+      .get("/categories/find-all")
+      .then((res) => {
+        console.log(res.data);
+        setCategories(res.data);
+      })
+      .catch((err) => console.log(err));
+  }, []);
 
   return (
     <Background>
@@ -40,7 +47,9 @@ export default function NewCommunityForm() {
         className="media-input"
       />
       <div className="upload">
-        <label htmlFor="file">Upload An <strong>Icon</strong> Image</label>
+        <label htmlFor="file">
+          Upload An <strong>Icon</strong> Image
+        </label>
       </div>
       <input
         onChange={(e) => uploadImage(setCoverLoading, setCover, e)}
@@ -81,7 +90,7 @@ const Background = styled.form`
       color: ${(p) => p.theme.fontColor};
     }
     > label {
-        width: 100%;
+      width: 100%;
       box-sizing: border-box;
       border: 2px solid ${colors.orange};
       height: 45px;
@@ -93,7 +102,7 @@ const Background = styled.form`
       color: ${(p) => p.theme.fontColor};
       font-weight: 700;
       margin-bottom: 13px;
-      >strong{
+      > strong {
         color: ${colors.pink};
       }
     }
@@ -125,7 +134,7 @@ const InputContainer = styled.div`
   align-items: center;
   width: 100%;
   padding: 13px;
-  >label{
+  > label {
     margin-bottom: 5px;
     width: 75%;
   }

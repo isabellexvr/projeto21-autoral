@@ -1,6 +1,6 @@
 import express from "express";
 import cors from "cors";
-import { communitiesRouter, publicationsRouter, usersRouter, likesRouter, commentsRouter } from "./routes";
+import { communitiesRouter, publicationsRouter, usersRouter, likesRouter, commentsRouter, categoriesRouter } from "./routes";
 const uploadImage = require("./uploadImg")
 
 const app = express();
@@ -15,7 +15,7 @@ app
     .use("/communities", communitiesRouter)
     .use("/likes", likesRouter)
     .use("/comments", commentsRouter)
-    .use("/categories")
+    .use("/categories", categoriesRouter)
     ;
 const port = process.env.PORT || 3000;
 
