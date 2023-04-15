@@ -1,6 +1,8 @@
 import { colors } from "../../Assets/colors";
 import styled from "styled-components";
 import Modal from "react-modal"
+import { Link } from "react-router-dom";
+import { BsPlusLg } from "react-icons/bs";
 
 export const ModalStyle = styled(Modal)`
   width: 85vw;
@@ -81,3 +83,66 @@ export const modalStyles = {
     cursor: "default",
   },
 };
+
+export const NewCommunity = styled(Link)`
+  all: unset;
+  border: 2px solid ${colors.lighterBlack};
+  height: 155px;
+  width: 120px;
+  margin-right: 15px;
+  border-radius: 15px;
+  box-sizing: border-box;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  > h1 {
+    text-align: center;
+    line-height: 18px;
+    font-weight: 600;
+    margin-top: 10px;
+    margin-bottom: 15px;
+  }
+`;
+
+export const NewCommunityFooter = styled.div`
+  width: 102%;
+  height: 46px;
+  background-color: ${colors.lighterBlack};
+  -webkit-mask-image: radial-gradient(
+    circle at top,
+    transparent 16px,
+    black 17px
+  );
+  border-bottom-right-radius: 15px;
+  border-bottom-left-radius: 15px;
+  position: absolute;
+  bottom: -23px;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  > h1 {
+    font-size: 14px;
+  }
+`;
+
+export const NewCommunityIcon = styled(BsPlusLg)`
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  position: absolute;
+  bottom: 18px;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  box-sizing: border-box;
+  border: 2px solid ${colors.pink};
+  filter: drop-shadow(1px 1px 12px ${colors.pink});
+  background-color: ${colors.orange};
+  font-size: 5px;
+`;

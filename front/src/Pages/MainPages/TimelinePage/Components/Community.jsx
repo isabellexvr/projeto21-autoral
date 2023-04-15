@@ -32,6 +32,7 @@ const CommunityContainer = styled.div`
   border-radius: 15px;
   box-sizing: border-box;
   position: relative;
+  border: 2px solid ${colors.lighterBlack};
 `;
 
 const Footer = styled.div`
@@ -46,7 +47,7 @@ const Footer = styled.div`
   border-bottom-right-radius: 15px;
   border-bottom-left-radius: 15px;
   position: absolute;
-  bottom: -23px;
+  bottom: -25px;
   left: 50%;
   transform: translate(-50%, -50%);
   border-top-left-radius: 10px;
