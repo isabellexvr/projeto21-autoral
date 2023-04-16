@@ -16,6 +16,7 @@ import { BsFillGeoAltFill } from "react-icons/bs";
 
 export default function SignUpForm({ theme, loading, setLoading }) {
   const [location, setLocation] = useState(null);
+  const [showLocationForm, setShowLocationForm] = useState(false);
 
   const [form, setForm] = useState({});
   const [picture, setPicture] = useState(null);
@@ -134,17 +135,19 @@ export default function SignUpForm({ theme, loading, setLoading }) {
           loading={loading}
           theme={theme}
         />
-        <UploadButton>
+        <UploadButton type="button" onClick={() => setShowLocationForm(!showLocationForm)}>
           Select Your Location <BsFillGeoAltFill />{" "}
         </UploadButton>
-        <LocationForm
-          selectedCountry={selectedCountry}
-          selectedState={selectedState}
-          selectedCity={selectedCity}
-          setSelectedCountry={setSelectedCountry}
-          setSelectedState={setSelectedState}
-          setSelectedCity={setSelectedCity}
-        />
+        {showLocationForm && (
+          <LocationForm
+            selectedCountry={selectedCountry}
+            selectedState={selectedState}
+            selectedCity={selectedCity}
+            setSelectedCountry={setSelectedCountry}
+            setSelectedState={setSelectedState}
+            setSelectedCity={setSelectedCity}
+          />
+        )}
 
         {loading ? (
           <ConfirmButton disabled>

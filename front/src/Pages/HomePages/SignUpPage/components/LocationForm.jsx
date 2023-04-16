@@ -1,4 +1,4 @@
-import { StyledSelect, SelectLabel, SelectContainer, } from "../styles";
+import { StyledSelect, SelectLabel, SelectContainer } from "../styles";
 import { useState, useEffect } from "react";
 import axios from "axios";
 
@@ -14,6 +14,7 @@ export default function LocationForm({
   const [states, setStates] = useState([]);
   const [countries, setCountries] = useState([]);
 
+
   const handleSelected = (option, state) => {
     switch (state) {
       case "country":
@@ -28,8 +29,8 @@ export default function LocationForm({
     }
   };
 
-useEffect(() => {
-/*      axios
+  useEffect(() => {
+    /*      axios
       .get("https://api.countrystatecity.in/v1/countries", {
         headers: { "X-CSCAPI-KEY": import.meta.env.VITE_LOCATIONS_API_KEY },
       })
@@ -40,32 +41,38 @@ useEffect(() => {
       .catch((err) => {
         console.log(err);
       });  */
-      if(selectedCountry){
-        axios
-        .get(`https://api.countrystatecity.in/v1/countries/${selectedCountry}/states`, {
-          headers: { "X-CSCAPI-KEY": import.meta.env.VITE_LOCATIONS_API_KEY },
-        })
+    if (selectedCountry) {
+      axios
+        .get(
+          `https://api.countrystatecity.in/v1/countries/${selectedCountry}/states`,
+          {
+            headers: { "X-CSCAPI-KEY": import.meta.env.VITE_LOCATIONS_API_KEY },
+          }
+        )
         .then((res) => {
           setStates(res.data.map((c) => ({ value: c.iso2, label: c.name })));
           console.log(res.data);
         })
         .catch((err) => {
           console.log(err);
-        }); 
-      }
-      if(selectedState){
-        axios
-        .get(`https://api.countrystatecity.in/v1/countries/${selectedCountry}/states/${selectedState}/cities`, {
-          headers: { "X-CSCAPI-KEY": import.meta.env.VITE_LOCATIONS_API_KEY },
-        })
+        });
+    }
+    if (selectedState) {
+      axios
+        .get(
+          `https://api.countrystatecity.in/v1/countries/${selectedCountry}/states/${selectedState}/cities`,
+          {
+            headers: { "X-CSCAPI-KEY": import.meta.env.VITE_LOCATIONS_API_KEY },
+          }
+        )
         .then((res) => {
           setStates(res.data.map((c) => ({ value: c.iso2, label: c.name })));
           console.log(res.data);
         })
         .catch((err) => {
           console.log(err);
-        }); 
-      }
+        });
+    }
   }, []);
 
   return (
@@ -95,7 +102,8 @@ useEffect(() => {
         name="cities"
         options={cities}
         value={selectedCity}
-        onChange={(e) => handleSelected(e, "city")}        isDisabled={countries.length < 1 || !selectedState}
+        onChange={(e) => handleSelected(e, "city")}
+        isDisabled={countries.length < 1 || !selectedState}
       />
     </SelectContainer>
   );
