@@ -133,6 +133,7 @@ export const NewCommunityFooter = styled.div`
 `;
 
 export const NewCommunityIcon = styled(BsPlusLg)`
+cursor: pointer;
   width: 30px;
   height: 30px;
   border-radius: 50%;

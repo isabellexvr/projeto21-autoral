@@ -29,13 +29,12 @@ function addMemberIntoCommunity(data: NewMember) {
 
 function findCommunitiesByUserId(userId: number) {
 
-    // return db.prisma.usersCommunities.findMany({ where: { userId } });
-
     return db.prisma.communities.findMany({
         where: {
             usersCommunities: { some: { userId } }
         },
-        include: {categories: true}
+        include: {categories: true},
+        orderBy: {createdAt: "desc"}
     })
 
 };

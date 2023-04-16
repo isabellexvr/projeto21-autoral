@@ -1,4 +1,6 @@
-export function handleContent(profileView) {
+import api from "../../Services/Api/api.js"
+
+export function handleContent(profileView, userInfo, userName, setLoading, setContent) {
     if (userInfo && profileView === 1) {
       setLoading(true);
       api

@@ -32,7 +32,6 @@ export default function TimelinePage({
   setPublicationModal,
   loading,
   setLoading,
-  commentsModalStates,
 }) {
   const { theme, setTheme } = useTheme();
   const { userInfo, setUserInfo } = useUserInfo();
@@ -40,7 +39,6 @@ export default function TimelinePage({
   const [posts, setPosts] = useState([]);
   const [communities, setCommunities] = useState([]);
   const [likeLoading, setLikeLoading] = useState(false);
-  const { commentsModal, setCommentsModal } = commentsModalStates;
 
   const navigate = useNavigate();
 
@@ -78,7 +76,6 @@ export default function TimelinePage({
       api
         .get(`/communities/user/${userInfo.userName}`)
         .then((res) => {
-          console.log(res.data);
           setCommunities(res.data);
         })
         .catch((err) => console.log(err));
@@ -147,7 +144,6 @@ export default function TimelinePage({
                 likeLoading={likeLoading}
                 setLikeLoading={setLikeLoading}
                 likes={p.likes}
-                commentsModalStates={commentsModalStates}
                 theme={theme}
               />
             </>

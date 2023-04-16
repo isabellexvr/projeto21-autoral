@@ -14,6 +14,7 @@ import api from "../../Services/Api/api.js";
 import Community from "./components/Community";
 import { handleContent } from "./services";
 
+
 const PROFILEVIEWS = ["Posts", "Communities"];
 
 export default function ProfilePage({
@@ -21,11 +22,9 @@ export default function ProfilePage({
   setPublicationModal,
   loading,
   setLoading,
-  commentsModalStates,
 }) {
   const { theme, setTheme } = useTheme();
   const { userInfo, setUserInfo } = useUserInfo();
-  const { commentsModal, setCommentsModal } = commentsModalStates;
 
   const [viewContent, setViewContent] = useState(0);
   const [content, setContent] = useState([]);
@@ -57,7 +56,6 @@ export default function ProfilePage({
         .then((res) => {
           setLoading(false);
           setContent(res.data);
-          console.log(res.data);
         })
         .catch((err) => console.log(err));
 
@@ -113,7 +111,7 @@ export default function ProfilePage({
                 isSelected={viewContent === i}
                 onClick={() => {
                   setViewContent(i);
-                  handleContent(i);
+                  handleContent(i, userInfo, userName, setLoading, setContent);
                 }}
               >
                 {v}
@@ -125,22 +123,26 @@ export default function ProfilePage({
             <>
               {viewContent === 0
                 ? content.map((p, i) => (
-                    <Post
-                      key={i}
-                      fullName={p.users.fullName}
-                      userName={p.users.userName}
-                      userPicture={p.users.picture}
-                      postMedia={p.media}
-                      postDescription={p.description}
-                      likesCount={p._count.likes}
-                      commentsCount={p._count.comments}
-                      time={p.createdAt}
-                      postId={p.id}
-                      userInfo={userInfo}
-                      likeLoading={likeLoading}
-                      setLikeLoading={setLikeLoading}
-                      likes={p.likes}
-                    />
+                    <>
+                      <Post
+                        key={i}
+                        fullName={p.users.fullName}
+                        userName={p.users.userName}
+                        userPicture={p.users.picture}
+                        postMedia={p.media}
+                        postDescription={p.description}
+                        likesCount={p._count.likes}
+                        commentsCount={p._count.comments}
+                        time={p.createdAt}
+                        postId={p.id}
+                        userInfo={userInfo}
+                        likeLoading={likeLoading}
+                        setLikeLoading={setLikeLoading}
+                        likes={p.likes}
+                        commentsModalStates={commentsModalStates}
+                        theme={theme}
+                      />
+                    </>
                   ))
                 : content.map((c, i) => (
                     <Community

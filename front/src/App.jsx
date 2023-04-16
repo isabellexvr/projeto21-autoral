@@ -13,14 +13,11 @@ import CreateCommunityPage from "./Pages/MainPages/CreateCommunityPage";
 function App() {
   const [loading, setLoading] = useState(false);
   const [publicationModal, setPublicationModal] = useState(false);
-  const [commentsModal, setCommentsModal] = useState(false);
 
   //todo: mandar essas variáveis invés de um por um
   const loadingStates = { loading, setLoading };
 
   const publicationModalStates = { publicationModal, setPublicationModal };
-
-  const commentsModalStates = {commentsModal, setCommentsModal};
 
   return (
     <ThemeProvider>
@@ -44,7 +41,6 @@ function App() {
                   setPublicationModal={setPublicationModal}
                   loading={loading}
                   setLoading={setLoading}
-                  commentsModalStates={commentsModalStates}
                 />
               }
             />
@@ -56,7 +52,6 @@ function App() {
                   setPublicationModal={setPublicationModal}
                   loading={loading}
                   setLoading={setLoading}
-                  commentsModalStates={commentsModalStates}
                 />
               }
             />
@@ -68,7 +63,6 @@ function App() {
                   setPublicationModal={setPublicationModal}
                   loading={loading}
                   setLoading={setLoading}
-                  commentsModalStates={commentsModalStates}
                 />
               }
             />

@@ -44,16 +44,17 @@ export const TextInfo = styled.div`
 `;
 
 export const OptionsButton = styled.button`
-  cursor: pointer;
+
   all: unset;
-  width: 35px;
-  height: 35px;
+  width: 30px;
+  height: 30px;
   border-radius: 50%;
   background-color: grey;
   display: flex;
   align-items: center;
   justify-content: center;
   opacity: 0.5;
+  cursor: pointer;
   > svg {
     font-size: 16px;
   }
@@ -127,26 +128,36 @@ export const InfoContainer = styled.div`
 `;
 
 export const OptionsMenu = styled.div`
-  height: 100px;
+  height: 120px;
   width: 100px;
   position: absolute;
-  background-color: red;
-
+  background-color: ${colors.pink};
+  color: ${(p) => p.theme.fontColor};
   right: 0;
   top: 0;
   border-radius: 15px;
   display: ${(p) => (p.menu ? "flex" : "none")};
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: flex-end;
   align-items: center;
+  z-index: 1;
   > button {
     all: unset;
     height: 30px;
-    border: 2px solid ${colors.orange};
+    background-color: ${colors.orange};
     width: 80%;
     border-radius: 5px;
     display: flex;
     justify-content: center;
     align-items: center;
+    margin-bottom: 10px;
+    cursor: pointer;
+  }
+  > svg {
+    position: absolute;
+    right: 0;
+    top: 0;
+    font-size: 31px;
+    cursor: pointer;
   }
 `;

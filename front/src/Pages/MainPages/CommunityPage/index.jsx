@@ -5,10 +5,7 @@ export default function CommunityPage({
   setPublicationModal,
   loading,
   setLoading,
-  commentsModalStates,
 }) {
-  const { commentsModal, setCommentsModal } = commentsModalStates;
-
   return <CommunityBackground>comunidade ne pae</CommunityBackground>;
 }
 
