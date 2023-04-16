@@ -3,7 +3,7 @@ import { colors } from "../../Assets/colors";
 
 export const Background = styled.div`
   background-color: ${(p) => p.theme.backgroundColor};
-  height: 100vh;
+  height: fit-content;
   color: ${(p) => p.theme.fontColor};
   .switch {
     position: relative;

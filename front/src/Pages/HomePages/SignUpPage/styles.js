@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { colors } from "../../Assets/colors";
 import { Link } from "react-router-dom";
+import Select from "react-select";
 
 export const FormContainer = styled.div``;
 
@@ -9,7 +10,7 @@ export const Form = styled.form`
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 500px;
+  height: fit-content;
 
   justify-content: space-around;
 `;
@@ -17,6 +18,7 @@ export const Form = styled.form`
 export const UploadButton = styled.button`
   all: unset;
   width: 270px;
+  margin-bottom: 10px;
   height: 52px;
   cursor: pointer;
   box-sizing: border-box;
@@ -89,7 +91,10 @@ export const LinkToSignIn = styled(Link)`
   all: unset;
   width: 250px;
   cursor: pointer;
-  line-height: 20px;
+  line-height: 23px;
+  margin-top: 10px;
+  text-decoration: underline;
+  margin-bottom: 50px;
 `;
 
 export const Title = styled.div`
@@ -102,4 +107,26 @@ export const Title = styled.div`
     color: ${colors.pink};
     filter: drop-shadow(0px 0px 2px ${colors.pink});
   }
+`;
+
+export const SelectContainer = styled.div`
+  height: fit-content;
+  border: 2px solid ${colors.pink};
+  border-radius: 15px;
+  padding: 14px;
+  margin-bottom: 15px;
+  filter: drop-shadow(0px 0px 2px ${colors.pink});
+`;
+
+export const StyledSelect = styled(Select)`
+  width: 270px;
+  height: 52px;
+  color: ${colors.pink};
+  font-weight: 500;
+  margin-top: 5px;
+`;
+
+export const SelectLabel = styled.label`
+color: ${colors.pink};
+width: 270px;
 `;

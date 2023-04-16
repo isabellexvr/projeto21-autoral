@@ -36,6 +36,7 @@ const InputStyle = styled.input`
   height: 52px;
   border-radius: 8px;
   width: 270px;
+  margin-bottom: 10px;
   padding: 10px;
   box-sizing: border-box;
   color: ${(p) => p.theme.backgroundColor};

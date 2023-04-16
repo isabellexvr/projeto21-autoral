@@ -6,7 +6,7 @@ import { themes } from "../../../Contexts/ThemeContext";
 import { useTheme } from "../../../Contexts/ThemeContext";
 import { BsFillMoonStarsFill, BsFillSunFill } from "react-icons/bs";
 import Header from "../Constants/Header";
-import SignUpForm from "./SignUpForm";
+import SignUpForm from "./components/SignUpForm";
 import { Title } from "./styles";
 
 export default function SignUpPage({ loading, setLoading }) {

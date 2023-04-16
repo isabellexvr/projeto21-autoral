@@ -1,49 +1,58 @@
-import Input from "../Constants/Input";
+import Input from "../../Constants/Input";
 import { useState } from "react";
-import { AiFillCamera } from "react-icons/ai";
 import {
   FormContainer,
   Form,
-  UploadButton,
   ConfirmButton,
-  PicPreview,
   LinkToSignIn,
-} from "./styles";
-import { uploadImage } from "../../Services/Api/uploadImage.js";
+  UploadButton,
+} from "../styles";
 import { ThreeDots } from "react-loader-spinner";
 import { useNavigate } from "react-router-dom";
-import api from "../../Services/Api/api.js";
+import UploadButtonComponent from "./UploadButton";
+import axios from "axios";
+import LocationForm from "./LocationForm";
+import { BsFillGeoAltFill } from "react-icons/bs";
 
 export default function SignUpForm({ theme, loading, setLoading }) {
+  const [location, setLocation] = useState(null);
+
   const [form, setForm] = useState({});
-  const [url, setUrl] = useState(null);
-  const [uploadLoading, setUploadLoading] = useState(false);
+  const [picture, setPicture] = useState(null);
+  const [cover, setCover] = useState(null);
+
+  const [profileUploadLoading, setProfileUploadLoading] = useState(false);
+  const [coverUploadLoading, setCoverUploadLoading] = useState(false);
+
+  const [selectedCountry, setSelectedCountry] = useState(null);
+  const [selectedState, setSelectedState] = useState(null);
+  const [selectedCity, setSelectedCity] = useState(null);
 
   const navigate = useNavigate();
-  
+
   function handleForm({ target: { value, name } }) {
     setForm({ ...form, [name]: value });
   }
 
   function sendForm(event) {
-
     event.preventDefault();
-    console.log({...form, picture: url})
 
-     setLoading(true);
+    setLoading(true);
 
     if (form.password !== form.confirmPassword) {
-      alert("As senhas não correspondem.");
+      alert("The passwords are different.");
       setLoading(false);
       return;
     }
 
     delete form.confirmPassword;
 
-    let finalObj;
-    url ? (finalObj = { ...form, picture: url }) : (finalObj = { ...form });
+    let finalObj = { ...form };
 
-    api
+    if (picture) finalObj = { ...finalObj, picture };
+    if (cover) finalObj = { ...finalObj, cover };
+    console.log(finalObj);
+    /*     api
       .post("/users/sign-up", finalObj)
       .then((res) => {
         console.log(res.data);
@@ -53,13 +62,13 @@ export default function SignUpForm({ theme, loading, setLoading }) {
         event.target.reset();
       })
       .catch((err) => {
-        console.log(err.response.data)
+        console.log(err.response.data);
         alert("Something went wrong while registering.");
         setLoading(false);
-        
-      }); 
-
+      }); */
   }
+
+  function getCurrentLocation() {}
 
   return (
     <FormContainer>
@@ -89,40 +98,25 @@ export default function SignUpForm({ theme, loading, setLoading }) {
           theme={theme}
         />
 
-        {uploadLoading ? (
-          <UploadButton disabled>
-            <ThreeDots
-              height="50"
-              width="50"
-              radius="9"
-              color={theme.fontColor}
-              ariaLabel="three-dots-loading"
-              wrapperStyle={{}}
-              wrapperClassName=""
-              visible={true}
-            />
-          </UploadButton>
-        ) : !url ? (
-          <UploadButton>
-            Upload a Profile Picture
-            <input
-              onChange={(e) => uploadImage(setUploadLoading, setUrl, e)}
-              type="file"
-              accept="image/*"
-            />
-            <AiFillCamera />
-          </UploadButton>
-        ) : (
-          <UploadButton>
-            Change Your Photo
-            <PicPreview src={url} />
-            <input
-              onChange={(e) => uploadImage(setUploadLoading, setUrl, e)}
-              type="file"
-              accept="image/*"
-            />
-          </UploadButton>
-        )}
+        <UploadButtonComponent
+          loading={profileUploadLoading}
+          setLoading={setProfileUploadLoading}
+          theme={theme}
+          url={picture}
+          setUrl={setPicture}
+          afterText={"Upload a Profile Picture"}
+          beforeText={"Change Your Profile Picture"}
+        />
+
+        <UploadButtonComponent
+          loading={coverUploadLoading}
+          setLoading={setCoverUploadLoading}
+          theme={theme}
+          url={cover}
+          setUrl={setCover}
+          afterText={"Upload a Cover Picture"}
+          beforeText={"Change Your Cover Picture"}
+        />
 
         <Input
           type={"password"}
@@ -139,6 +133,17 @@ export default function SignUpForm({ theme, loading, setLoading }) {
           handleForm={handleForm}
           loading={loading}
           theme={theme}
+        />
+        <UploadButton>
+          Select Your Location <BsFillGeoAltFill />{" "}
+        </UploadButton>
+        <LocationForm
+          selectedCountry={selectedCountry}
+          selectedState={selectedState}
+          selectedCity={selectedCity}
+          setSelectedCountry={setSelectedCountry}
+          setSelectedState={setSelectedState}
+          setSelectedCity={setSelectedCity}
         />
 
         {loading ? (
