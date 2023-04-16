@@ -1,6 +1,7 @@
 import { db } from "../config/db";
 import { users } from "@prisma/client";
-import { UserEntity } from "services";
+
+
 
 function findUserByUsername(username: string) {
     return (db.prisma.users.findFirst({
@@ -18,7 +19,17 @@ function findUserById(id: number) {
     return db.prisma.users.findFirst({where: {id}})
 }
 
-function createNewUser(data: UserEntity) {
+type NewUserEntity = {
+    fullName: string;
+    userName: string;
+    picture: string | null;
+    cover: string | null;
+    addressId: number;
+    email: string;
+    password: string;
+}
+
+function createNewUser(data: NewUserEntity) {
     return db.prisma.users.create({ data });
 }
 

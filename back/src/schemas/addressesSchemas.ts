@@ -6,4 +6,4 @@ export const newAddressSchema = joi.object({
     state: joi.string().required(),
     stateIso2: joi.string().max(2).required(),
     city: joi.string().required()
-})
+});

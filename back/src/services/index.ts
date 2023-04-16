@@ -4,3 +4,4 @@ export * from "./communitiesServices";
 export * from "./commentsServices";
 export * from "./likesServices";
 export * from "./categoriesServices";
+export * from "./addressesServices";

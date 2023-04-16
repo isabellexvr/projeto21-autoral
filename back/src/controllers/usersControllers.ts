@@ -25,7 +25,7 @@ export type NewUserPayload = {
 export async function createUser(req: Request, res: Response) {
     const payload: NewUserPayload = req.body;
     try {
-        await usersServices.createUser(payload.userInfo);
+        await usersServices.createUser(payload);
         return res.status(201).send("User created succesfully")
     } catch (error) {
         if (error.name === "UsernameConflictError") return res.status(409).send(error);

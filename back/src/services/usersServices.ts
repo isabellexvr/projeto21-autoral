@@ -4,26 +4,22 @@ import { usernameConflictError, emailConflictError, userNotFoundError, invalidPa
 import bcrypt from "bcrypt";
 import { signIn } from "../protocols";
 import jwt from "jsonwebtoken";
+import { addressesServices } from "./addressesServices";
+import { NewUserPayload } from "../controllers";
 
-export type UserEntity = {
-    fullName: string;
-    userName: string;
-    picture: string | null;
-    cover: string | null;
-    email: string;
-    password: string;
-}
 
-async function createUser(userInfo: UserEntity) {
-    await checkUsername(userInfo.userName);
+async function createUser(payload: NewUserPayload) {
+    await checkUsername(payload.userInfo.userName);
 
-    await checkEmail(userInfo.email);
+    await checkEmail(payload.userInfo.email);
 
-    const hashedPassword = bcrypt.hashSync(userInfo.password, 10);
+    const hashedPassword = bcrypt.hashSync(payload.userInfo.password, 10);
 
-    delete userInfo.password;
+    delete payload.userInfo.password;
 
-    await usersRepository.createNewUser({ ...userInfo, password: hashedPassword });
+    const addressId = await addressesServices.findOrCreateAddress(payload.locationInfo);
+
+    await usersRepository.createNewUser({ ...payload.userInfo, password: hashedPassword, addressId });
 };
 
 async function checkUsername(username: string) {
