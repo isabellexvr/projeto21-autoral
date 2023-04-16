@@ -1,6 +1,6 @@
 import { Response, Request } from "express";
 import { AuthenticatedRequest } from "../middlewares/authMiddleware";
-import { addressesServices } from "services";
+import { addressesServices } from "../services";
 
 export type AddressEntity = {
     country: string,

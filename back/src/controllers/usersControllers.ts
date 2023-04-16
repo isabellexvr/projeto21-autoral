@@ -1,5 +1,4 @@
 import { Response, Request } from "express";
-import { users } from "@prisma/client";
 import { usersServices } from "../services";
 import { signIn } from "../protocols";
 const uploadImage = require("../uploadImg")

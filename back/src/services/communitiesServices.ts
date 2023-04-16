@@ -1,15 +1,18 @@
 import { NewCommunity, NewMember, communitiesRepository } from "../repositories/communitiesRepository";
 import { ExceededLimitError, NameAlreadyExistsError, UserIsAlreadyAMember } from "../errors/communitiesErrors";
 import { usersRepository } from "../repositories";
+import { NewCommunityPayload } from "controllers";
+import { addressesServices } from "./addressesServices";
 
-async function createCommunity(data: NewCommunity) {
-    checkCommunitiesAmmount(data.adminId);
-    checkCommunityName(data.name);
+async function createCommunity(payload: NewCommunityPayload) {
+    await checkCommunitiesAmmount(payload.communityInfo.ownerId);
+    await checkCommunityName(payload.communityInfo.name);
 
+    const addressId = await addressesServices.findOrCreateAddress(payload.locationInfo)
 
-    const community = await communitiesRepository.createCommunity(data);
+    const community = await communitiesRepository.createCommunity({...payload.communityInfo, addressId});
 
-    await addMemberIntoCommunity({ communityId: community.id, userId: community.adminId });
+    await addMemberIntoCommunity({ communityId: community.id, userId: community.ownerId });
 }
 
 async function addMemberIntoCommunity(data: NewMember) {

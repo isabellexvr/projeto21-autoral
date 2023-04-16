@@ -1,4 +1,4 @@
-import { addressesRepository } from "repositories/addressesRepository"
+import { addressesRepository } from "../repositories/addressesRepository"
 import { AddressEntity } from "../controllers"
 import { addresses } from "@prisma/client";
 

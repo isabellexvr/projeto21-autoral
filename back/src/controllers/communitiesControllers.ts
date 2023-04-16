@@ -2,14 +2,24 @@ import { Response } from "express";
 import { AuthenticatedRequest } from "../middlewares/authMiddleware";
 import { communitiesServices } from "../services/communitiesServices";
 
-type NewCommunityPayload = {
-    name: string,
-    description?: string,
-    icon?: string,
-    cover?: string,
-    categoryId: number,
-    cityId: number,
-    createdAt?: Date
+export type NewCommunityPayload = {
+    communityInfo: {
+        name: string,
+        description?: string,
+        icon?: string,
+        cover?: string,
+        categoryId: number,
+        createdAt?: Date,
+        ownerId: number
+    },
+    locationInfo: {
+        country: string,
+        countryIso2: string,
+        state: string,
+        stateIso2: string,
+        city: string
+    }
+
 }
 
 export async function createNewCommunity(req: AuthenticatedRequest, res: Response) {
