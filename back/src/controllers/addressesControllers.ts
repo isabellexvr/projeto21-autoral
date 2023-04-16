@@ -21,11 +21,21 @@ export async function postNewAddress(req: Request, res: Response) {
     }
 }
 
-export async function findAddressByUser(req: AuthenticatedRequest, res: Response) {
-    const userId = req.userId;
+export async function findAddressByUser(req: Request, res: Response) {
+    const userId = req.params.userId;
     try {
-        const address = await addressesServices.findAddressesByUserId(userId);
+        const address = await addressesServices.findAddressesByUserId(Number(userId));
         res.status(200).send(address)
+    } catch (error) {
+        return res.send(error).status(500)
+    }
+}
+
+export async function findAddressByCommunity(req: Request, res: Response) {
+    const communityId = req.params.communityId;
+    try {
+        const address = await addressesServices.findAddressByCommunityId(Number(communityId));
+        res.send(address).status(200)
     } catch (error) {
         return res.send(error).status(500)
     }

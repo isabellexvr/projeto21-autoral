@@ -13,6 +13,13 @@ function findAddressByUserId(userId: number) {
     return db.prisma.users.findFirst({ where: { id: userId }, select: { addresses: true } })
 }
 
+function findAddressByCommunityId(communityId: number) {
+    return db.prisma.communities.findFirst({
+        where: { id: communityId },
+        select: { addresses: true }
+    })
+}
+
 export const addressesRepository = {
-    postNewAddress, findAddress, findAddressByUserId
+    postNewAddress, findAddress, findAddressByUserId, findAddressByCommunityId
 }

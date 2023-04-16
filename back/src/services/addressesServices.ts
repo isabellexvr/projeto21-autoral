@@ -21,6 +21,11 @@ async function findAddressesByUserId(userId: number) {
     return address
 }
 
+async function findAddressByCommunityId(communityId: number) {
+    const address = await addressesRepository.findAddressByCommunityId(communityId);
+    return address;
+}
+
 export const addressesServices = {
-    findOrCreateAddress, findAddressesByUserId
+    findOrCreateAddress, findAddressesByUserId, findAddressByCommunityId
 }
