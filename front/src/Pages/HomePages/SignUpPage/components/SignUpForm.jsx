@@ -11,6 +11,7 @@ import { ThreeDots } from "react-loader-spinner";
 import { useNavigate } from "react-router-dom";
 import UploadButtonComponent from "./UploadButton";
 import axios from "axios";
+import api from "../../../Services/Api/api.js";
 import LocationForm from "./LocationForm";
 import { BsFillGeoAltFill } from "react-icons/bs";
 
@@ -35,7 +36,7 @@ export default function SignUpForm({ theme, loading, setLoading }) {
     setForm({ ...form, [name]: value });
   }
 
-  function sendForm(event) {
+  async function sendForm(event) {
     event.preventDefault();
 
     setLoading(true);
@@ -48,13 +49,26 @@ export default function SignUpForm({ theme, loading, setLoading }) {
 
     delete form.confirmPassword;
 
-    let finalObj = { ...form };
+    let userInfo = { ...form };
 
-    if (picture) finalObj = { ...finalObj, picture };
-    if (cover) finalObj = { ...finalObj, cover };
-    console.log(finalObj);
-    /*     api
-      .post("/users/sign-up", finalObj)
+    if (picture) userInfo = { ...userInfo, picture };
+    if (cover) userInfo = { ...userInfo, cover };
+
+    if (!selectedCountry || !selectedState || !selectedCity) {
+      alert("Please, select your location first");
+      return;
+    }
+
+    const locationInfo = {
+      country: selectedCountry.label,
+      countryIso2: selectedCountry.value,
+      state: selectedState.label,
+      stateIso2: selectedState.value,
+      city: selectedCity.label,
+    };
+
+     await api
+      .post("/users/sign-up", { userInfo, locationInfo })
       .then((res) => {
         console.log(res.data);
         alert("Successfully registered!");
@@ -66,7 +80,7 @@ export default function SignUpForm({ theme, loading, setLoading }) {
         console.log(err.response.data);
         alert("Something went wrong while registering.");
         setLoading(false);
-      }); */
+      }); 
   }
 
   function getCurrentLocation() {}
@@ -135,7 +149,10 @@ export default function SignUpForm({ theme, loading, setLoading }) {
           loading={loading}
           theme={theme}
         />
-        <UploadButton type="button" onClick={() => setShowLocationForm(!showLocationForm)}>
+        <UploadButton
+          type="button"
+          onClick={() => setShowLocationForm(!showLocationForm)}
+        >
           Select Your Location <BsFillGeoAltFill />{" "}
         </UploadButton>
         {showLocationForm && (

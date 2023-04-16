@@ -27,6 +27,7 @@ export async function createUser(req: Request, res: Response) {
         await usersServices.createUser(payload);
         return res.status(201).send("User created succesfully")
     } catch (error) {
+        console.log(error)
         if (error.name === "UsernameConflictError") return res.status(409).send(error);
         if (error.name === "EmailConflictError") return res.status(409).send(error);
         return res.status(500).send(error)

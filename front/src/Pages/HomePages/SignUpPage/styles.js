@@ -124,6 +124,10 @@ export const StyledSelect = styled(Select)`
   color: ${colors.pink};
   font-weight: 500;
   margin-top: 5px;
+  z-index:1;
+  >option{
+    z-index: 1;
+  }
 `;
 
 export const SelectLabel = styled.label`

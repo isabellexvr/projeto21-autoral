@@ -2,6 +2,13 @@ import { StyledSelect, SelectLabel, SelectContainer } from "../styles";
 import { useState, useEffect } from "react";
 import axios from "axios";
 
+const customStyles = {
+  option: (provided, state) => ({
+    ...provided,
+    zIndex: state.isFocused ? 100 : 'auto',
+  }),
+};
+
 export default function LocationForm({
   selectedCountry,
   selectedState,
@@ -30,7 +37,7 @@ export default function LocationForm({
   };
 
   useEffect(() => {
-    /*      axios
+          axios
       .get("https://api.countrystatecity.in/v1/countries", {
         headers: { "X-CSCAPI-KEY": import.meta.env.VITE_LOCATIONS_API_KEY },
       })
@@ -40,11 +47,11 @@ export default function LocationForm({
       })
       .catch((err) => {
         console.log(err);
-      });  */
+      });  
     if (selectedCountry) {
       axios
         .get(
-          `https://api.countrystatecity.in/v1/countries/${selectedCountry}/states`,
+          `https://api.countrystatecity.in/v1/countries/${selectedCountry.value}/states`,
           {
             headers: { "X-CSCAPI-KEY": import.meta.env.VITE_LOCATIONS_API_KEY },
           }
@@ -60,20 +67,20 @@ export default function LocationForm({
     if (selectedState) {
       axios
         .get(
-          `https://api.countrystatecity.in/v1/countries/${selectedCountry}/states/${selectedState}/cities`,
+          `https://api.countrystatecity.in/v1/countries/${selectedCountry.value}/states/${selectedState.value}/cities`,
           {
             headers: { "X-CSCAPI-KEY": import.meta.env.VITE_LOCATIONS_API_KEY },
           }
         )
         .then((res) => {
-          setStates(res.data.map((c) => ({ value: c.iso2, label: c.name })));
+          setCities(res.data.map((c) => ({ value: c.iso2, label: c.name })));
           console.log(res.data);
         })
         .catch((err) => {
           console.log(err);
         });
     }
-  }, []);
+  }, [selectedCountry,selectedState,selectedCity]);
 
   return (
     <SelectContainer>
@@ -86,6 +93,7 @@ export default function LocationForm({
         value={selectedCountry}
         isSearchable={countries.length > 0}
         onChange={(e) => handleSelected(e, "country")}
+        styles={customStyles}
       />
       <SelectLabel htmlFor="states">Select your state:</SelectLabel>
       <StyledSelect
@@ -95,6 +103,7 @@ export default function LocationForm({
         value={selectedState}
         onChange={(e) => handleSelected(e, "state")}
         isDisabled={countries.length < 1 || !selectedCountry}
+        styles={customStyles}
       />
       <SelectLabel htmlFor="cities">Select your city:</SelectLabel>
       <StyledSelect
@@ -104,6 +113,7 @@ export default function LocationForm({
         value={selectedCity}
         onChange={(e) => handleSelected(e, "city")}
         isDisabled={countries.length < 1 || !selectedState}
+                styles={customStyles}
       />
     </SelectContainer>
   );

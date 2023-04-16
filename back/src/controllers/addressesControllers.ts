@@ -14,8 +14,8 @@ export async function postNewAddress(req: Request, res: Response) {
     const addressInfo: AddressEntity = req.body;
 
     try {
-        await addressesServices.findOrCreateAddress(addressInfo);
-        res.sendStatus(201);
+        const addressId = await addressesServices.findOrCreateAddress(addressInfo);
+        res.send(addressId).status(201)
     } catch (error) {
         return res.send(error).status(500)
     }
