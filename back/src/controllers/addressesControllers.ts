@@ -13,19 +13,20 @@ export type AddressEntity = {
 export async function postNewAddress(req: Request, res: Response) {
     const addressInfo: AddressEntity = req.body;
 
-    try{
+    try {
         await addressesServices.findOrCreateAddress(addressInfo);
         res.sendStatus(201);
-    }catch(error){
+    } catch (error) {
         return res.send(error).status(500)
     }
 }
 
-export async function findAddressByUser(req: AuthenticatedRequest, res: Response){
+export async function findAddressByUser(req: AuthenticatedRequest, res: Response) {
     const userId = req.userId;
-    try{
-        
-    }catch(error){
-
+    try {
+        const address = await addressesServices.findAddressesByUserId(userId);
+        res.status(200).send(address)
+    } catch (error) {
+        return res.send(error).status(500)
     }
 }

@@ -16,6 +16,11 @@ async function findOrCreateAddress(addressInfo: AddressEntity) {
     return address.id
 }
 
+async function findAddressesByUserId(userId: number) {
+    const address = await addressesRepository.findAddressByUserId(userId);
+    return address
+}
+
 export const addressesServices = {
-    findOrCreateAddress
+    findOrCreateAddress, findAddressesByUserId
 }
