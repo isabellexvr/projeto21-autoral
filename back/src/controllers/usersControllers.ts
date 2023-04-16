@@ -4,10 +4,28 @@ import { usersServices } from "../services";
 import { signIn } from "../protocols";
 const uploadImage = require("../uploadImg")
 
+export type NewUserPayload = {
+    userInfo: {
+        fullName: string;
+        userName: string;
+        picture: string | null;
+        cover: string | null;
+        email: string;
+        password: string;
+    },
+    locationInfo: {
+        country: string,
+        countryIso2: string,
+        state: string,
+        stateIso2: string,
+        city: string
+    }
+}
+
 export async function createUser(req: Request, res: Response) {
-    const userInfo: users = req.body;
+    const payload: NewUserPayload = req.body;
     try {
-        await usersServices.createUser(userInfo);
+        await usersServices.createUser(payload.userInfo);
         return res.status(201).send("User created succesfully")
     } catch (error) {
         if (error.name === "UsernameConflictError") return res.status(409).send(error);

@@ -43,43 +43,16 @@ async function main() {
             ]
         });
 
-        const BRAZILIANSTATES = [
-            { name: "Acre", countryId: 1 },
-            { name: "Alagoas", countryId: 1 },
-            { name: "Amapá", countryId: 1 },
-            { name: "Amazonas", countryId: 1 },
-            { name: "Bahia", countryId: 1 },
-            { name: "Ceará", countryId: 1 },
-            { name: "Distrito Federal", countryId: 1 },
-            { name: "Espirito Santo", countryId: 1 },
-            { name: "Goiás", countryId: 1 },
-            { name: "Maranhão", countryId: 1 },
-            { name: "Mato Grosso do Sul", countryId: 1 },
-            { name: "Mato Grosso", countryId: 1 },
-            { name: "Minas Gerais", countryId: 1 },
-            { name: "Pará", countryId: 1 },
-            { name: "Paraíba", countryId: 1 },
-            { name: "Paraná", countryId: 1 },
-            { name: "Pernambuco", countryId: 1 },
-            { name: "Piauí", countryId: 1 },
-            { name: "Rio de Janeiro", countryId: 1 },
-            { name: "Rio Grande do Norte", countryId: 1 },
-            { name: "Rio Grande do Sul", countryId: 1 },
-            { name: "Rondônia", countryId: 1 },
-            { name: "Roraima", countryId: 1 },
-            { name: "Santa Catarina", countryId: 1 },
-            { name: "São Paulo", countryId: 1 },
-            { name: "Sergipe", countryId: 1 },
-            { name: "Tocantins", countryId: 1 },
-        ];
-
-        await db.prisma.countries.create({ data: { id: 1, name: "Brasil" } });
-
-        await db.prisma.states.createMany({
-            data: BRAZILIANSTATES
-        });
-
-        await db.prisma.cities.create({ data: { id: 1, name: "Maceió", stateId: 2 } });
+        await db.prisma.addresses.create({
+            data: {
+                id: 1,
+                country: "Brazil",
+                countryIso2: "BR",
+                state: "Alagoas",
+                stateIso2: "AL",
+                city: "Maceió"
+            }
+        })
 
 
         const encryptedPsswd = bcrypt.hashSync("testpassword", 10)
@@ -91,7 +64,7 @@ async function main() {
                 userName: "testuser",
                 picture: "https://cdn.pixabay.com/photo/2021/11/12/03/04/woman-6787784_960_720.png",
                 cover: "https://cdn.pixabay.com/photo/2016/11/19/22/05/sailing-boat-1841376_960_720.jpg",
-                cityId: 1,
+                addressId: 1,
                 email: "testemail@gmail.com",
                 password: encryptedPsswd
             }
@@ -103,9 +76,9 @@ async function main() {
                 description: "Para jogadores de Valorant da cidade de Maceió.",
                 icon: "https://yoolk.ninja/wp-content/uploads/2020/06/Games-Valorant-1024x1024.png",
                 cover: "https://sm.ign.com/ign_br/game/v/valorant/valorant_5mxf.jpg",
-                cityId: 1,
                 categoryId: 1,
-                adminId: 1
+                addressId: 1,
+                ownerId: 1,
             }
         });
 

@@ -16,6 +16,7 @@ app
     .use("/likes", likesRouter)
     .use("/comments", commentsRouter)
     .use("/categories", categoriesRouter)
+    .use("/addresses",)
     ;
 const port = process.env.PORT || 3000;
 

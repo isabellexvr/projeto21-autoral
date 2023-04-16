@@ -5,9 +5,16 @@ import bcrypt from "bcrypt";
 import { signIn } from "../protocols";
 import jwt from "jsonwebtoken";
 
-async function createUser(userInfo: users) {
-    console.log(userInfo)
+export type UserEntity = {
+    fullName: string;
+    userName: string;
+    picture: string | null;
+    cover: string | null;
+    email: string;
+    password: string;
+}
 
+async function createUser(userInfo: UserEntity) {
     await checkUsername(userInfo.userName);
 
     await checkEmail(userInfo.email);

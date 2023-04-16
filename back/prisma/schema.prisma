@@ -33,10 +33,12 @@ model communities {
   cover            String?
   city             String?
   categoryId       Int
-  adminId          Int
+  ownerId          Int
+  addressId        Int
   createdAt        DateTime           @default(dbgenerated("'2023-04-07 22:15:55.247532-03'::timestamp with time zone")) @db.Timestamptz(6)
   categories       categories         @relation(fields: [categoryId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "communities_fk0")
-  users            users              @relation(fields: [adminId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "communities_fk1")
+  users            users              @relation(fields: [ownerId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "communities_fk1")
+  addresses        addresses          @relation(fields: [addressId], references: [id])
   communitiesPosts communitiesPosts[]
   usersCommunities usersCommunities[]
 }
@@ -83,6 +85,7 @@ model users {
   userName                              String             @unique @db.VarChar(25)
   picture                               String?
   cover                                 String?            @default("https://cdn.pixabay.com/photo/2016/11/19/22/05/sailing-boat-1841376_960_720.jpg")
+  addressId                             Int
   email                                 String             @unique
   password                              String             @unique
   comments                              comments[]
@@ -92,16 +95,18 @@ model users {
   likes                                 likes[]
   posts                                 posts[]
   usersCommunities                      usersCommunities[]
-  addresses                             addresses[]
+  addresses                             addresses          @relation(fields: [addressId], references: [id])
 }
 
 model addresses {
-  id      Int    @id(map: "addresses_pk") @default(autoincrement())
-  city    String
-  state   String
-  country String
-  userId  Int
-  users   users  @relation(fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "addresses_fk0")
+  id          Int           @id(map: "addresses_pk") @default(autoincrement())
+  city        String
+  state       String
+  stateIso2   String
+  country     String
+  countryIso2 String
+  users       users[]
+  communities communities[]
 }
 
 model usersCommunities {
