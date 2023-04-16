@@ -23,7 +23,7 @@ function deleteComment(commentId: number) {
 }
 
 function findCommentsByPostId(postId: number) {
-    return db.prisma.comments.findMany({ where: { postId }, include: { users: true } });
+    return db.prisma.comments.findMany({ where: { postId }, include: { users: true }, orderBy: {id: "desc"} });
 }
 
 export const commentsRepository = {

@@ -56,7 +56,7 @@ export default function Post({
   }
 
   function handleComments(postId) {
-    setShowComments(!showComments);
+    setShowComments(true);
     setLoadingComments(true);
     setNewComment(null);
     api
@@ -71,9 +71,25 @@ export default function Post({
       .catch((err) => console.log(err));
   }
 
-  function sendComment(e) {
+  function sendComment(e, postId) {
     e.preventDefault();
-    console.log(newComment);
+    setLoadingComments(true);
+    const finalObj = {
+      comment: newComment,
+      postId,
+      createdAt: new Date().toISOString(),
+    };
+    console.log(finalObj);
+    api
+      .post("/comments/new", finalObj, {
+        headers: { Authorization: "Bearer " + userInfo.token },
+      })
+      .then((res) => {
+        handleComments(postId);
+        setLoadingComments(false);
+        console.log(res.data);
+      })
+      .catch((err) => console.log(err));
   }
 
   return (
@@ -139,8 +155,7 @@ export default function Post({
             )}
             <AiOutlineComment
               onClick={() => {
-
-                handleComments(postId);
+                showComments ? setShowComments(false) : handleComments(postId);
               }}
             />
           </ButtonContainer>
@@ -153,11 +168,34 @@ export default function Post({
         {showComments && (
           <>
             {loadingComments ? (
-              <>carregando comentarios</>
+              <>Loading...</>
             ) : comments.length > 0 ? (
               <CommentsContainer>
                 <h1>Comments</h1>
-                <NewCommentForm onSubmit={sendComment} theme={theme}>
+                {comments.map((c, i) => (
+                  <StyledComment>
+                    <div className="header">
+                      <div className="left">
+                        <img src={c.users.picture} />
+                        <div className="names">
+                          <h1>{c.users.fullName}</h1>
+                          <h2>@{c.users.userName}</h2>
+                        </div>
+                      </div>
+
+                      <button>
+                        <SlOptions />
+                      </button>
+                    </div>
+                    <div className="content">
+                      <p>{c.comment}</p>
+                    </div>
+                  </StyledComment>
+                ))}
+                <NewCommentForm
+                  onSubmit={(e) => sendComment(e, postId)}
+                  theme={theme}
+                >
                   <input
                     onChange={(e) => {
                       setNewComment(e.target.value);
@@ -169,7 +207,10 @@ export default function Post({
               </CommentsContainer>
             ) : (
               <CommentsContainer>
-                <NewCommentForm onSubmit={sendComment} theme={theme}>
+                <NewCommentForm
+                  onSubmit={(e) => sendComment(e, postId)}
+                  theme={theme}
+                >
                   <input
                     onChange={(e) => {
                       setNewComment(e.target.value);
@@ -232,9 +273,11 @@ const EditDescriptionInput = styled.input`
 const CommentsContainer = styled.div`
   > h1 {
     color: ${colors.orange};
-    font-size: 18px;
+    font-size: 21px;
     font-weight: 600;
+    margin-top: 10px;
     margin-bottom: 10px;
+    filter: drop-shadow(1px 1px 12px ${colors.orange});
   }
   width: 90%;
   margin-bottom: 20px;
@@ -248,8 +291,7 @@ const NewCommentForm = styled.form`
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  border-top: 1px solid grey;
-  padding-top: 10px;
+  margin-top: 10px;
   > input {
     all: unset;
     background-color: ${(p) => p.theme.fontColor};
@@ -259,7 +301,7 @@ const NewCommentForm = styled.form`
     box-sizing: border-box;
     width: 100%;
     margin-bottom: 5px;
-    color: ${p => p.theme.backgroundColor};
+    color: ${(p) => p.theme.backgroundColor};
     ::placeholder {
       font-size: 14px;
     }
@@ -274,5 +316,62 @@ const NewCommentForm = styled.form`
     align-items: center;
     justify-content: center;
     font-weight: 600;
+  }
+`;
+
+const StyledComment = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-bottom: 10px;
+  margin-top: 15px;
+  border-bottom: 1px solid ${colors.pink};
+
+  > .header {
+    display: flex;
+    justify-content: space-between;
+    width: 90%;
+    > .left {
+      display: flex;
+      width: 70%;
+      > img {
+        width: 40px;
+        height: 40px;
+        border: 2px solid ${colors.orange};
+        border-radius: 50%;
+        object-fit: cover;
+        margin-right: 6px;
+      }
+      > .names {
+        > h1 {
+          font-size: 15px;
+        }
+        > h2 {
+          color: ${colors.orange};
+          font-size: 13px;
+          font-weight: 600;
+        }
+      }
+    }
+    > button {
+      all: unset;
+      width: 30px;
+      height: 30px;
+      background-color: grey;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0.6;
+      > svg {
+        font-size: 17px;
+      }
+    }
+  }
+  > .content {
+    margin-top: 7px;
+    margin-bottom: 10px;
+    width: 90%;
   }
 `;
