@@ -14,7 +14,6 @@ import api from "../../Services/Api/api.js";
 import Community from "./components/Community";
 import { handleContent } from "./services";
 
-
 const PROFILEVIEWS = ["Posts", "Communities"];
 
 export default function ProfilePage({
@@ -35,20 +34,22 @@ export default function ProfilePage({
   const { userName } = useParams();
 
   useEffect(() => {
-    const isLoggedIn = localStorage.getItem("userInfo");
+    if (!userInfo) {
+      const isLoggedIn = localStorage.getItem("userInfo");
 
-    if (!isLoggedIn) {
-      navigate("/sign-in");
-      return;
-    } else {
-      const info = JSON.parse(isLoggedIn);
-      setUserInfo(info);
-      setLoading(true);
+      if (!isLoggedIn) {
+        navigate("/sign-in");
+        return;
+      } else {
+        const info = JSON.parse(isLoggedIn);
+        setUserInfo(info);
+        setLoading(true);
+      }
     }
   }, []);
 
   useEffect(() => {
-    if (userInfo && viewContent === 0) {
+    if (userInfo && viewContent === 0 && !userProfileInfo) {
       api
         .get(`/publications/profile/${userName}`, {
           headers: { Authorization: "Bearer " + userInfo.token },
@@ -62,7 +63,6 @@ export default function ProfilePage({
       api
         .get(`/users/info/${userName}`)
         .then((res) => {
-          console.log(res.data);
           setUserProfileInfo(res.data);
           setLoading(false);
         })
@@ -108,6 +108,7 @@ export default function ProfilePage({
           <ViewSelection>
             {PROFILEVIEWS.map((v, i) => (
               <ViewButton
+              key={i}
                 isSelected={viewContent === i}
                 onClick={() => {
                   setViewContent(i);
