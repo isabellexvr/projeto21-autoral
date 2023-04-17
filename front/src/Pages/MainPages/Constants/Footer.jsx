@@ -12,6 +12,8 @@ export default function Footer({ theme, setPublicationModal, userName }) {
 
   const navigate = useNavigate();
 
+  console.log(userName)
+
   return (
     <FooterContainer>
       <FooterStyle theme={theme}>

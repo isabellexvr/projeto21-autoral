@@ -9,7 +9,7 @@ export default function Community({
   theme
 }) {
   return (
-    <StyledLink to="/community/1">
+    <StyledLink to={`/community/${communityName}`} >
       <CommunityContainer communityCover={communityCover}>
         <Category theme={theme}>{categoryName}</Category>
         <Footer>

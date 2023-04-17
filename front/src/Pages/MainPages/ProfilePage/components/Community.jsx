@@ -12,6 +12,7 @@
 
 import styled from "styled-components";
 import { colors } from "../../../Assets/colors";
+import { useNavigate } from "react-router-dom";
 
 export default function Community({
   name,
@@ -20,8 +21,10 @@ export default function Community({
   cover,
   category,
 }) {
+
+  const navigate = useNavigate()
   return (
-    <CommunityContainer cover={cover}>
+    <CommunityContainer onClick={()=>navigate(`/community/${name}`)} cover={cover}>
       <CommunityHeader>
         <img src={icon} />
         <h1>{name}</h1>

@@ -10,7 +10,7 @@ async function createCommunity(payload: NewCommunityPayload) {
 
     const addressId = await addressesServices.findOrCreateAddress(payload.locationInfo)
 
-    const community = await communitiesRepository.createCommunity({...payload.communityInfo, addressId});
+    const community = await communitiesRepository.createCommunity({ ...payload.communityInfo, addressId });
 
     await addMemberIntoCommunity({ communityId: community.id, userId: community.ownerId });
 }
@@ -51,9 +51,15 @@ async function findCategoryCommunities(categoryId: number) {
     return communities;
 }
 
+async function findCommunityInfo(communityName: string) {
+    const info = communitiesRepository.findCommunityInfoByName(communityName)
+    return info
+}
+
 export const communitiesServices = {
     createCommunity,
     findUserCommunities,
     findCategoryCommunities,
-    addMemberIntoCommunity
+    addMemberIntoCommunity,
+    findCommunityInfo
 }

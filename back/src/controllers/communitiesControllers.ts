@@ -1,4 +1,4 @@
-import { Response } from "express";
+import { Response, Request } from "express";
 import { AuthenticatedRequest } from "../middlewares/authMiddleware";
 import { communitiesServices } from "../services/communitiesServices";
 
@@ -37,7 +37,7 @@ export async function createNewCommunity(req: AuthenticatedRequest, res: Respons
     };
 };
 
-export async function findUsersCommunities(req: AuthenticatedRequest, res: Response) {
+export async function findUsersCommunities(req: Request, res: Response) {
     const userName = req.params.userName;
 
     try {
@@ -48,7 +48,7 @@ export async function findUsersCommunities(req: AuthenticatedRequest, res: Respo
     };
 };
 
-export async function findCategoryCommunities(req: AuthenticatedRequest, res: Response) {
+export async function findCategoryCommunities(req: Request, res: Response) {
     const categoryId = req.params.categoryId;
 
     try {
@@ -70,3 +70,14 @@ export async function addMemberToCommunity(req: AuthenticatedRequest, res: Respo
         return res.status(500).send(error);
     }
 }
+
+export async function findCommunityInfo(req: Request, res: Response) {
+    const categoryName = req.params.categoryName;
+
+    try {
+        const info = await communitiesServices.findCommunityInfo(categoryName);
+        res.send(info).status(200);
+    } catch (error) {
+        return res.status(500).send(error)
+    };
+};

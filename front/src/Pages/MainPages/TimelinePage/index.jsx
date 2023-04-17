@@ -56,7 +56,7 @@ export default function TimelinePage({
   }, []);
 
   useEffect(() => {
-    if (userInfo && selectedTimeline === 0 && !posts) {
+    if (userInfo && selectedTimeline === 0) {
       api
         .get("/publications/timeline", {
           headers: { Authorization: "Bearer " + userInfo.token },

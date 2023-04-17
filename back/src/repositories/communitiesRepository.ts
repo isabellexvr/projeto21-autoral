@@ -1,3 +1,4 @@
+import { addresses } from '@prisma/client';
 import { db } from './../config/db';
 
 export type NewCommunity = {
@@ -33,8 +34,8 @@ function findCommunitiesByUserId(userId: number) {
         where: {
             usersCommunities: { some: { userId } }
         },
-        include: {categories: true},
-        orderBy: {createdAt: "desc"}
+        include: { categories: true },
+        orderBy: { createdAt: "desc" }
     })
 
 };
@@ -47,11 +48,19 @@ function findCommunitiesByCategoryId(categoryId: number) {
     return db.prisma.communities.findMany({ where: { categoryId } });
 };
 
+function findCommunityInfoByName(communityName: string) {
+    return db.prisma.communities.findFirst({
+        where: { name: communityName },
+        include: { usersCommunities: { include: { users: true } }, addresses: true }
+    })
+}
+
 export const communitiesRepository = {
     createCommunity,
     findCommunitiesByUserId,
     findCommunitiesByCategoryId,
     findCommunityByName,
     addMemberIntoCommunity,
-    checkUserCommunityMember
+    checkUserCommunityMember,
+    findCommunityInfoByName
 }

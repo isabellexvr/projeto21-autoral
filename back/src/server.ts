@@ -14,12 +14,10 @@ app
     .use("/users", usersRouter)
     .use("/publications", publicationsRouter)
     .use("/communities", communitiesRouter)
-
     .use("/likes", likesRouter)
     .use("/comments", commentsRouter)
     .use("/categories", categoriesRouter)
     .use("/addresses", addressesRouter)
-
     ;
 const port = process.env.PORT || 3000;
 

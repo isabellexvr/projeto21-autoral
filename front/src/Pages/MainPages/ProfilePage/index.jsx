@@ -223,7 +223,7 @@ export default function ProfilePage({
             </>
           )}
 
-          <Footer theme={theme} setPublicationModal={setPublicationModal} />
+          <Footer theme={theme} setPublicationModal={setPublicationModal} userName={userInfo?.userName} />
           <PostModal
             publicationModal={publicationModal}
             setPublicationModal={setPublicationModal}
