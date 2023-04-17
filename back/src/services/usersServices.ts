@@ -74,6 +74,7 @@ const validatePasswordOrFail = (enteredPassword: string, userPassword: string) =
 }
 
 async function findInfoByUsername(userName: string) {
+    await findUserByUsernameOrFail(userName);
     const userInfo = await usersRepository.findUserByUsername(userName);
     delete userInfo.password;
     return userInfo;

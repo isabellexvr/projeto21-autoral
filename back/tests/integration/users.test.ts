@@ -1,6 +1,6 @@
-import { faker } from '@faker-js/faker';
 import app from "../../src/server";
 import supertest from "supertest";
+import { faker } from '@faker-js/faker';
 import { cleanDb, cleanUsers, disconnectDb } from "../helpers";
 import { createFakeUser } from '../factories/usersFactory';
 import { usernameConflictError, emailConflictError, userNotFoundError, invalidPasswordError } from 'errors';
@@ -115,7 +115,7 @@ describe("POST /users/sign-in", () => {
 			password: faker.internet.password(6)
 		});
 
-		
+
 
 
 		it("Should respond with status 404 if there's no user for e-mail sent", async () => {
@@ -178,3 +178,16 @@ describe("POST /users/sign-in", () => {
 
 	})
 });
+
+describe("GET /users/info/:userName", () => {
+	it("should respond with status 400 if username sent via params doesn't relate to any existent user.", async () => {
+		const res = await server.get("/users/info/" + faker.name.firstName());
+		expect(res.statusCode).toBe(404);
+	})
+	it("should respond with status 200 and user's info if user exists.", async () => {
+		const address = await findFirstAddress();
+		const user = await createFakeUser({ addressId: address.id })
+		const res = await server.get("/users/info/" + user.userName);
+		expect(res.statusCode).toBe(200);
+	})
+})

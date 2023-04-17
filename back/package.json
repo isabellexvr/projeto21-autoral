@@ -15,7 +15,8 @@
     "dev:migration:generate": "dotenv -e .env.development prisma migrate dev",
     "test": "NODE_ENV=test jest --passWithNoTests --runInBand",
     "test:seed": "dotenv -e .env.test prisma db seed",
-    "test:migration:generate": "dotenv -e .env.test prisma migrate dev"
+    "test:migration:generate": "dotenv -e .env.test prisma migrate dev",
+    "test:coverage": "NODE_ENV=test jest --passWithNoTests --runInBand --coverage --watchAll --collectCoverageFrom='./src/**'"
   },
   "keywords": [],
   "author": "Isabelle Xavier",

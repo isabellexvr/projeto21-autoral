@@ -12,8 +12,6 @@ export async function createUser(req: Request, res: Response) {
     } catch (error) {
         if (error.name === "UsernameConflictError") return res.status(409).send(error);
         if (error.name === "EmailConflictError") return res.status(409).send(error);
-        console.error(error)
-        return res.status(500).send(error)
     }
 }
 
@@ -26,7 +24,6 @@ export async function login(req: Request, res: Response) {
     } catch (error) {
         if (error.name === "UserNotFound") return res.status(404).send(error);
         if (error.name === "InvalidPasswordError") return res.status(401).send(error);
-        return res.status(500).send(error)
     }
 }
 
@@ -47,6 +44,6 @@ export async function findInfo(req: Request, res: Response) {
         const userInfo = await usersServices.findInfoByUsername(userName);
         res.send(userInfo).status(200)
     } catch (error) {
-        return res.send(error).status(500)
+        if (error.name === "UserNotFound") return res.status(404).send(error);
     }
 }
