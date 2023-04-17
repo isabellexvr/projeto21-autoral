@@ -73,10 +73,10 @@ export async function addMemberToCommunity(req: AuthenticatedRequest, res: Respo
 }
 
 export async function findCommunityInfo(req: Request, res: Response) {
-    const categoryName = req.params.categoryName;
+    const communityName = req.params.communityName;
 
     try {
-        const info = await communitiesServices.findCommunityInfo(categoryName);
+        const info = await communitiesServices.findCommunityInfo(communityName);
         res.send(info).status(200);
     } catch (error) {
         return res.status(500).send(error)

@@ -30,6 +30,7 @@ export default function CommunityPage({
   const [likeLoading, setLikeLoading] = useState(false);
 
   const { communityName } = useParams();
+  console.log(communityName)
 
   const navigate = useNavigate();
 

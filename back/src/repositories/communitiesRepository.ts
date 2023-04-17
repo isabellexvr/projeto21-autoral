@@ -49,6 +49,7 @@ function findCommunitiesByCategoryId(categoryId: number) {
 };
 
 function findCommunityInfoByName(communityName: string) {
+    console.log(communityName)
     return db.prisma.communities.findFirst({
         where: { name: communityName },
         include: { usersCommunities: { include: { users: true } }, addresses: true }
