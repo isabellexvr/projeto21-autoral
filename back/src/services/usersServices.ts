@@ -5,7 +5,7 @@ import bcrypt from "bcrypt";
 import { signIn } from "../protocols";
 import jwt from "jsonwebtoken";
 import { addressesServices } from "./addressesServices";
-import { NewUserPayload } from "../controllers";
+import { NewUserPayload } from "../protocols";
 
 
 async function createUser(payload: NewUserPayload) {
@@ -25,7 +25,7 @@ async function createUser(payload: NewUserPayload) {
 async function checkUsername(username: string) {
     const userExists = await usersRepository.findUserByUsername(username);
 
-    if (userExists) throw usernameConflictError();
+    if (userExists?.userName === username) throw usernameConflictError();
 
 };
 
@@ -64,7 +64,6 @@ const findUserByEmailOrFail = async (email: string) => {
 
 const findUserByUsernameOrFail = async (username: string) => {
     const user = await usersRepository.findUserByUsername(username);
-    console.log(user);
     if (!user) throw userNotFoundError("username");
     return user
 }

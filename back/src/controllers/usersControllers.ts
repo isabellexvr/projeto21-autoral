@@ -1,25 +1,8 @@
 import { Response, Request } from "express";
 import { usersServices } from "../services";
 import { signIn } from "../protocols";
+import { NewUserPayload } from "../protocols";
 const uploadImage = require("../uploadImg")
-
-export type NewUserPayload = {
-    userInfo: {
-        fullName: string;
-        userName: string;
-        picture: string | null;
-        cover: string | null;
-        email: string;
-        password: string;
-    },
-    locationInfo: {
-        country: string,
-        countryIso2: string,
-        state: string,
-        stateIso2: string,
-        city: string
-    }
-}
 
 export async function createUser(req: Request, res: Response) {
     const payload: NewUserPayload = req.body;
@@ -27,9 +10,9 @@ export async function createUser(req: Request, res: Response) {
         await usersServices.createUser(payload);
         return res.status(201).send("User created succesfully")
     } catch (error) {
-        console.log(error)
         if (error.name === "UsernameConflictError") return res.status(409).send(error);
         if (error.name === "EmailConflictError") return res.status(409).send(error);
+        console.error(error)
         return res.status(500).send(error)
     }
 }
@@ -41,7 +24,6 @@ export async function login(req: Request, res: Response) {
         const userInfo = await usersServices.login(loginInfo);
         return res.status(200).send(userInfo);
     } catch (error) {
-        console.log(error)
         if (error.name === "UserNotFound") return res.status(404).send(error);
         if (error.name === "InvalidPasswordError") return res.status(401).send(error);
         return res.status(500).send(error)
