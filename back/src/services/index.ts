@@ -5,3 +5,4 @@ export * from "./commentsServices";
 export * from "./likesServices";
 export * from "./categoriesServices";
 export * from "./addressesServices";
+export * from "./followersServices";

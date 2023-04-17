@@ -24,7 +24,6 @@ import PostModal from "../Constants/PostModal";
 import { handlePosts } from "./services";
 import { TiArrowDownThick } from "react-icons/ti";
 
-
 const TIMELINESTYPES = ["My Timeline", "Communities"];
 
 export default function TimelinePage({
@@ -43,19 +42,21 @@ export default function TimelinePage({
   const navigate = useNavigate();
 
   useEffect(() => {
-    const isLoggedIn = localStorage.getItem("userInfo");
-    if (!isLoggedIn) {
-      navigate("/sign-in");
-      return;
-    } else {
-      const info = JSON.parse(isLoggedIn);
-      setUserInfo(info);
-      setLoading(true);
+    if (!userInfo) {
+      const isLoggedIn = localStorage.getItem("userInfo");
+      if (!isLoggedIn) {
+        navigate("/sign-in");
+        return;
+      } else {
+        const info = JSON.parse(isLoggedIn);
+        setUserInfo(info);
+        setLoading(true);
+      }
     }
   }, []);
 
   useEffect(() => {
-    if (userInfo && selectedTimeline === 0) {
+    if (userInfo && selectedTimeline === 0 && !posts) {
       api
         .get("/publications/timeline", {
           headers: { Authorization: "Bearer " + userInfo.token },

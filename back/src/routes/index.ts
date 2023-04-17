@@ -5,3 +5,4 @@ export * from "./likesRouter";
 export * from "./commentsRouter";
 export * from "./categoriesRouter";
 export * from "./addressesRouter";
+export * from "./followersRouter";

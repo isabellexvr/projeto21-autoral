@@ -16,13 +16,12 @@ export function handleContent(profileView, userInfo, userName, setLoading, setCo
     if (userInfo && profileView === 0) {
       setLoading(true);
       api
-        .get("/publications/profile", {
+        .get(`/publications/profile/${userName}`, {
           headers: { Authorization: "Bearer " + userInfo.token },
         })
         .then((res) => {
           setLoading(false);
           setContent(res.data);
-          console.log(res.data);
         })
         .catch((err) => console.log(err));
     }

@@ -5,8 +5,9 @@ import { users } from "@prisma/client";
 
 function findUserByUsername(username: string) {
     return (db.prisma.users.findFirst({
-        where: { userName: username }
-    }))
+        where: { userName: username },
+        include: { followers_followers_followedIdTousers: { include: { users_followers_followerIdTousers: true } } }
+    }));
 };
 
 function findUserByEmail(email: string) {
@@ -16,7 +17,7 @@ function findUserByEmail(email: string) {
 }
 
 function findUserById(id: number) {
-    return db.prisma.users.findFirst({where: {id}})
+    return db.prisma.users.findFirst({ where: { id } })
 }
 
 type NewUserEntity = {
