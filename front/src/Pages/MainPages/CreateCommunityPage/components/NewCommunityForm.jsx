@@ -11,8 +11,18 @@ import {
   SubmitButton,
   PreviewPic,
 } from "./NewCommunityFormStyles";
+import styled from "styled-components";
+import { colors } from "../../../Assets/colors";
+import { BsFillGeoAltFill } from "react-icons/bs";
+import LocationForm from "../../../HomePages/SignUpPage/components/LocationForm";
 
-export default function NewCommunityForm({ token, theme, navigate }) {
+export default function NewCommunityForm({
+  token,
+  theme,
+  navigate,
+  showLocationForm,
+  setShowLocationForm,
+}) {
   const [form, setForm] = useState({});
   const [categories, setCategories] = useState([]);
 
@@ -23,20 +33,24 @@ export default function NewCommunityForm({ token, theme, navigate }) {
   const [iconLoading, setIconLoading] = useState(false);
   const [coverLoading, setCoverLoading] = useState(false);
 
+  const [selectedCountry, setSelectedCountry] = useState(null);
+  const [selectedState, setSelectedState] = useState(null);
+  const [selectedCity, setSelectedCity] = useState(null);
+
   function handleForm({ target: { value, name } }) {
     setForm({ ...form, [name]: value });
   }
 
   function sendForm(e) {
     e.preventDefault();
-    let finalObj;
+    let communityInfo;
 
-    if(!category ) {
-      alert("Please, choose an category")
-      return
+    if (!category) {
+      alert("Please, choose an category");
+      return;
     }
 
-    finalObj = {
+    communityInfo = {
       ...form,
       categoryId: Number(category),
       createdAt: new Date().toISOString(),
@@ -44,23 +58,39 @@ export default function NewCommunityForm({ token, theme, navigate }) {
       cover,
     };
 
-    console.log(finalObj)
+    if (!selectedCountry || !selectedState || !selectedCity) {
+      alert("Please, select the location first");
+      return;
+    }
 
-     api.post("/communities/create", finalObj, {
-      headers: { Authorization: "Bearer " + token },
-    }).then(res => {
-      navigate("/timeline")
-      alert('Community created')
-      console.log(res.data)
+    const locationInfo = {
+      country: selectedCountry.label,
+      countryIso2: selectedCountry.value,
+      state: selectedState.label,
+      stateIso2: selectedState.value,
+      city: selectedCity.label,
+    };
 
-    }).catch(err => console.log(err))
+    api
+      .post(
+        "/communities/create",
+        { communityInfo, locationInfo },
+        {
+          headers: { Authorization: "Bearer " + token },
+        }
+      )
+      .then((res) => {
+        alert("Community created");
+        navigate("/timeline");
+        console.log(res.data);
+      })
+      .catch((err) => console.log(err));
   }
 
   useEffect(() => {
     api
       .get("/categories/find-all")
       .then((res) => {
-        console.log(res.data);
         setCategories(res.data);
       })
       .catch((err) => console.log(err));
@@ -199,7 +229,81 @@ export default function NewCommunityForm({ token, theme, navigate }) {
           </div>
         </>
       )}
+
+      <LocationContainer>
+        <div className="text">
+          <BsFillGeoAltFill />
+          <label>Select the Communitie's Location:</label>
+          <BsFillGeoAltFill />
+        </div>
+
+        <div className="buttons">
+          <LocationButton type="button">My Current Location</LocationButton>
+          <LocationButton
+            type="button"
+            onClick={() => {
+              setShowLocationForm(!showLocationForm);
+            }}
+          >
+            Select A Different Location
+          </LocationButton>
+        </div>
+      </LocationContainer>
+
+      {showLocationForm && (
+        <LocationForm
+          selectedCountry={selectedCountry}
+          selectedState={selectedState}
+          selectedCity={selectedCity}
+          setSelectedCountry={setSelectedCountry}
+          setSelectedState={setSelectedState}
+          setSelectedCity={setSelectedCity}
+        />
+      )}
+
       <SubmitButton type="submit">Create</SubmitButton>
     </Background>
   );
 }
+
+const LocationContainer = styled.div`
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  .text {
+    padding: 10px;
+    display: flex;
+    justify-content: space-around;
+    > label {
+      font-size: 14px;
+      text-align: center;
+    }
+  }
+  .buttons {
+    display: flex;
+    justify-content: space-around;
+    width: 80%;
+  }
+  > svg {
+    font-size: 20px;
+  }
+`;
+
+const LocationButton = styled.button`
+  all: unset;
+  border: 2px solid ${colors.orange};
+  margin-bottom: 10px;
+  width: 40%;
+  height: 60px;
+  border-radius: 10px;
+  padding: 10px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-size: 13px;
+  font-weight: 600;
+`;

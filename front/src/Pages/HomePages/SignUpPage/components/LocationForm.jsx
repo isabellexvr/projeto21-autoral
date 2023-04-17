@@ -5,7 +5,7 @@ import axios from "axios";
 const customStyles = {
   option: (provided, state) => ({
     ...provided,
-    zIndex: state.isFocused ? 100 : 'auto',
+    zIndex: state.isFocused ? 100 : "auto",
   }),
 };
 
@@ -20,7 +20,6 @@ export default function LocationForm({
   const [cities, setCities] = useState([]);
   const [states, setStates] = useState([]);
   const [countries, setCountries] = useState([]);
-
 
   const handleSelected = (option, state) => {
     switch (state) {
@@ -37,17 +36,16 @@ export default function LocationForm({
   };
 
   useEffect(() => {
-          axios
+    axios
       .get("https://api.countrystatecity.in/v1/countries", {
         headers: { "X-CSCAPI-KEY": import.meta.env.VITE_LOCATIONS_API_KEY },
       })
       .then((res) => {
         setCountries(res.data.map((c) => ({ value: c.iso2, label: c.name })));
-        console.log(res.data);
       })
       .catch((err) => {
         console.log(err);
-      });  
+      });
     if (selectedCountry) {
       axios
         .get(
@@ -57,8 +55,8 @@ export default function LocationForm({
           }
         )
         .then((res) => {
+          console.log(res.data)
           setStates(res.data.map((c) => ({ value: c.iso2, label: c.name })));
-          console.log(res.data);
         })
         .catch((err) => {
           console.log(err);
@@ -74,18 +72,23 @@ export default function LocationForm({
         )
         .then((res) => {
           setCities(res.data.map((c) => ({ value: c.iso2, label: c.name })));
-          console.log(res.data);
         })
         .catch((err) => {
           console.log(err);
         });
     }
-  }, [selectedCountry,selectedState,selectedCity]);
+  }, [selectedCountry, selectedState, selectedCity]);
 
   return (
     <SelectContainer>
-      <SelectLabel htmlFor="countries">Select your country:</SelectLabel>
+      <SelectLabel
+        opacity={countries?.length === 0 ? "0" : "1"}
+        htmlFor="countries"
+      >
+        Select country:
+      </SelectLabel>
       <StyledSelect
+        opacity={countries?.length === 0 ? "0" : "1"}
         id="countries"
         name="countries"
         isDisabled={countries.length < 1}
@@ -95,8 +98,11 @@ export default function LocationForm({
         onChange={(e) => handleSelected(e, "country")}
         styles={customStyles}
       />
-      <SelectLabel htmlFor="states">Select your state:</SelectLabel>
+      <SelectLabel opacity={states?.length === 0 ? "0" : "1"} htmlFor="states">
+        Select state:
+      </SelectLabel>
       <StyledSelect
+        opacity={states?.length === 0 ? "0" : "1"}
         id="states"
         name="states"
         options={states}
@@ -105,15 +111,18 @@ export default function LocationForm({
         isDisabled={countries.length < 1 || !selectedCountry}
         styles={customStyles}
       />
-      <SelectLabel htmlFor="cities">Select your city:</SelectLabel>
+      <SelectLabel opacity={cities?.length === 0 ? "0" : "1"} htmlFor="cities">
+        Select city:
+      </SelectLabel>
       <StyledSelect
+        opacity={cities?.length === 0 ? "0" : "1"}
         id="cities"
         name="cities"
         options={cities}
         value={selectedCity}
         onChange={(e) => handleSelected(e, "city")}
         isDisabled={countries.length < 1 || !selectedState}
-                styles={customStyles}
+        styles={customStyles}
       />
     </SelectContainer>
   );

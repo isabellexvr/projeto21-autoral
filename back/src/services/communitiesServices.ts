@@ -8,6 +8,8 @@ async function createCommunity(payload: NewCommunityPayload) {
     await checkCommunitiesAmmount(payload.communityInfo.ownerId);
     await checkCommunityName(payload.communityInfo.name);
 
+   // console.log("aqui ó: ",payload.communityInfo.ownerId)
+
     const addressId = await addressesServices.findOrCreateAddress(payload.locationInfo)
 
     const community = await communitiesRepository.createCommunity({ ...payload.communityInfo, addressId });

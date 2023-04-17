@@ -6,6 +6,8 @@ import { colors } from "../../Assets/colors";
 import NewCommunityForm from "./components/NewCommunityForm";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
+import LocationForm from "../../HomePages/SignUpPage/components/LocationForm";
+import { useState } from "react";
 
 export default function CreateCommunityPage({
   publicationModal,
@@ -13,16 +15,10 @@ export default function CreateCommunityPage({
   loading,
   setLoading,
 }) {
-
-/*  name: joi.string().required(),
-    description: joi.string(),
-    icon: joi.string(),
-    categoryId: joi.number().required(),
-    createdAt: joi.date() */
-
-
   const { theme, setTheme } = useTheme();
   const { userInfo, setUserInfo } = useUserInfo();
+
+  const [showLocationForm, setShowLocationForm] = useState(false);
 
   const navigate = useNavigate();
 
@@ -42,9 +38,8 @@ export default function CreateCommunityPage({
   return (
     <Background theme={theme}>
         <PageTitle  theme={theme}><h1>Create a New Sphere</h1></PageTitle>
-        <NewCommunityForm token={userInfo.token} theme={theme} navigate={navigate}>
+        <NewCommunityForm token={userInfo?.token} theme={theme} navigate={navigate} showLocationForm={showLocationForm} setShowLocationForm={setShowLocationForm} />
 
-        </NewCommunityForm>
       <Footer
           theme={theme}
           setPublicationModal={setPublicationModal}
@@ -66,6 +61,7 @@ const Background = styled.div`
 `
 
 const PageTitle = styled.div`
+z-index: 1;
 position: fixed;
 top: 0;
 left: 0;

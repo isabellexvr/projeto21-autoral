@@ -26,10 +26,11 @@ export async function createNewCommunity(req: AuthenticatedRequest, res: Respons
 
     const userId = req.userId;
     const body: NewCommunityPayload = req.body;
+    console.log("omg:", userId)
 
     try {
-        const data = { ...body, adminId: userId };
-        await communitiesServices.createCommunity(data);
+        body.communityInfo.ownerId = userId;
+        await communitiesServices.createCommunity(body);
         res.sendStatus(201);
     } catch (error) {
         console.log(error)

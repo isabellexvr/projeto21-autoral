@@ -124,13 +124,15 @@ export const StyledSelect = styled(Select)`
   color: ${colors.pink};
   font-weight: 500;
   margin-top: 5px;
-  z-index:1;
-  >option{
-    z-index: 1;
+  z-index: 5;
+  opacity: ${(p) => p.opacity};
+  > option {
+    z-index: 100;
   }
 `;
 
 export const SelectLabel = styled.label`
-color: ${colors.pink};
-width: 270px;
+  opacity: ${(p) => p.opacity};
+  color: ${colors.pink};
+  width: 270px;
 `;

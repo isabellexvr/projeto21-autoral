@@ -10,16 +10,16 @@ type JWTPayload = {
 
 export async function authToken(req: AuthenticatedRequest, res: Response, next: NextFunction) {
     const authHeader = req.header("Authorization");
-    console.log(authHeader)
+
     if (!authHeader) return res.status(403).send(UnauthorizedError());
 
     const token = authHeader.split(" ")[1];
-    console.log(token)
+
     if (!token) return res.status(403).send(UnauthorizedError());
 
     try {
         const { userId } = jwt.verify(token, process.env.JWT_SECRET) as JWTPayload;
-        console.log(userId)
+
         req.userId = userId;
     } catch (error) {
         console.log(error)
