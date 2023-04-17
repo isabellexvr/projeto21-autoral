@@ -8,6 +8,7 @@ async function follow(followerId: number, followedId: number) {
 }
 
 async function findFollowingOrFail(data: FollowersEntity) {
+    console.log(data)
     const following = await followersRepository.findFollowing(data);
     if (!following) throw YouDontFollowError();
     return following.id

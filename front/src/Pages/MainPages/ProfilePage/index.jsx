@@ -44,6 +44,32 @@ export default function ProfilePage({
   const navigate = useNavigate();
   const { userName } = useParams();
 
+  function handleFollow(type, userId, token) {
+    console.log(token);
+    if (type === "Follow") {
+      setLikeLoading(true);
+      api
+        .post(
+          "/followers/follow/" + userId,
+          {},
+          {
+            headers: { Authorization: "Bearer " + userInfo.token },
+          }
+        )
+        .then((res) => setLikeLoading(false))
+        .catch((err) => console.log(err));
+    }
+    if (type === "Unfollow") {
+      setLikeLoading(true);
+      api
+        .delete("/followers/unfollow/" + userId, {
+          headers: { Authorization: "Bearer " + userInfo.token },
+        })
+        .then((res) => setLikeLoading(false))
+        .catch((err) => console.log(err));
+    }
+  }
+
   useEffect(() => {
     if (!userInfo) {
       const isLoggedIn = localStorage.getItem("userInfo");
@@ -75,12 +101,18 @@ export default function ProfilePage({
         .get(`/users/info/${userName}`)
         .then((res) => {
           setUserProfileInfo(res.data);
-          console.log(res.data)
+          console.log(res.data);
           setLoading(false);
         })
         .catch((err) => console.log(err));
     }
   }, [loading, likeLoading]);
+
+  console.log(
+    userProfileInfo?.followers_followers_followedIdTousers.find(
+      (e) => e.followerId === userInfo.id
+    )
+  );
 
   return (
     <>
@@ -105,10 +137,28 @@ export default function ProfilePage({
           </UserMainInfoContainer>
           {userInfo.userName !== userProfileInfo.userName && (
             <>
-            <FollowButton>Follow</FollowButton>
+              {userProfileInfo?.followers_followers_followedIdTousers.find(
+                (e) => e.followerId === userInfo.id
+              ) ? (
+                <FollowButton
+                  onClick={() =>
+                    handleFollow("Unfollow", userProfileInfo.id, userInfo.token)
+                  }
+                >
+                  Unfollow
+                </FollowButton>
+              ) : (
+                <FollowButton
+                  onClick={() =>
+                    handleFollow("Follow", userProfileInfo.id, userInfo.token)
+                  }
+                >
+                  Follow
+                </FollowButton>
+              )}
             </>
           )}
-          
+
           <UserStatisticsContainer>
             <Statistic theme={theme}>
               <h1>100</h1>

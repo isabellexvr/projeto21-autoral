@@ -18,6 +18,7 @@ export async function unfollow(req: AuthenticatedRequest, res: Response) {
     const userId = req.userId;
     const followedId = req.params.followedId
     try {
+        console.log(userId, followedId)
         await followersServices.unfollow(userId, Number(followedId))
         res.sendStatus(201);
     } catch (error) {

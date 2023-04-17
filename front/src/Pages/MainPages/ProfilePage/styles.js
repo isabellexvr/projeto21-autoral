@@ -154,7 +154,7 @@ export const FollowButton = styled.button`
 all:unset;
 background-color: ${colors.orange};
 height: 35px;
-width: 75px;
+width: 86px;
 font-size: 18px;
 font-weight: 600;
 display: flex;
