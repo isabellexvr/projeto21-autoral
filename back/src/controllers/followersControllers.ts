@@ -1,6 +1,6 @@
 import { Response, Request } from "express";
 import { AuthenticatedRequest } from "../middlewares/authMiddleware";
-import { followersServices } from "services";
+import { followersServices } from "../services";
 
 export async function follow(req: AuthenticatedRequest, res: Response) {
     const userId = req.userId;

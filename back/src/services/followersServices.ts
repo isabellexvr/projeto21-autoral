@@ -1,5 +1,5 @@
-import { YouDontFollowError } from "errors/followersErrors";
-import { FollowersEntity, followersRepository } from "repositories/followersRepository";
+import { YouDontFollowError } from "../errors/followersErrors";
+import { FollowersEntity, followersRepository } from "../repositories/followersRepository";
 
 
 async function follow(followerId: number, followedId: number) {
